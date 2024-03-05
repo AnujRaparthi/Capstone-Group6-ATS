@@ -70,13 +70,17 @@ const jobListingsData = [
 
 ];
 
-const MainContent = ({ filters }) => {
+const MainContent = ({ filters, searchTerm }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // You can adjust the number of items per page
 
   // First, filter jobListingsData based on the filters prop
   const filteredJobListings = jobListingsData.filter(listing => {
+    // Filter by search term if it is provided
+    return searchTerm.length === 0 || listing.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      listing.description.toLowerCase().includes(searchTerm.toLowerCase());
+  }).filter(listing => {
     return (
       (!filters.location || listing.location === filters.location) &&
       (!filters.department || listing.department === filters.department) &&

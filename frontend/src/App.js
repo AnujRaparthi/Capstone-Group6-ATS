@@ -14,16 +14,22 @@ const App = () => {
     experience: ''
   });
 
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   return (
     <div className="App">
-      <Header />
+      <Header onSearchChange={handleSearchChange} />
       <div className="content">
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="md:col-span-1">
           <FilterSection filters={filters} onFilterChange={setFilters} />
         </div>
         <div className="md:col-span-3">
-          <MainContent filters={filters} />
+          <MainContent filters={filters} searchTerm={searchTerm}/>
         </div>
       </div>
       </div>
