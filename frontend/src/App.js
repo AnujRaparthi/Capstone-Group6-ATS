@@ -1,25 +1,35 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import './index.css';
+import Header from './components/Header';
+import FilterSection from './components/FilterSection';
+import MainContent from './components/MainContent.jsx';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import Footer from './components/Footer';
 
-function App() {
+const App = () => {
+  const [filters, setFilters] = useState({
+    location: '',
+    department: '',
+    experience: ''
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <div className="content">
+      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="md:col-span-1">
+          <FilterSection filters={filters} onFilterChange={setFilters} />
+        </div>
+        <div className="md:col-span-3">
+          <MainContent filters={filters} />
+        </div>
+      </div>
+      </div>
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;
