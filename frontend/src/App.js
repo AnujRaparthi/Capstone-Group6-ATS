@@ -15,21 +15,31 @@ const App = () => {
   });
 
   const [searchTerm, setSearchTerm] = useState('');
+  const [submittedSearch, setSubmittedSearch] = useState('');
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
+  const handleSearchSubmit = () => {
+    setSubmittedSearch(searchTerm);
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm(''); // Clear the search term
+    setSubmittedSearch(''); // Also clear the submitted search to reset the results
+  };
+
   return (
     <div className="App">
-      <Header onSearchChange={handleSearchChange} />
+      <Header searchTerm={searchTerm} onSearchChange={handleSearchChange} onSearchSubmit={handleSearchSubmit} onClearSearch={handleClearSearch}/>
       <div className="content">
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="md:col-span-1">
           <FilterSection filters={filters} onFilterChange={setFilters} />
         </div>
         <div className="md:col-span-3">
-          <MainContent filters={filters} searchTerm={searchTerm}/>
+          <MainContent filters={filters} searchTerm={submittedSearch}/>
         </div>
       </div>
       </div>
