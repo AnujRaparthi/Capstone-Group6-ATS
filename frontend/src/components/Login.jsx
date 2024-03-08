@@ -20,7 +20,7 @@ const Login = () => {
       if (user.userType === 'applicant') {
         navigate('/');
       } else if (user.userType === 'recruiter') {
-        navigate('/recruiter');
+        navigate('/hrportal');
       }
     } catch (error) {
       console.error('Login error:', error);

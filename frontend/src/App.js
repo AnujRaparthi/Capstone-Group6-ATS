@@ -36,60 +36,73 @@ const App = () => {
     setSearchTerm(''); // Clear the search term
     setSubmittedSearch(''); // Also clear the submitted search to reset the results
   };
-
+//headers
   return (
     <Router>
-    <UserProvider>
-    <div className="App">
+      <UserProvider>
+        <div className="App">
 
-    <Routes>
-          <Route
-            path="/hrportal"
-            element={
-              <>
-                < HrHeader/>
-                <Hrportal />
-                <Footer />
-              </>
-            }
-          />
-           <Route path="/login" element={<><Login /><Footer /></>} />
-           <Route path="/signup" element={<><Signup /><Footer /></>} />
-          <Route
-            path="/"
-            element={
-              <>
-                <HeaderWrapper 
-            searchTerm={searchTerm}
-            onSearchChange={handleSearchChange}
-            onSearchSubmit={handleSearchSubmit}
-            onClearSearch={handleClearSearch}
-          />
-                <div className="content">
-                  <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div className="md:col-span-1">
-                      <FilterSection
-                        filters={filters}
-                        onFilterChange={setFilters}
-                      />
-                    </div>
-                    <div className="md:col-span-3">
-                      <MainContent
-                        filters={filters}
-                        searchTerm={submittedSearch}
-                      />
+          <Routes>
+            <Route
+              path="/hrportal"
+              element={
+                <>
+                  < HrHeader />
+                  <Hrportal />
+                  <Footer />
+                </>
+              }
+            />
+            {/* header for login and signup */}
+            <Route path="/login" element={<>
+              <HeaderWrapper
+                searchTerm={searchTerm}
+                onSearchChange={handleSearchChange}
+                onSearchSubmit={handleSearchSubmit}
+                onClearSearch={handleClearSearch}
+              /><Login /><Footer /></>} />
+            <Route path="/signup" element={<>
+              <HeaderWrapper
+                searchTerm={searchTerm}
+                onSearchChange={handleSearchChange}
+                onSearchSubmit={handleSearchSubmit}
+                onClearSearch={handleClearSearch}
+              /><Signup /><Footer /></>} />
+            <Route
+              path="/"
+              element={
+                <>
+                  <HeaderWrapper
+                    searchTerm={searchTerm}
+                    onSearchChange={handleSearchChange}
+                    onSearchSubmit={handleSearchSubmit}
+                    onClearSearch={handleClearSearch}
+                  />
+                  <div className="content">
+                    <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+                      <div className="md:col-span-1">
+                        <FilterSection
+                          filters={filters}
+                          onFilterChange={setFilters}
+                        />
+                      </div>
+                      <div className="md:col-span-3">
+                        <MainContent
+                          filters={filters}
+                          searchTerm={submittedSearch}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <Footer />
-              </>
-            }
-          />
-        </Routes>
-      
+                  <Footer />
+                </>
+              }
+            />
+          </Routes>
 
-    </div>
-    </UserProvider>
+
+        </div>
+      </UserProvider>
     </Router>
   );
 };
