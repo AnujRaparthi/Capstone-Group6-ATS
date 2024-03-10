@@ -17,9 +17,10 @@ const Login = () => {
       const { user, token } = response.data;
       login(user, token);
       console.log(response.data); 
-      if (user.userType === 'applicant') {
+
+      if (user && user.userType === 'applicant') {
         navigate('/');
-      } else if (user.userType === 'recruiter') {
+      } else if (user && user.userType === 'recruiter') {
         navigate('/hrportal');
       }
     } catch (error) {
@@ -42,7 +43,7 @@ const Login = () => {
   return (
     <>
       <div className="flex items-center justify-center min-h-screen">
-        <div className='bg-white w-full max-w-sm p-6'>
+        <div className='bg-white shadow w-full max-w-sm p-6 rounded-md'>
           <div className="sm:mx-auto sm:w-full">
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
               Login
@@ -63,7 +64,7 @@ const Login = () => {
                 </label>
                 <div className="mt-2">
                   <input id="email" name="email" type="email" autoComplete="email" required
-                    className="appearance-none block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="appearance-none block w-full rounded-md border-0 py-1  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     value={email} onChange={(e) => setEmail(e.target.value)}/>
                 </div>
               </div>
@@ -74,7 +75,7 @@ const Login = () => {
                 </label>
                 <div className="mt-2">
                   <input id="password" name="password" type="password" autoComplete="current-password" required
-                    className="appearance-none block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="appearance-none block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     value={password} onChange={(e) => setPassword(e.target.value)}/>
                 </div>
               </div>

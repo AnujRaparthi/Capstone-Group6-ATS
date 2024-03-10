@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import './index.css';
 import Header from './components/Header';
@@ -13,6 +13,7 @@ import { UserProvider } from './components/UserContext';
 import HeaderWrapper from './components/HeaderWrapper';
 import Hrportal from "./components/Hrportal";
 import HrHeader from "./components/HrHeader";
+import JobDescription from './components/JobDescription';
 
 const App = () => {
   const [filters, setFilters] = useState({
@@ -36,12 +37,11 @@ const App = () => {
     setSearchTerm(''); // Clear the search term
     setSubmittedSearch(''); // Also clear the submitted search to reset the results
   };
-//headers
+
   return (
     <Router>
       <UserProvider>
         <div className="App">
-
           <Routes>
             <Route
               path="/hrportal"
@@ -68,6 +68,16 @@ const App = () => {
                 onSearchSubmit={handleSearchSubmit}
                 onClearSearch={handleClearSearch}
               /><Signup /><Footer /></>} />
+            <Route path="/job/:id" element={<>
+              <HeaderWrapper
+                searchTerm={searchTerm}
+                onSearchChange={handleSearchChange}
+                onSearchSubmit={handleSearchSubmit}
+                onClearSearch={handleClearSearch}
+              /><JobDescription /><Footer /></>} />
+
+
+
             <Route
               path="/"
               element={
@@ -99,8 +109,6 @@ const App = () => {
               }
             />
           </Routes>
-
-
         </div>
       </UserProvider>
     </Router>
