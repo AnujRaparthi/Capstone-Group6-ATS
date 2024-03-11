@@ -237,3 +237,9 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #006ba1;  /* Slightly darker on hover */
 }
+
+.MJ{
+  color:#045A9D;
+  text-align: center;
+  font-size: 3em;
+}

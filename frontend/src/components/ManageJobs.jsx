@@ -33,7 +33,7 @@ const ManageJobs = () => {
 
   return (
     <div className="form-container">
-      <h2>Manage Jobs</h2>
+      <h1 class="MJ">Manage Jobs</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="jobTitle">Job Title:</label>
