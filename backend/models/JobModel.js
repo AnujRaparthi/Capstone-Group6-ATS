@@ -13,7 +13,11 @@ const jobSchema = new mongoose.Schema({
   department_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Department'
-  }
+  },
+  experience: {
+    type: String,
+    required: true
+  },
  
 });
 
