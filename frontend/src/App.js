@@ -14,6 +14,7 @@ import HeaderWrapper from './components/HeaderWrapper';
 import Hrportal from "./components/Hrportal";
 import HrHeader from "./components/HrHeader";
 import JobDescription from './components/JobDescription';
+import ManageJobs from "./components/ManageJobs";
 
 const App = () => {
   const [filters, setFilters] = useState({
@@ -53,6 +54,7 @@ const App = () => {
                 </>
               }
             />
+            <Route path="/ManageJobs" element={<ManageJobs />} />
             {/* header for login and signup */}
             <Route path="/login" element={<>
               <HeaderWrapper
