@@ -6,11 +6,16 @@ const FilterSection = ({ filters, onFilterChange }) => {
     // Update the filters state in the parent App component
 
     console.log(filterName,value);
+    console.log('Filter obj',{
+      ...filters,
+      [filterName]: value
+    });
+    
     onFilterChange({
       ...filters,
       [filterName]: value
     });
-    console.log(filters);
+    
   };
 
   const handleClearFilters = () => {
