@@ -31,7 +31,7 @@ const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, sho
         {user ? (
             <>
               <nav className="hidden md:flex space-x-10">
-                <Link to="#" className="text-base font-medium text-black hover:text-gray-900">My Job Applications</Link>
+                <Link to="/status" className="text-base font-medium text-black hover:text-gray-900">My Job Applications</Link>
               </nav>
               <div className="relative">
                 <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="flex items-center text-base font-medium text-black hover:text-gray-900">

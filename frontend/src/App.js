@@ -15,6 +15,7 @@ import Hrportal from "./components/Hrportal";
 import HrHeader from "./components/HrHeader";
 import JobDescription from './components/JobDescription';
 import ManageJobs from "./components/ManageJobs";
+import JobApplicationsStatusPage from "./components/JobApplicationsStatusPage";
 
 const App = () => {
   const [filters, setFilters] = useState({
@@ -61,6 +62,7 @@ const App = () => {
                   <Footer />
                 </>
               } />
+            <Route path="/status" element={<JobApplicationsStatusPage />} />
             {/* header for login and signup */}
             <Route path="/login" element={<>
               <HeaderWrapper
