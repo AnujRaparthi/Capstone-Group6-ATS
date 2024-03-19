@@ -3,6 +3,7 @@ import logo from "../images/logo_new.png";
 import "../App.css";
 import { useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext';
+import { Link } from 'react-router-dom';
 
 const HrHeader = () => {
   const { user, logout } = useUser();
@@ -22,7 +23,7 @@ const HrHeader = () => {
           <nav className="hidden md:flex space-x-10">
             <a href="#" class="text-base font-medium text-black hover:text-gray-900">View Job Applications</a>
             <a href="#" class="text-base font-medium text-black hover:text-gray-900">View Applicants</a>
-            <a href="#" class="text-base font-medium text-black hover:text-gray-900">Manage Jobs</a>
+            <Link to="/ManageJobs" class="text-base font-medium text-black hover:text-gray-900">Manage Jobs</Link>
             <a href="#" class="text-base font-medium text-black hover:text-gray-900">Manage Locations</a>
             <a href="#" class="text-base font-medium text-black hover:text-gray-900">Manage Departments</a>
 

@@ -1,11 +1,11 @@
 require('dotenv').config();
 const express = require('express');
-//const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const connectDB = require('./db');
 const authRoutes = require('./routes/auth');
 const cors = require('cors');
-const Job = require('./models/JobModel');
-
+const jobModel = require('./models/JobModel');
+const jobRoutes = require('./api/jobs');
 const app = express();
 
 
@@ -14,6 +14,20 @@ connectDB();
 
 app.use(cors());
 app.use('/api', authRoutes);
+app.use('/api/jobs', jobRoutes);
+
+// API endpoint to post a new job
+app.post('/api/jobs', async (req, res) => {
+  try {
+    const jobData = req.body;
+    const newJob = new jobModel(jobData);
+    const savedJob = await newJob.save();
+    res.status(201).json(savedJob);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to save job' });
+  }
+});
 
 const PORT = process.env.PORT || 5000; 
 

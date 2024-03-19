@@ -11,7 +11,7 @@ const ManageJobs = () => {
   const [compensationType, setCompensationType] = useState('');
   const [compensationRangeFrom, setCompensationRangeFrom] = useState('');
   const [compensationRangeTo, setCompensationRangeTo] = useState('');
-  // ... add a state variable for 'department_id' if needed
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -25,10 +25,25 @@ const ManageJobs = () => {
       compensation_range_from: compensationRangeFrom,
       compensation_range_to: compensationRangeTo,
       job_description: jobDescription,
-      // ... add 'department_id'  if you include it in the form
+      
     };
-
-    // Handle form submission logic here (send jobData to your backend)
+    try {
+      const response =  fetch('/api/jobs', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(jobData) 
+      });
+  
+      if (response.ok) {
+        console.log('Job posted successfully!');
+        
+      } else {
+        console.error('Error posting job:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error posting job:', error);
+    }
+    
   };
 
   return (
@@ -134,7 +149,7 @@ const ManageJobs = () => {
             required
           />
         </div>
-        <button type="submit">Post Job</button>
+        <button type="submit" id='post'>Post Job</button>
       </form>
     </div>
   );

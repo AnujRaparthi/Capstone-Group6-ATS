@@ -224,7 +224,7 @@ body {
 }
 
 /* Button */
-button[type="submit"] {
+#post {
   background-color: #008CBA; /* Sample color */
   color: white;
   padding: 10px 20px;
@@ -234,7 +234,7 @@ button[type="submit"] {
   transition: background-color 0.3s ease; /* Add a smooth transition */
 }
 
-button[type="submit"]:hover {
+#post:hover {
   background-color: #006ba1;  /* Slightly darker on hover */
 }
 

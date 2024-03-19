@@ -54,7 +54,13 @@ const App = () => {
                 </>
               }
             />
-            <Route path="/ManageJobs" element={<ManageJobs />} />
+            <Route path="/ManageJobs" element={
+                <>
+                  < HrHeader />
+                  <ManageJobs />
+                  <Footer />
+                </>
+              } />
             {/* header for login and signup */}
             <Route path="/login" element={<>
               <HeaderWrapper

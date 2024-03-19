@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import ManageJobs from "./ManageJobs"; // Assuming your ManageJobs component is in a file named ManageJobs.jsx
+import ManageJobs from "./ManageJobs";
+import { Link } from "react-router-dom";
 
 const Hrportal = () => {
-  const [showManageJobs, setShowManageJobs] = useState(false);
+  const [showManageJobs] = useState(false);
 
-  const handleManageJobsClick = () => {
+  /* const handleManageJobsClick = () => {
     setShowManageJobs(true);
-  };
+  }; */
 
   return (
     <main>
       <div className="container">
         <div className="nav-buttons">
-          <button className="nav-button" onClick={handleManageJobsClick}>
+          <Link to="/ManageJobs" className="nav-button">
             Manage Jobs
-          </button>
+          </Link>
           <button className="nav-button">View Job Applications</button>
           <button className="nav-button">View Applicants</button>
           <button className="nav-button">Manage Locations</button>
