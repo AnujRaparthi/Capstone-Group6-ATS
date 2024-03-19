@@ -62,7 +62,15 @@ const App = () => {
                   <Footer />
                 </>
               } />
-            <Route path="/status" element={<JobApplicationsStatusPage />} />
+            {/* <Route path="/status" element={<JobApplicationsStatusPage />} /> */}
+
+            <Route path="/status" element={<>
+              <HeaderWrapper
+                searchTerm={searchTerm}
+                onSearchChange={handleSearchChange}
+                onSearchSubmit={handleSearchSubmit}
+                onClearSearch={handleClearSearch}
+              /><JobApplicationsStatusPage /><Footer /></>} />
             {/* header for login and signup */}
             <Route path="/login" element={<>
               <HeaderWrapper

@@ -5,7 +5,7 @@ import Header from './Header';
 const HeaderWrapper = ({ searchTerm, onSearchChange, onSearchSubmit, onClearSearch }) => {
   const location = useLocation();
   //console.log("Current path:", location.pathname); 
-  const showSearchBar = !['/login', '/signup'].includes(location.pathname) && !location.pathname.startsWith('/job/');
+  const showSearchBar = !['/login', '/signup','/status'].includes(location.pathname) && !location.pathname.startsWith('/job/');
 
   return (
     <Header 

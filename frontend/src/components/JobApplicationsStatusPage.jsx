@@ -26,11 +26,13 @@ const mockApplications = [
 const JobApplicationsStatusPage = () => {
     
   return (
-    <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div className="content">
+    <div className="max-w-7xl mx-auto py-6 sm:px-6">
       <h1 className="text-2xl font-bold mb-6">My Job Applications</h1>
       {mockApplications.map(application => (
         <JobApplicationCard key={application.id} application={application} />
       ))}
+    </div>
     </div>
   );
 };

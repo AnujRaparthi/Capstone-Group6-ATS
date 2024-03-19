@@ -27,7 +27,7 @@ const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, sho
           <img className="h-16 w-auto" src={logo} alt="Career Hunt logo" />
         </Link>
         <div className="flex items-center space-x-10">
-        <Link to="#" className="text-base font-medium text-black hover:text-gray-900">All Jobs</Link>
+        <Link to="/" className="text-base font-medium text-black hover:text-gray-900">All Jobs</Link>
         {user ? (
             <>
               <nav className="hidden md:flex space-x-10">
