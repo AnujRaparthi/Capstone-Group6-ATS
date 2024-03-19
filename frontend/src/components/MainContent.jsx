@@ -22,6 +22,7 @@ const MainContent = ({ filters, searchTerm }) => {
     fetchJobs();
   }, []);
 
+
   // Function to filter job listings based on filters and search term
   const getFilteredJobListings = () => {
     return jobListings
@@ -35,8 +36,8 @@ const MainContent = ({ filters, searchTerm }) => {
       .filter(listing => {
         if (searchTerm === '') return true;
         return (
-          listing.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          listing.description.toLowerCase().includes(searchTerm.toLowerCase())
+          listing.job_title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          listing.job_description.toLowerCase().includes(searchTerm.toLowerCase())
         );
       });
   };

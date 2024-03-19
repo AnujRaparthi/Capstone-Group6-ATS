@@ -109,8 +109,8 @@ body {
   background-color:#067DCD;
   color: white;
   border: none;
-  border-top-right-radius: 9999px;
-  border-bottom-right-radius: 9999px;
+  border-top-right-radius: 9999px !important;
+  border-bottom-right-radius: 9999px !important;
   cursor: pointer;
   outline: none;
 }

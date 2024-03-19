@@ -2,7 +2,7 @@ import React from 'react';
 
 const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
 
-  console.log(itemsPerPage,totalItems,paginate,currentPage);
+  // console.log(itemsPerPage,totalItems,paginate,currentPage);
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
