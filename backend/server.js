@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const connectDB = require('./db');
 const authRoutes = require('./routes/auth');
 const cors = require('cors');
-const jobModel = require('./models/JobModel');
+const Job = require('./models/JobModel');
 const jobRoutes = require('./api/jobs');
 const app = express();
 
@@ -32,6 +32,8 @@ app.post('/api/jobs', async (req, res) => {
 const PORT = process.env.PORT || 5001; 
 
 app.get('/api/jobs', async (req, res) => {
+
+  console.log('Inside Jobs API');
   try {
     const jobs = await Job.find();
 

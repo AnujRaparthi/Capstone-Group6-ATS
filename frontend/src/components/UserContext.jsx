@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await axios.get('http://localhost:5000/api/validateToken', {
+          const response = await axios.get('http://localhost:5001/api/validateToken', {
             headers: {
               Authorization: `Bearer ${token}`,
             },

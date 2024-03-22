@@ -10,9 +10,11 @@ const MainContent = ({ filters, searchTerm }) => {
 
   useEffect(() => {
     const fetchJobs = async () => {
+
+      console.log('Inside fetchJobs');
       try {
         const response = await axios.get('http://localhost:5001/api/jobs');
-        console.log(response);
+        console.log('Response=',response);
         setJobListings(response.data);
       } catch (error) {
         console.error('Error fetching jobs:', error);
