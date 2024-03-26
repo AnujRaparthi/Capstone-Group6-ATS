@@ -44,6 +44,41 @@ app.get('/api/jobs', async (req, res) => {
   }
 });
 
+const nodemailer = require('nodemailer');
+
+// Configure your SMTP mail server here
+const transporter = nodemailer.createTransport({
+  service: "Gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'careerhunt.ats@gmail.com',
+    pass: 'nrhm jhyb gwyb nbfq',
+  },
+});
+//App Password - nrhm jhyb gwyb nbfq
+
+app.post('/api/send-email', async (req, res) => {
+  const { email, comment } = req.body;
+
+  try {
+    await transporter.sendMail({
+      from: '"CareerHunt ATS" <careerhunt.ats@gmail.com>',
+      to: email, // Recipient email from the request
+      subject: "New Comment on Your Application",
+      text: comment,
+      html: `<p>${comment}</p>`,
+    });
+
+    res.send({ message: 'Email sent' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).send({ message: 'Error sending email' });
+  }
+});
+
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
 app.get('/', (req, res) => {
