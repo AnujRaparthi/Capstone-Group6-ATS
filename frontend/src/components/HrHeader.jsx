@@ -22,7 +22,8 @@ const HrHeader = () => {
         <div className="flex items-center">
           <nav className="hidden md:flex space-x-10">
             <a href="#" class="text-base font-medium text-black hover:text-gray-900">View Job Applications</a>
-            <a href="#" class="text-base font-medium text-black hover:text-gray-900">View Applicants</a>
+            
+            <Link to="/ViewApplicants" class="text-base font-medium text-black hover:text-gray-900">View Applicants</Link>
             <Link to="/ManageJobs" class="text-base font-medium text-black hover:text-gray-900">Manage Jobs</Link>
             <a href="#" class="text-base font-medium text-black hover:text-gray-900">Manage Locations</a>
             <a href="#" class="text-base font-medium text-black hover:text-gray-900">Manage Departments</a>

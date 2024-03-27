@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
-import './index.css';
-import Header from './components/Header';
-import FilterSection from './components/FilterSection';
-import MainContent from './components/MainContent.jsx';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import Footer from './components/Footer';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import { UserProvider } from './components/UserContext';
-import HeaderWrapper from './components/HeaderWrapper';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
+import "./index.css";
+import Header from "./components/Header";
+import FilterSection from "./components/FilterSection";
+import MainContent from "./components/MainContent.jsx";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import Footer from "./components/Footer";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import { UserProvider } from "./components/UserContext";
+import HeaderWrapper from "./components/HeaderWrapper";
 import Hrportal from "./components/Hrportal";
 import HrHeader from "./components/HrHeader";
-import JobDescription from './components/JobDescription';
+import JobDescription from "./components/JobDescription";
 import ManageJobs from "./components/ManageJobs";
 import JobApplicationsStatusPage from "./components/JobApplicationsStatusPage";
+/* import ViewJobApplications from './components/ViewJobApplications'; */
+import ViewApplicants from "./components/ViewApplicants";
 
 const App = () => {
   const [filters, setFilters] = useState({
@@ -36,8 +38,8 @@ const App = () => {
   };
 
   const handleClearSearch = () => {
-    setSearchTerm(''); // Clear the search term
-    setSubmittedSearch(''); // Also clear the submitted search to reset the results
+    setSearchTerm(""); // Clear the search term
+    setSubmittedSearch(""); // Also clear the submitted search to reset the results
   };
 
   return (
@@ -49,18 +51,30 @@ const App = () => {
               path="/hrportal"
               element={
                 <>
-                  < HrHeader />
+                  <HrHeader />
                   <Hrportal />
                   <Footer />
                 </>
               }
             />
-            <Route path="/ManageJobs" element={
+            <Route
+              path="/ManageJobs"
+              element={
                 <>
-                  < HrHeader />
+                  <HrHeader />
                   <ManageJobs />
                   <Footer />
                 </>
+              }
+            />
+
+            {/* <Route path="/ViewJobApplications" element={
+                <>
+                 
+                  <ViewJobApplications />
+                  <Footer />
+                </>
+              } /> */}
               } />
             {/* <Route path="/status" element={<JobApplicationsStatusPage />} /> */}
 
@@ -72,29 +86,53 @@ const App = () => {
                 onClearSearch={handleClearSearch}
               /><JobApplicationsStatusPage /><Footer /></>} />
             {/* header for login and signup */}
-            <Route path="/login" element={<>
-              <HeaderWrapper
-                searchTerm={searchTerm}
-                onSearchChange={handleSearchChange}
-                onSearchSubmit={handleSearchSubmit}
-                onClearSearch={handleClearSearch}
-              /><Login /><Footer /></>} />
-            <Route path="/signup" element={<>
-              <HeaderWrapper
-                searchTerm={searchTerm}
-                onSearchChange={handleSearchChange}
-                onSearchSubmit={handleSearchSubmit}
-                onClearSearch={handleClearSearch}
-              /><Signup /><Footer /></>} />
-            <Route path="/job/:id" element={<>
-              <HeaderWrapper
-                searchTerm={searchTerm}
-                onSearchChange={handleSearchChange}
-                onSearchSubmit={handleSearchSubmit}
-                onClearSearch={handleClearSearch}
-              /><JobDescription /><Footer /></>} />
+            <Route
+              path="/login"
+              element={
+                <>
+                  <HeaderWrapper
+                    searchTerm={searchTerm}
+                    onSearchChange={handleSearchChange}
+                    onSearchSubmit={handleSearchSubmit}
+                    onClearSearch={handleClearSearch}
+                  />
+                  <Login />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <>
+                  <HeaderWrapper
+                    searchTerm={searchTerm}
+                    onSearchChange={handleSearchChange}
+                    onSearchSubmit={handleSearchSubmit}
+                    onClearSearch={handleClearSearch}
+                  />
+                  <Signup />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/job/:id"
+              element={
+                <>
+                  <HeaderWrapper
+                    searchTerm={searchTerm}
+                    onSearchChange={handleSearchChange}
+                    onSearchSubmit={handleSearchSubmit}
+                    onClearSearch={handleClearSearch}
+                  />
+                  <JobDescription />
+                  <Footer />
+                </>
+              }
+            />
 
-
+            <Route path="/ViewApplicants" element={ <><HrHeader/> <ViewApplicants /><Footer/></>} />
 
             <Route
               path="/"

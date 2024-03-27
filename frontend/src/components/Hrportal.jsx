@@ -17,7 +17,9 @@ const Hrportal = () => {
             Manage Jobs
           </Link>
           <button className="nav-button">View Job Applications</button>
-          <button className="nav-button">View Applicants</button>
+          <Link to="/ViewApplicants" className="nav-button">
+            View Applicants
+          </Link>
           <button className="nav-button">Manage Locations</button>
           <button className="nav-button">Manage Departments</button>
         </div>

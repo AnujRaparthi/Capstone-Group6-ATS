@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
     res.status(201).json(savedJob);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to save job' });
+    res.status(500).json({ error: 'Failed to save job', reason: err.message });
   }
 });
 

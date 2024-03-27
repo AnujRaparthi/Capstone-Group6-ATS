@@ -1,19 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 
 const ManageJobs = () => {
-  const [jobTitle, setJobTitle] = useState('');
-  const [jobDescription, setJobDescription] = useState('');
-  const [jobLocation, setJobLocation] = useState('');
-  const [jobType, setJobType] = useState('');
-  const [noOfPositions, setNoOfPositions] = useState('');
-  const [state, setState] = useState('');
-  const [targetHiringDate, setTargetHiringDate] = useState('');
-  const [compensationType, setCompensationType] = useState('');
-  const [compensationRangeFrom, setCompensationRangeFrom] = useState('');
-  const [compensationRangeTo, setCompensationRangeTo] = useState('');
+  const [jobTitle, setJobTitle] = useState("");
+  const [jobDescription, setJobDescription] = useState("");
+  const [jobLocation, setJobLocation] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [noOfPositions, setNoOfPositions] = useState("");
+  const [state, setState] = useState("");
+  const [targetHiringDate, setTargetHiringDate] = useState("");
+  const [compensationType, setCompensationType] = useState("");
+  const [compensationRangeFrom, setCompensationRangeFrom] = useState("");
+  const [compensationRangeTo, setCompensationRangeTo] = useState("");
+  const [experience, setExperience] = useState('');
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch("http://localhost:5001/api/jobs");
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Fetched jobs:", data); // Log the fetched data
+          setJobs(data);
+        } else {
+          console.error("Failed to fetch jobs:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Failed to fetch jobs:", error);
+      }
+    };
+  
+    console.log("Fetching jobs..."); // Log when fetching starts
+    fetchJobs();
+  
+    return () => {
+      console.log("Cleanup"); // Log cleanup if needed
+    };
+  }, []);
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const jobData = {
       job_title: jobTitle,
@@ -25,25 +51,34 @@ const ManageJobs = () => {
       compensation_range_from: compensationRangeFrom,
       compensation_range_to: compensationRangeTo,
       job_description: jobDescription,
-      
+      experience: experience, 
     };
     try {
-      const response =  fetch('/api/jobs', { 
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(jobData) 
+      const response = await fetch("http://localhost:5001/api/jobs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(jobData),
       });
-  
+
       if (response.ok) {
-        console.log('Job posted successfully!');
-        
+        console.log("Job posted successfully!");
+        /*  // Reset form fields after successful submission
+      setJobTitle('');
+      setJobDescription('');
+      setJobLocation('');
+      setJobType('');
+      setNoOfPositions('');
+      setState('');
+      setTargetHiringDate('');
+      setCompensationType('');
+      setCompensationRangeFrom('');
+      setCompensationRangeTo(''); */
       } else {
-        console.error('Error posting job:', response.statusText);
+        console.error("Error posting job:", response.statusText);
       }
     } catch (error) {
-      console.error('Error posting job:', error);
+      console.error("Error posting job:", error);
     }
-    
   };
 
   return (
@@ -112,7 +147,7 @@ const ManageJobs = () => {
         <div className="form-group">
           <label htmlFor="targetHiringDate">Target Hiring Date:</label>
           <input
-            type="date" 
+            type="date"
             id="targetHiringDate"
             value={targetHiringDate}
             onChange={(e) => setTargetHiringDate(e.target.value)}
@@ -130,7 +165,9 @@ const ManageJobs = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="compensationRangeFrom">Compensation Range From:</label>
+          <label htmlFor="compensationRangeFrom">
+            Compensation Range From:
+          </label>
           <input
             type="number"
             id="compensationRangeFrom"
@@ -149,8 +186,53 @@ const ManageJobs = () => {
             required
           />
         </div>
-        <button type="submit" id='post'>Post Job</button>
+        <div className="form-group">
+          <label htmlFor="experience">Experience:</label>
+          <input
+            type="text"
+            id="experience"
+            value={experience}
+            onChange={(e) => setExperience(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" id="post">
+          Post Job
+        </button>
       </form>
+      
+{/* <div>
+  <table>
+    <thead>
+      <tr>
+        <th>Job Title</th>
+        <th>Job Type</th>
+        <th>Number of Positions</th>
+        <th>State</th>
+        <th>Target Hiring Date</th>
+        <th>Compensation Type</th>
+        <th>Compensation Range From</th>
+        <th>Compensation Range To</th>
+        <th>Experience</th>
+      </tr>
+    </thead>
+    <tbody>
+      {jobs.map((job) => (
+        <tr key={job._id}>
+          <td>{job.job_title}</td>
+          <td>{job.job_type}</td>
+          <td>{job.no_of_positions}</td>
+          <td>{job.state}</td>
+          <td>{job.target_hiring_date}</td>
+          <td>{job.compensation_type}</td>
+          <td>{job.compensation_range_from}</td>
+          <td>{job.compensation_range_to}</td>
+          <td>{job.experience}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+    </div> */}
     </div>
   );
 };
