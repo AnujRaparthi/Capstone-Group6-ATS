@@ -18,6 +18,7 @@ import ManageJobs from "./components/ManageJobs";
 import JobApplicationsStatusPage from "./components/JobApplicationsStatusPage";
 /* import ViewJobApplications from './components/ViewJobApplications'; */
 import ViewApplicants from "./components/ViewApplicants";
+import CommunicationForm from './components/CommunicationForm.jsx';
 
 const App = () => {
   const [filters, setFilters] = useState({
@@ -75,7 +76,7 @@ const App = () => {
                   <Footer />
                 </>
               } /> */}
-              } />
+              
             {/* <Route path="/status" element={<JobApplicationsStatusPage />} /> */}
 
             <Route path="/status" element={<>
@@ -85,6 +86,13 @@ const App = () => {
                 onSearchSubmit={handleSearchSubmit}
                 onClearSearch={handleClearSearch}
               /><JobApplicationsStatusPage /><Footer /></>} />
+              <Route path="/email" element={<>
+              <HeaderWrapper
+                searchTerm={searchTerm}
+                onSearchChange={handleSearchChange}
+                onSearchSubmit={handleSearchSubmit}
+                onClearSearch={handleClearSearch}
+              /><CommunicationForm /><Footer /></>} />
             {/* header for login and signup */}
             <Route
               path="/login"
