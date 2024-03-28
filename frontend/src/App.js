@@ -14,6 +14,8 @@ import HeaderWrapper from "./components/HeaderWrapper";
 import Hrportal from "./components/Hrportal";
 import HrHeader from "./components/HrHeader";
 import JobDescription from "./components/JobDescription";
+import JobApplicationForm from './components/JobApplicationForm';
+import ApplicationSuccess from './components/ApplicationSuccess';
 import ManageJobs from "./components/ManageJobs";
 import JobApplicationsStatusPage from "./components/JobApplicationsStatusPage";
 /* import ViewJobApplications from './components/ViewJobApplications'; */
@@ -93,52 +95,38 @@ const App = () => {
                 onSearchSubmit={handleSearchSubmit}
                 onClearSearch={handleClearSearch}
               /><CommunicationForm /><Footer /></>} />
+
             {/* header for login and signup */}
-            <Route
-              path="/login"
-              element={
-                <>
-                  <HeaderWrapper
-                    searchTerm={searchTerm}
-                    onSearchChange={handleSearchChange}
-                    onSearchSubmit={handleSearchSubmit}
-                    onClearSearch={handleClearSearch}
-                  />
-                  <Login />
-                  <Footer />
-                </>
-              }
-            />
-            <Route
-              path="/signup"
-              element={
-                <>
-                  <HeaderWrapper
-                    searchTerm={searchTerm}
-                    onSearchChange={handleSearchChange}
-                    onSearchSubmit={handleSearchSubmit}
-                    onClearSearch={handleClearSearch}
-                  />
-                  <Signup />
-                  <Footer />
-                </>
-              }
-            />
-            <Route
-              path="/job/:id"
-              element={
-                <>
-                  <HeaderWrapper
-                    searchTerm={searchTerm}
-                    onSearchChange={handleSearchChange}
-                    onSearchSubmit={handleSearchSubmit}
-                    onClearSearch={handleClearSearch}
-                  />
-                  <JobDescription />
-                  <Footer />
-                </>
-              }
-            />
+            <Route path="/login" element={<>
+              <HeaderWrapper
+              /><Login /><Footer /></>} />
+            <Route path="/signup" element={<>
+              <HeaderWrapper
+              /><Signup /><Footer /></>} />
+              
+            <Route path="/job/:jobId" element={<>
+              <HeaderWrapper
+                searchTerm={searchTerm}
+                onSearchChange={handleSearchChange}
+                onSearchSubmit={handleSearchSubmit}
+                onClearSearch={handleClearSearch}
+              /><JobDescription /><Footer /></>} />
+
+               <Route path="/application-success" element={<>
+              <HeaderWrapper
+                searchTerm={searchTerm}
+                onSearchChange={handleSearchChange}
+                onSearchSubmit={handleSearchSubmit}
+                onClearSearch={handleClearSearch}
+              /><ApplicationSuccess /></>} />
+
+            <Route path="/apply-now/:jobId" element={<>
+              <HeaderWrapper
+                searchTerm={searchTerm}
+                onSearchChange={handleSearchChange}
+                onSearchSubmit={handleSearchSubmit}
+                onClearSearch={handleClearSearch}
+              /><JobApplicationForm /><Footer /></>} />
 
             <Route path="/ViewApplicants" element={ <><HrHeader/> <ViewApplicants /><Footer/></>} />
 

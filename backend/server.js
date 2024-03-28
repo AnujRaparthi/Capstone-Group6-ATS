@@ -6,6 +6,8 @@ const authRoutes = require('./routes/auth');
 const cors = require('cors');
 const Job = require('./models/JobModel');
 const jobRoutes = require('./api/jobs');
+const applicationsRoute = require('./routes/applications')
+const getjobRoutes = require('./routes/jobRoutes');
 const app = express();
 
 
@@ -13,7 +15,10 @@ app.use(express.json());
 connectDB();
 
 app.use(cors());
+app.use('/api', applicationsRoute);
+app.use('/api/jobs', getjobRoutes);
 app.use('/api', authRoutes);
+
 console.log('Before jobRoutes');
 app.use('/api', jobRoutes);
 console.log('After jobRoutes'); 
@@ -33,7 +38,7 @@ app.post('/api/jobs', async (req, res) => {
 
 const PORT = process.env.PORT || 5001; 
 
-/* app.get('/api/jobs', async (req, res) => {
+app.get('/api/jobs', async (req, res) => {
   try {
     const jobs = await Job.find();
 
@@ -42,7 +47,7 @@ const PORT = process.env.PORT || 5001;
   } catch (error) {
     res.status(500).send(error);
   }
-}); */
+}); 
 
 const nodemailer = require('nodemailer');
 
