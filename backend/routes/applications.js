@@ -43,54 +43,21 @@ router.post('/applications', upload.single('resume'), async (req, res) => {
     res.status(500).send({ message: "Internal server error while processing application." });
   }
 });
+router.get('/applications/check-application/:jobId/:userId', async (req, res) => {
+  const { jobId, userId } = req.params;
+  
+  try {
+    const existingApplication = await JobApplication.findOne({
+      job_id: jobId,
+      applicant_id: userId,
+    });
+
+    const hasApplied = !!existingApplication;
+    res.status(200).json({ hasApplied });
+  } catch (error) {
+    console.error("Error checking application:", error);
+    res.status(500).send({ message: "Internal server error while checking application." });
+  }
+});
 
 module.exports = router;
-
-
-
-// // Apply authMiddleware if the route requires authentication
-// // router.post('/applications', authMiddleware, upload.single('resume'), async (req, res) => {
-// router.post('/applications', upload.single('resume'), async (req, res) => {
-//   console.log("Received jobId:", req.body.jobId);
-//   console.log("Received file:", req.file);
-//   console.log("Received fields:", Object.keys(req.body));
-
-//   // Validate required fields
-//   if (!req.body.jobId || !req.file || !req.user) {
-//     console.error("Required fields are missing");
-//     return res.status(400).send('Missing required fields');
-//   }
-
-//   // Assuming you have an authenticated user via authMiddleware
-//   //const userId = req.user._id;
-
-//   try {
-//     // Create a new JobApplication document
-//     const newApplication = new JobApplication({
-//       job_id: req.body.jobId,
-//       // Include additional fields as per your schema
-//       resume_path: req.file.path,
-//       applicant_id: req.user._id, // Uncomment if using authMiddleware
-//     });
-
-//     // Save the new job application to the database
-//     await newApplication.save();
-//     res.send('Application submitted successfully');
-//   } catch (error) {
-//     console.error("Failed to save the application:", error);
-//     res.status(500).send('Server error while saving the application');
-//   }
-// });
-
-// // Apply authMiddleware if the route requires authentication
-// // router.post('/applications', authMiddleware, upload.single('resume'), async (req, res) => {
-//   router.post('/applications', upload.single('resume'), async (req, res) => {
-//     console.log("Simplified check - Received fields and file:");
-//     console.log(req.body); // Log all received form fields
-//     console.log(req.file); // Log received file details
-  
-//     // Temporarily bypass all validations for testing
-//     return res.status(200).send('Endpoint reached and data received');
-//   });
-
-//module.exports = router;

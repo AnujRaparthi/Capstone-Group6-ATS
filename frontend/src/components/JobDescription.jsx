@@ -8,6 +8,7 @@ const JobDescription = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
   const { user } = useUser();
+  const userId = user._id;
   const [job, setJob] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasApplied, setHasApplied] = useState(false);
@@ -36,11 +37,20 @@ const JobDescription = () => {
     return <div>No job details found or error fetching job details.</div>;
   }
 
-  const handleApplyNow = () => {
-    if (!hasApplied) {
-      navigate(`/apply-now/${jobId}`);
-    } else {
-      navigate('/application-success');
+  const handleApplyNow = async () => {
+    try {
+      // Check if the user has already applied for the job
+      const response = await axios.get(`http://localhost:5001/api/applications/check-application/${jobId}/${userId}`);
+      if (response.data.hasApplied) {
+        // User has already applied, show an alert
+        alert('You have already applied for this job.');
+      } else {
+        // User hasn't applied, redirect to application form
+        navigate(`/apply-now/${jobId}`);
+      }
+    } catch (error) {
+      console.error('Error checking application status:', error);
+      // Handle errors, such as showing a message or logging
     }
   };
 
