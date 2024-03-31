@@ -1,24 +1,41 @@
-import React,{ useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom'; 
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../images/logo_new.png';
 import '../App.css';
-import { useUser } from './UserContext'; 
+import { useUser } from './UserContext';
 
-
-const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, showSearchBar}) => {
-  const { user, logout } = useUser(); 
+const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, showSearchBar }) => {
+  const { user, logout } = useUser();
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
-    navigate('/login'); 
+    navigate('/login');
+    setIsDropdownOpen(false); 
   };
+
+
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSearchSubmit();
   };
+
+
+  const handleClickOutside = (event) => {
+    if (!event.target.closest('.user-menu')) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <header className="bg-white shadow">
@@ -27,15 +44,13 @@ const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, sho
           <img className="h-16 w-auto" src={logo} alt="Career Hunt logo" />
         </Link>
         <div className="flex items-center space-x-10">
-        <Link to="/" className="text-base font-medium text-black hover:text-gray-900">All Jobs</Link>
-        {user ? (
+          <Link to="/" className="text-base font-medium text-black hover:text-gray-900">All Jobs</Link>
+          {user && (
             <>
-              <nav className="hidden md:flex space-x-10">
-                <Link to="/status" className="text-base font-medium text-black hover:text-gray-900">My Job Applications</Link>
-              </nav>
-              <div className="relative">
-                <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="flex items-center text-base font-medium text-black hover:text-gray-900">
-                  {user.name} 
+              <Link to="/status" className="text-base font-medium text-black hover:text-gray-900">My Job Applications</Link>
+              <div className="relative user-menu">
+                <button onClick={toggleDropdown} className="flex items-center text-base font-medium text-black hover:text-gray-900">
+                  {user.name}
                 </button>
                 {isDropdownOpen && (
                   <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20">
@@ -44,31 +59,25 @@ const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, sho
                 )}
               </div>
             </>
-          ) : (
-            <Link to="/login" className="text-base font-medium text-black hover:text-gray-900">
-              Login
-            </Link>
+          )}
+          {!user && (
+            <Link to="/login" className="text-base font-medium text-black hover:text-gray-900">Login</Link>
           )}
         </div>
       </div>
 
       {showSearchBar && (
-      <div className="banner-search">
-        <form onSubmit={handleSubmit} className="banner-search">
-          <div className="search-bar">
-            <input type="search" name="search" placeholder="Search jobs by keyword..." autoComplete="on" onChange={onSearchChange} value={searchTerm} />
-            <button type="submit" className="search-button">
-              Search
-            </button>
-            {searchTerm && (
-              <button onClick={onClearSearch} className="clear-button">
-                X
-              </button>
-            )}
-          </div>
-        </form>
-        
-      </div>
+        <div className="banner-search">
+          <form onSubmit={handleSubmit} className="banner-search">
+            <div className="search-bar">
+              <input type="search" name="search" placeholder="Search jobs by keyword..." autoComplete="on" onChange={onSearchChange} value={searchTerm} />
+              <button type="submit" className="search-button">Search</button>
+              {searchTerm && (
+                <button onClick={onClearSearch} className="clear-button">X</button>
+              )}
+            </div>
+          </form>
+        </div>
       )}
     </header>
   );

@@ -6,29 +6,32 @@ import { useUser } from './UserContext'; // Adjust according to your structure
 
 const JobDescription = () => {
   const { jobId } = useParams();
-
   const navigate = useNavigate();
   const { user } = useUser();
-  const userId = user._id;
+  const userId = user ? user._id : null;
   const [job, setJob] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasApplied, setHasApplied] = useState(false);
 
   useEffect(() => {
-    const fetchJob = async () => {
+    const fetchJobAndCheckApplication = async () => {
       setIsLoading(true);
       try {
         const response = await axios.get(`http://localhost:5001/api/jobs/${jobId}`);
         setJob(response.data);
+        if (userId) {
+          const checkResponse = await axios.get(`/api/applications/check-application/${jobId}/${userId}`);
+          setHasApplied(checkResponse.data.hasApplied);
+        }
       } catch (error) {
-        console.error("Failed to fetch job:", error);
+        console.error("Failed to fetch job or check application status:", error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchJob();
-  }, [jobId]);
+    fetchJobAndCheckApplication();
+  }, [jobId, userId]);
 
   if (isLoading) {
     return <div>Loading job details...</div>;
@@ -40,18 +43,14 @@ const JobDescription = () => {
 
   const handleApplyNow = async () => {
     try {
-      // Check if the user has already applied for the job
       const response = await axios.get(`http://localhost:5001/api/applications/check-application/${jobId}/${userId}`);
       if (response.data.hasApplied) {
-        // User has already applied, show an alert
         alert('You have already applied for this job.');
       } else {
-        // User hasn't applied, redirect to application form
         navigate(`/apply-now/${jobId}`);
       }
     } catch (error) {
       console.error('Error checking application status:', error);
-      // Handle errors, such as showing a message or logging
     }
   };
 
@@ -103,45 +102,50 @@ const JobDescription = () => {
               </ul> */}
             </div>
           </div>
-          
+
           <div className="md:col-span-1 p-6">
-            {!hasApplied ? (
+            {!userId ? (
+              <button onClick={() => navigate('/login')} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+                Log in to Apply
+              </button>
+            ) : hasApplied ? (
+              <div>You have already applied for this job.</div>
+            ) : (
               <button onClick={handleApplyNow} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
                 Apply now
               </button>
-            ) : (
-              <div>You have already applied for this job.</div>
             )}
-          
 
-          <div className="overflow-x-auto">
-            <h3 className="font-bold text-lg mb-3"></h3>
-            <table className="table-fixed w-full">
-              <tbody>
-                <tr className="border-b">
-                  <td className="py-2 text-gray-600 font-medium">Type</td>
-                  <td className="py-2 text-gray-900">Full-Time</td>
-                </tr>
-                <tr className="bg-gray-100 border-b">
-                  <td className="py-2 text-gray-600 font-medium">Location</td>
-                  <td className="py-2 text-gray-900">Milton</td>
-                </tr>
-                <tr className="border-b">
-                  <td className="py-2 text-gray-600 font-medium">Department</td>
-                  <td className="py-2 text-gray-900">IT</td>
-                </tr>
-                <tr className="bg-gray-100">
-                  <td className="py-2 text-gray-600 font-medium">Experience</td>
-                  <td className="py-2 text-gray-900">{job.experience}</td>
-                </tr>
-              </tbody>
-            </table>
+
+
+            <div className="overflow-x-auto">
+              <h3 className="font-bold text-lg mb-3"></h3>
+              <table className="table-fixed w-full">
+                <tbody>
+                  <tr className="border-b">
+                    <td className="py-2 text-gray-600 font-medium">Type</td>
+                    <td className="py-2 text-gray-900">Full-Time</td>
+                  </tr>
+                  <tr className="bg-gray-100 border-b">
+                    <td className="py-2 text-gray-600 font-medium">Location</td>
+                    <td className="py-2 text-gray-900">Milton</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-2 text-gray-600 font-medium">Department</td>
+                    <td className="py-2 text-gray-900">IT</td>
+                  </tr>
+                  <tr className="bg-gray-100">
+                    <td className="py-2 text-gray-600 font-medium">Experience</td>
+                    <td className="py-2 text-gray-900">{job.experience}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
-  );  
+  );
 };
 
 export default JobDescription;

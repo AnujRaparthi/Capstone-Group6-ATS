@@ -6,21 +6,22 @@ const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
     const validateToken = async () => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await axios.get('http://localhost:5001/api/validateToken', {
+          const response = await axios.get('http://localhost:5001/api/validate-token', {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-          setUser(response.data); 
+          setUser(response.data.user);
         } catch (error) {
           console.error('Token validation error:', error);
-          localStorage.removeItem('token'); 
+          localStorage.removeItem('token');
+          setUser(null);
         }
       }
     };
@@ -29,12 +30,12 @@ export const UserProvider = ({ children }) => {
 
   const login = (userData) => {
     setUser(userData);
-    localStorage.setItem('token', userData.token); 
+    localStorage.setItem('token', userData.token);
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('token'); 
+    localStorage.removeItem('token');
     //navigate('/login'); 
   };
 

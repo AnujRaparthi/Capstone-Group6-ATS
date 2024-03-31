@@ -1,9 +1,11 @@
 require('dotenv').config();
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const connectDB = require('./db');
 const authRoutes = require('./routes/auth');
 const cors = require('cors');
+const User = require('./models/User')
 const Job = require('./models/JobModel');
 const jobRoutes = require('./api/jobs');
 const applicationsRoute = require('./routes/applications')
@@ -48,6 +50,21 @@ app.get('/api/jobs', async (req, res) => {
     res.status(500).send(error);
   }
 }); 
+
+app.get('/api/validate-token', (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) {
+    return res.status(401).send({ error: 'No token provided' });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ error: 'Invalid token' });
+    }
+    res.send({ valid: true, userId: decoded.userId });
+  });
+});
+
 
 const nodemailer = require('nodemailer');
 
