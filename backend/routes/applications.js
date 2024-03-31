@@ -19,33 +19,32 @@ router.post('/applications', upload.single('resume'), async (req, res) => {
   if (!req.file) {
     return res.status(400).send('No file uploaded.');
   }
-  
+
   try {
     const newApplication = new JobApplication({
       job_id: req.body.jobId,
-      applicant_id: req.body.userId, 
+      applicant_id: req.body.userId,
       resume_path: req.file.path,
-      additionalInfo: {
-        firstName,
-        lastName,
-        email,
-        preferredLocation,
-        totalWorkExperience,
-        highestEducationalQualification,
-      },
+      firstName,
+      lastName,
+      email,
+      preferredLocation,
+      totalWorkExperience,
+      highestEducationalQualification,
     });
-    
+
     console.log("Saving application:", newApplication);
     await newApplication.save();
-    console.log("Application saved successfully");
-    res.status(201).send({ message: 'Application submitted successfully!', newApplicationId: newApplication._id });  } catch (error) {
+    //console.log("Application saved successfully");
+    res.status(201).send({ message: 'Application submitted successfully!', newApplicationId: newApplication._id });
+  } catch (error) {
     console.error("Error saving application:", error);
     res.status(500).send({ message: "Internal server error while processing application." });
   }
 });
 router.get('/applications/check-application/:jobId/:userId', async (req, res) => {
   const { jobId, userId } = req.params;
-  
+
   try {
     const existingApplication = await JobApplication.findOne({
       job_id: jobId,
