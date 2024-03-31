@@ -20,7 +20,9 @@ const Hrportal = () => {
           <Link to="/ViewApplicants" className="nav-button">
             View Applicants
           </Link>
-          <button className="nav-button">Manage Locations</button>
+          <Link to="/ManageLocations" className="nav-button">
+            Manage Locations
+          </Link>
           <button className="nav-button">Manage Departments</button>
         </div>
 

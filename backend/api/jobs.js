@@ -4,7 +4,7 @@ const jobModel = require('../models/JobModel');
 const router = express.Router();
 
 // API endpoint to post a new job
-router.post('/', async (req, res) => {
+router.post('/jobs', async (req, res) => {
   try {
     const jobData = req.body;
     const newJob = new jobModel(jobData);
