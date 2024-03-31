@@ -6,6 +6,7 @@ import { useUser } from './UserContext'; // Adjust according to your structure
 
 const JobDescription = () => {
   const { jobId } = useParams();
+
   const navigate = useNavigate();
   const { user } = useUser();
   const userId = user._id;

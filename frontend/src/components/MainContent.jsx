@@ -10,8 +10,6 @@ const MainContent = ({ filters, searchTerm }) => {
 
   useEffect(() => {
     const fetchJobs = async () => {
-
-      console.log('Inside fetchJobs');
       try {
         const response = await axios.get('http://localhost:5001/api/jobs');
         console.log('Response=',response);
@@ -59,6 +57,7 @@ const MainContent = ({ filters, searchTerm }) => {
         currentItems.map(listing => (
           <JobListing
             key={listing._id}
+            id={listing._id}
             title={listing.job_title}
             experience={listing.experience}
             location="Milton, Ontario"
