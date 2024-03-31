@@ -61,7 +61,7 @@ const JobDescription = () => {
   // const postedText = daysSincePosted < 7 ? "Posted recently" : `${daysSincePosted} days ago`;
 
   return (
-    <div>
+    <div className="content">
       <div className="mt-5 ml-10">
         <button onClick={() => navigate('/')} className="flex items-center text-blue-600 hover:text-blue-800 font-semibold">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -89,7 +89,7 @@ const JobDescription = () => {
 
             <div className="px-4 py-5 sm:px-6">
               <p className="text-gray-700 mb-4">{job.description}</p>
-              <h3 className="text-m font leading-7 text-gray-900 sm:truncate">Responsibilities: proficiency in data analysis tools, strong problem-solving skills, and effective communication are essential.</h3>
+              {/* <h3 className="text-m font leading-7 text-gray-900 sm:truncate">Responsibilities: proficiency in data analysis tools, strong problem-solving skills, and effective communication are essential.</h3>
               <ul className="list-disc ml-5 mb-4">
                 {job.responsibilities?.map((responsibility, index) => (
                   <li key={index}>{responsibility}</li>
@@ -100,7 +100,7 @@ const JobDescription = () => {
                 {job.requirements?.map((requirement, index) => (
                   <li key={index}>{requirement}</li>
                 ))}
-              </ul>
+              </ul> */}
             </div>
           </div>
           
