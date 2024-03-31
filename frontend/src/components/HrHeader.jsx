@@ -25,7 +25,7 @@ const HrHeader = () => {
             
             <Link to="/ViewApplicants" class="text-base font-medium text-black hover:text-gray-900">View Applicants</Link>
             <Link to="/ManageJobs" class="text-base font-medium text-black hover:text-gray-900">Manage Jobs</Link>
-            <a href="#" class="text-base font-medium text-black hover:text-gray-900">Manage Locations</a>
+            <Link to="/ManageLocations" class="text-base font-medium text-black hover:text-gray-900">Manage Locations</Link>
             <a href="#" class="text-base font-medium text-black hover:text-gray-900">Manage Departments</a>
 
           </nav>

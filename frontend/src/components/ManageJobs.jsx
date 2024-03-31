@@ -200,39 +200,6 @@ const ManageJobs = () => {
           Post Job
         </button>
       </form>
-      
-{/* <div>
-  <table>
-    <thead>
-      <tr>
-        <th>Job Title</th>
-        <th>Job Type</th>
-        <th>Number of Positions</th>
-        <th>State</th>
-        <th>Target Hiring Date</th>
-        <th>Compensation Type</th>
-        <th>Compensation Range From</th>
-        <th>Compensation Range To</th>
-        <th>Experience</th>
-      </tr>
-    </thead>
-    <tbody>
-      {jobs.map((job) => (
-        <tr key={job._id}>
-          <td>{job.job_title}</td>
-          <td>{job.job_type}</td>
-          <td>{job.no_of_positions}</td>
-          <td>{job.state}</td>
-          <td>{job.target_hiring_date}</td>
-          <td>{job.compensation_type}</td>
-          <td>{job.compensation_range_from}</td>
-          <td>{job.compensation_range_to}</td>
-          <td>{job.experience}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-    </div> */}
     </div>
   );
 };

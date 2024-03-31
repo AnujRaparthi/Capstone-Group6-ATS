@@ -10,6 +10,8 @@ const Job = require('./models/JobModel');
 const jobRoutes = require('./api/jobs');
 const applicationsRoute = require('./routes/applications')
 const getjobRoutes = require('./routes/jobRoutes');
+const Location = require('./models/LocationModel');
+
 const app = express();
 
 
@@ -24,19 +26,7 @@ app.use('/api', authRoutes);
 console.log('Before jobRoutes');
 app.use('/api', jobRoutes);
 console.log('After jobRoutes'); 
-/* // API endpoint to post a new job
-app.post('/api/jobs', async (req, res) => {
-  try {
-    console.log('Job POST request received!');
-    const jobData = req.body;
-    const newJob = new jobModel(jobData);
-    const savedJob = await newJob.save();
-    res.status(201).json(savedJob);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to save job', reason: err.message });
-  }
-}); */
+
 
 const PORT = process.env.PORT || 5001; 
 
@@ -65,6 +55,28 @@ app.get('/api/validate-token', (req, res) => {
   });
 });
 
+
+// locations
+app.get('/api/Location', async (req, res) => {
+  try {
+    const locations = await Location.find();
+    res.json(locations);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+// POST route to add a new location
+app.post('/api/Location', async (req, res) => {
+  try {
+    const { location_name, address } = req.body;
+    const newLocation = new Location({ location_name, address });
+    const savedLocation = await newLocation.save();
+    res.status(201).json(savedLocation);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 const nodemailer = require('nodemailer');
 
