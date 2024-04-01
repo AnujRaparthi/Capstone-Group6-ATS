@@ -23,6 +23,7 @@ import ViewApplicants from "./components/ViewApplicants";
 import CommunicationForm from './components/CommunicationForm.jsx';
 import ManageLocations from "./components/ManageLocations";
 import AddLocationForm from './components/AddLocationForm';
+import ManageJobFrom from './components/ManageJobForm';
 
 const App = () => {
   const [filters, setFilters] = useState({
@@ -72,6 +73,8 @@ const App = () => {
                 </>
               }
             />
+
+            <Route path='/ManageJobForm' element={<><ManageJobFrom/></>}/>
 
             <Route path="/ManageLocations" element={<><HrHeader/><ManageLocations/><Footer/></>}/>
             <Route path="/AddLocationForm" element={<><AddLocationForm/></>}/>
