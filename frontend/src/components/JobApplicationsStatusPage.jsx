@@ -19,7 +19,16 @@ const mockApplications = [
     appliedDate: 'March 18, 2024',
     applicationNumber: 'APP10002',
     currentStage: 3,
-    status: 'Pending'
+    status: 'On Hold'
+  },
+  {
+    id: 3,
+    jobTitle: 'Senior Software Developer',
+    location: 'Milton, Ontario',
+    appliedDate: 'March 18, 2024',
+    applicationNumber: 'APP10003',
+    currentStage: 3,
+    status: 'Rejected'
   }
 ];
 
