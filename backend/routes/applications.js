@@ -31,6 +31,8 @@ router.post('/applications', upload.single('resume'), async (req, res) => {
       preferredLocation,
       totalWorkExperience,
       highestEducationalQualification,
+      stage: 'Initial Screening',
+      status: 'Pending'
     });
 
     console.log("Saving application:", newApplication);

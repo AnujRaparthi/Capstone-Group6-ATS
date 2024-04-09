@@ -21,7 +21,7 @@ const HrHeader = () => {
         <img className="h-16 w-auto" src={logo} alt="Career Hunt logo" />
         <div className="flex items-center">
           <nav className="hidden md:flex space-x-10">
-            <a href="#" class="text-base font-medium text-black hover:text-gray-900">View Job Applications</a>
+            <a href="/ViewJobApplications" class="text-base font-medium text-black hover:text-gray-900">View Job Applications</a>
             
             <Link to="/ViewApplicants" class="text-base font-medium text-black hover:text-gray-900">View Applicants</Link>
             <Link to="/ManageJobs" class="text-base font-medium text-black hover:text-gray-900">Manage Jobs</Link>

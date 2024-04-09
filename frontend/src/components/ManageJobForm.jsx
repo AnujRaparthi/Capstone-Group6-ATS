@@ -83,7 +83,7 @@ const ManageJobForm = () => {
 
   return (
     <div className="form-container">
-      <h1 class="MJ">Manage Jobs</h1>
+      <h1 class="MJ">Create Job</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="jobTitle">Job Title:</label>

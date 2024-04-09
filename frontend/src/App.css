@@ -67,7 +67,7 @@ body {
 }
 
 .primary-blue-bg{
-  background-color: #067DCD;
+  background-color: #067DCD !important;
 }
 
 .banner-search {
@@ -272,7 +272,7 @@ tr:nth-child(even) {
 }
 
 th{
-  background-color: #008CBA;
+  background-color: #067DCD;
 }
 
 .edit{
@@ -298,14 +298,14 @@ th{
 .addlocation {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #067DCD;
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
 }
 
 .addlocation:hover {
-  background-color: #0056b3;
+  background-color: #067DCD;
 }
 
 /* locationtable */
@@ -323,7 +323,7 @@ th{
 }
 
 .location-table th {
-  background-color: #007bff;
+  background-color: #067DCD;
 }
 
 .location-table tr:nth-child(even) {
