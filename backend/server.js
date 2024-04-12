@@ -12,10 +12,13 @@ const applicationsRoute = require('./routes/applications')
 const userRoutes = require('./routes/userRoutes');
 const getjobRoutes = require('./routes/jobRoutes');
 const Location = require('./models/LocationModel');
+const JobApplication = require('./models/JobApplication');
+const stripe = require('stripe')('sk_test_51P3jtODTqZXkpm4po0sAv1FZNbTMxjkkcwl9hDRQYLJwkM2mDqcCIaDlyaJVaUhxZnV0m7hlzrwvXTP29tzOJiCg00F9kPAxvA');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-
+app.use(bodyParser.json());
 app.use(express.json());
 connectDB();
 
@@ -111,6 +114,54 @@ app.post('/api/send-email', async (req, res) => {
   } catch (error) {
     console.error('Error sending email:', error);
     res.status(500).send({ message: 'Error sending email' });
+  }
+});
+
+app.get('/api/job-applications', async (req, res) => {
+
+  console.log('Inside applications API');
+  try {
+    const jobApplications = await JobApplication.find();
+
+    console.log('jobApplications='+jobApplications);
+    res.json(jobApplications);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}); 
+
+app.get('/job-application/:id', async (req, res) => {
+
+  console.log('Inside Job application api='+req.params.id);
+  try {
+    const application = await JobApplication.findById(req.params.id);
+
+    if (!application) {
+      return res.status(404).json({ message: 'Job application not found' });
+    }
+
+    res.json(application);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.post('api/create-payment-intent', async (req, res) => {
+  try {
+    const { paymentMethodId } = req.body;
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      payment_method: paymentMethodId,
+      amount: 9900, // $99 in cents
+      currency: 'cad',
+      confirmation_method: 'manual',
+      confirm: true,
+    });
+
+    res.json({ success: true, clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    console.error('Error creating payment intent:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 

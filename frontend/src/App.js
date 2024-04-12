@@ -27,6 +27,11 @@ import AddLocationForm from './components/AddLocationForm';
 import ManageJobFrom from './components/ManageJobForm';
 import ViewJobApplications from './components/ViewJobApplications';
 import JobApplication from './components/JobApplication';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import Home from './components/Home'; // Adjust the import path as needed
+
+const stripePromise = loadStripe("pk_test_51P3jtODTqZXkpm4pEf3Qz9QeOewSYUpfwC4vCgRXhMSc20qH6cEaobmYarHSYX11z9cckK55CRHYvks7tmSZQgHM00OvqAsnlp");
 
 
 
@@ -57,6 +62,11 @@ const App = () => {
     <Router>
       <UserProvider>
         <div className="App">
+          <Elements stripe={stripePromise}>
+            <Routes>
+              <Route path="/home" element={<Home />} />
+            </Routes>
+          </Elements>
           <Routes>
             <Route
               path="/hrportal"
