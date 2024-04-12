@@ -16,6 +16,7 @@ import HrHeader from "./components/HrHeader";
 import JobDescription from "./components/JobDescription";
 import JobApplicationForm from './components/JobApplicationForm';
 import ApplicationSuccess from './components/ApplicationSuccess';
+import Profile from './components/Profile';
 import ManageJobs from "./components/ManageJobs";
 import JobApplicationsStatusPage from "./components/JobApplicationsStatusPage";
 /* import ViewJobApplications from './components/ViewJobApplications'; */
@@ -78,7 +79,7 @@ const App = () => {
               }
             />
 
-<Route
+            <Route
               path="/ViewJobApplications"
               element={
                 <>
@@ -89,7 +90,7 @@ const App = () => {
               }
             />
 
-<Route
+            <Route
               path="/jobapplication/:applicationId"
               element={
                 <>
@@ -101,10 +102,10 @@ const App = () => {
             />
 
 
-            <Route path='/ManageJobForm' element={<><ManageJobFrom/></>}/>
+            <Route path='/ManageJobForm' element={<><ManageJobFrom /></>} />
 
-            <Route path="/ManageLocations" element={<><HrHeader/><ManageLocations/><Footer/></>}/>
-            <Route path="/AddLocationForm" element={<><AddLocationForm/></>}/>
+            <Route path="/ManageLocations" element={<><HrHeader /><ManageLocations /><Footer /></>} />
+            <Route path="/AddLocationForm" element={<><AddLocationForm /></>} />
 
 
             <Route path="/status" element={<>
@@ -114,7 +115,7 @@ const App = () => {
                 onSearchSubmit={handleSearchSubmit}
                 onClearSearch={handleClearSearch}
               /><JobApplicationsStatusPage /><Footer /></>} />
-              <Route path="/email" element={<>
+            <Route path="/email" element={<>
               <HeaderWrapper
                 searchTerm={searchTerm}
                 onSearchChange={handleSearchChange}
@@ -129,7 +130,7 @@ const App = () => {
             <Route path="/signup" element={<>
               <HeaderWrapper
               /><Signup /><Footer /></>} />
-              
+
             <Route path="/job/:jobId" element={<>
               <HeaderWrapper
                 searchTerm={searchTerm}
@@ -138,13 +139,21 @@ const App = () => {
                 onClearSearch={handleClearSearch}
               /><JobDescription /><Footer /></>} />
 
-               <Route path="/application-success" element={<>
+            <Route path="/application-success" element={<>
               <HeaderWrapper
                 searchTerm={searchTerm}
                 onSearchChange={handleSearchChange}
                 onSearchSubmit={handleSearchSubmit}
                 onClearSearch={handleClearSearch}
               /><ApplicationSuccess /></>} />
+
+            <Route path="/profile" element={<>
+              <HeaderWrapper
+                searchTerm={searchTerm}
+                onSearchChange={handleSearchChange}
+                onSearchSubmit={handleSearchSubmit}
+                onClearSearch={handleClearSearch}
+              /><Profile /><Footer /></>} />
 
             <Route path="/apply-now/:jobId" element={<>
               <HeaderWrapper
@@ -154,7 +163,7 @@ const App = () => {
                 onClearSearch={handleClearSearch}
               /><JobApplicationForm /><Footer /></>} />
 
-            <Route path="/ViewApplicants" element={ <><HrHeader/> <ViewApplicants /><Footer/></>} />
+            <Route path="/ViewApplicants" element={<><HrHeader /> <ViewApplicants /><Footer /></>} />
 
             <Route
               path="/"

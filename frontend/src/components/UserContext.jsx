@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 const UserContext = createContext();
 
 export const useUser = () => useContext(UserContext);
@@ -13,9 +14,7 @@ export const UserProvider = ({ children }) => {
       if (token) {
         try {
           const response = await axios.get('http://localhost:5001/api/validate-token', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           });
           setUser(response.data.user);
         } catch (error) {
@@ -25,12 +24,13 @@ export const UserProvider = ({ children }) => {
         }
       }
     };
+
     validateToken();
   }, []);
 
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem('token', userData.token);
+  const login = (user, token) => {
+    setUser(user);
+    localStorage.setItem('token', token);
   };
 
   const logout = () => {

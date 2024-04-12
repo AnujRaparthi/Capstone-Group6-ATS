@@ -9,9 +9,9 @@ const User = require('./models/User')
 const Job = require('./models/JobModel');
 const jobRoutes = require('./api/jobs');
 const applicationsRoute = require('./routes/applications')
+const userRoutes = require('./routes/userRoutes');
 const getjobRoutes = require('./routes/jobRoutes');
 const Location = require('./models/LocationModel');
-const JobApplication = require('./models/JobApplication');
 
 const app = express();
 
@@ -23,6 +23,7 @@ app.use(cors());
 app.use('/api', applicationsRoute);
 app.use('/api/jobs', getjobRoutes);
 app.use('/api', authRoutes);
+app.use('/api/users', userRoutes);
 
 console.log('Before jobRoutes');
 app.use('/api', jobRoutes);
@@ -110,35 +111,6 @@ app.post('/api/send-email', async (req, res) => {
   } catch (error) {
     console.error('Error sending email:', error);
     res.status(500).send({ message: 'Error sending email' });
-  }
-});
-
-app.get('/api/job-applications', async (req, res) => {
-
-  console.log('Inside applications API');
-  try {
-    const jobApplications = await JobApplication.find();
-
-    console.log('jobApplications='+jobApplications);
-    res.json(jobApplications);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-}); 
-
-app.get('/job-application/:id', async (req, res) => {
-
-  console.log('Inside Job application api='+req.params.id);
-  try {
-    const application = await JobApplication.findById(req.params.id);
-
-    if (!application) {
-      return res.status(404).json({ message: 'Job application not found' });
-    }
-
-    res.json(application);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
   }
 });
 

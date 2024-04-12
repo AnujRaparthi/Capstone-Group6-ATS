@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../images/logo_new.png';
-import '../App.css';
 import { useUser } from './UserContext';
 
 const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, showSearchBar }) => {
@@ -12,17 +11,15 @@ const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, sho
   const handleLogout = () => {
     logout();
     navigate('/login');
-    setIsDropdownOpen(false); 
+    setIsDropdownOpen(false); // Close dropdown after logout
   };
 
+  const handleNavigate = (path) => {
+    navigate(path);
+    setIsDropdownOpen(false); // Close dropdown after navigation
+  };
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSearchSubmit();
-  };
-
 
   const handleClickOutside = (event) => {
     if (!event.target.closest('.user-menu')) {
@@ -53,8 +50,9 @@ const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, sho
                   {user.name}
                 </button>
                 {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20">
-                    <button onClick={handleLogout} className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Logout</button>
+                  <div className="absolute text-center right-0 mt-2 px-2 py-2 w-20 bg-white rounded-md shadow-xl z-20">
+                    <Link to="/profile" onClick={() => handleNavigate('/profile')} >Profile</Link>
+                    <button onClick={handleLogout} >Logout</button>
                   </div>
                 )}
               </div>
@@ -68,7 +66,7 @@ const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, sho
 
       {showSearchBar && (
         <div className="banner-search">
-          <form onSubmit={handleSubmit} className="banner-search">
+          <form onSubmit={onSearchSubmit} className="banner-search">
             <div className="search-bar">
               <input type="search" name="search" placeholder="Search jobs by keyword..." autoComplete="on" onChange={onSearchChange} value={searchTerm} />
               <button type="submit" className="search-button">Search</button>

@@ -14,6 +14,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5001/api/login', { email, password });
+      console.log({ email, password });  
       const { user, token } = response.data;
       login(user, token);
       console.log(response.data); 
@@ -22,6 +23,10 @@ const Login = () => {
         navigate('/');
       } else if (user && user.userType === 'recruiter') {
         navigate('/hrportal');
+      } else {
+      
+        console.error('Unexpected user type:', user.userType);
+        setError('Unauthorized access.');
       }
     } catch (error) {
       console.error('Login error:', error);

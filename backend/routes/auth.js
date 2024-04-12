@@ -17,23 +17,24 @@ router.post('/signup', async (req, res) => {
     }
   });
   
-  // Login route
-  router.post('/login', async (req, res) => {
-    try {
-      const user = await User.findOne({ email: req.body.email });
-      if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
-        return res.status(401).send({ error: 'Login failed! Incorrect credentials' });
+     // Login route
+     router.post('/login', async (req, res) => {
+      try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email }).exec();
+        if (!user) {
+          return res.status(404).send({ error: 'User not found' });
+        }
+        // const isMatch = await bcrypt.compare(password, user.password);
+        // if (!isMatch) {
+        //   return res.status(401).send({ error: 'Invalid credentials' });
+        // }
+        const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.send({ user, token });
+      } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).send({ error: 'Internal server error' });
       }
-    //   const isPasswordMatch = await bcrypt.compare(req.body.password, user.password);
-    //   if (!isPasswordMatch) {
-    //     return res.status(401).send({ error: 'Login failed. Please check your credentials.' });
-    //   }
-    
-      const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
-      res.send({ user, token });
-    } catch (error) {
-      res.status(400).send({ error: 'Please enter all the fields' });
-    }
   });
   
   module.exports = router;
