@@ -2,37 +2,36 @@ const express = require('express');
 const multer = require('multer');
 const JobApplication = require('../models/JobApplication');
 const router = express.Router();
-const path = require('path');
+// const path = require('path');
 
 
-const storage = multer.diskStorage({
-  destination: 'uploads/',
-  filename: (req, file, cb) => {
-    cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
-  },
-});
+
+
+const storage = multer.memoryStorage();
 
 const upload = multer({ storage });
 
 router.post('/applications', upload.single('resume'), async (req, res) => {
-  const { jobId, userId, firstName, lastName, email, preferredLocation, totalWorkExperience, highestEducationalQualification } = req.body;
-  if (!req.file) {
-    return res.status(400).send('No file uploaded.');
-  }
+  const { jobId, userId, firstName, lastName, email, phone, preferredLocation, totalWorkExperience, highestEducationalQualification } = req.body;
 
   try {
     const newApplication = new JobApplication({
       job_id: req.body.jobId,
       applicant_id: req.body.userId,
-      resume_path: req.file.path,
       firstName,
       lastName,
       email,
+      phone,
       preferredLocation,
       totalWorkExperience,
       highestEducationalQualification,
       stage: 'Initial Screening',
-      status: 'Pending'
+      status: 'Pending',
+      resume_file: {
+        data: req.file.buffer,
+        contentType: req.file.mimetype,
+        fileName: req.file.originalname,
+      },
     });
 
     console.log("Saving application:", newApplication);
@@ -44,6 +43,7 @@ router.post('/applications', upload.single('resume'), async (req, res) => {
     res.status(500).send({ message: "Internal server error while processing application." });
   }
 });
+
 router.get('/applications/check-application/:jobId/:userId', async (req, res) => {
   const { jobId, userId } = req.params;
 
@@ -60,5 +60,8 @@ router.get('/applications/check-application/:jobId/:userId', async (req, res) =>
     res.status(500).send({ message: "Internal server error while checking application." });
   }
 });
+
+
+
 
 module.exports = router;

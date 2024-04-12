@@ -54,6 +54,7 @@ const JobApplicationForm = () => {
         submissionFormData.append('firstName', formData.firstName);
         submissionFormData.append('lastName', formData.lastName);
         submissionFormData.append('email', formData.email);
+        submissionFormData.append('phone', formData.phone);
         submissionFormData.append('jobId', jobId); // Assuming jobId is a variable holding the job's ID
         console.log("Appending jobId: ", jobId);
         submissionFormData.append('userId', user._id);
@@ -92,7 +93,7 @@ const JobApplicationForm = () => {
                     Back to all jobs
                 </button>
             </div>
-            <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="flex items-center justify-center min-h-screen">
 
                 <div className='bg-white shadow mt-10 mb-10 w-full max-w-xl p-6 border border-gray-300 rounded-md'>
 

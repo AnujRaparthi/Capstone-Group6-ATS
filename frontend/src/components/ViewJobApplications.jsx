@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const ViewJobApplications = () => {
   const [applications, setApplications] = useState([]);
@@ -39,6 +40,23 @@ const ViewJobApplications = () => {
     // Navigate to JobApplication component with the application data
     navigate(`/jobapplication/${applicationId}`);
   };
+
+  const handleDeleteApplication = async (applicationId) => {
+    if (window.confirm("Are you sure you want to delete this application?")) {
+      try {
+        // Updated endpoint to 'delete-application'
+        const response = await axios.delete(`http://localhost:5001/api/delete-application/${applicationId}`);
+        if (response.status === 200) {
+          setApplications(applications.filter(app => app._id !== applicationId));
+          alert("Application deleted successfully!");
+        }
+      } catch (error) {
+        console.error("Failed to delete the application:", error);
+        alert("Failed to delete the application.");
+      }
+    }
+  };
+  
 
   return (
     <div className="content">
@@ -81,17 +99,11 @@ const ViewJobApplications = () => {
                         View Application
                       </button>
                       <button
-                        onClick={() => {/* TODO: Implement Reject functionality */}}
-                        className="bg-red-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none"
-                      >
-                        Reject
-                      </button>
-                      <button
-                        onClick={() => {/* TODO: Implement Hold functionality */}}
-                        className="bg-yellow-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none"
-                      >
-                        Hold
-                      </button>
+                    onClick={() => handleDeleteApplication(application._id)}
+                    className="bg-red-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none"
+                  >
+                    Delete
+                  </button>
                     </div>
                     </td>
                 </tr>

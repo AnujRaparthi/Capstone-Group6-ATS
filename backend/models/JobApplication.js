@@ -7,6 +7,7 @@ const jobApplicationSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   email: String,
+  phone: String,
   preferredLocation: String,
   totalWorkExperience: String,
   highestEducationalQualification: String,
@@ -15,6 +16,11 @@ const jobApplicationSchema = new mongoose.Schema({
   assigned_to: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  },  
+  resume_file: {
+    data: Buffer,
+    contentType: String,
+    fileName: String,
   },
   interview_comments: String
 });

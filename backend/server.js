@@ -130,7 +130,7 @@ app.get('/api/job-applications', async (req, res) => {
   }
 }); 
 
-app.get('/job-application/:id', async (req, res) => {
+app.get('/api/job-application/:id', async (req, res) => {
 
   console.log('Inside Job application api='+req.params.id);
   try {
@@ -162,6 +162,47 @@ app.post('api/create-payment-intent', async (req, res) => {
   } catch (error) {
     console.error('Error creating payment intent:', error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+// Inside your Express server routes
+
+app.put('/api/update-application/:applicationId', async (req, res) => {
+  const { applicationId } = req.params;
+  const updateData = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      preferredLocation: req.body.preferredLocation,
+      totalWorkExperience: req.body.totalWorkExperience,
+      highestEducationalQualification: req.body.highestEducationalQualification,
+      stage: req.body.stage,
+      status: req.body.status,
+  };
+
+  try {
+      const updatedApplication = await JobApplication.findByIdAndUpdate(applicationId, updateData, { new: true });
+      res.status(200).json(updatedApplication);
+  } catch (error) {
+      console.error("Error updating application:", error);
+      res.status(500).send({ message: "Internal server error while updating application." });
+  }
+});
+
+// DELETE endpoint for deleting a job application
+app.delete('/api/delete-application/:applicationId', async (req, res) => {
+  try {
+    const applicationId = req.params.applicationId;
+    const deletedApplication = await JobApplication.findByIdAndDelete(applicationId);
+
+    if (!deletedApplication) {
+      return res.status(404).json({ message: "Application not found." });
+    }
+
+    res.status(200).json({ message: "Application deleted successfully." });
+  } catch (error) {
+    console.error("Failed to delete application:", error);
+    res.status(500).json({ message: "Internal server error while deleting application." });
   }
 });
 
