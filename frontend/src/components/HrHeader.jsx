@@ -25,10 +25,11 @@ const HrHeader = () => {
           <nav className="hidden md:flex space-x-10">
             <a href="/ViewJobApplications" class="text-base font-medium text-black hover:text-gray-900">View Job Applications</a>
             
-            <Link to="/ViewApplicants" class="text-base font-medium text-black hover:text-gray-900">View Applicants</Link>
+            <Link to="/ViewApplicants" class="text-base font-medium text-black hover:text-gray-900">View Users</Link>
             <Link to="/ManageJobs" class="text-base font-medium text-black hover:text-gray-900">Manage Jobs</Link>
             <Link to="/ManageLocations" class="text-base font-medium text-black hover:text-gray-900">Manage Locations</Link>
             <Link to="/ManageDepartments" class="text-base font-medium text-black hover:text-gray-900">Manage Departments</Link>
+            <Link to="/" class="text-base font-medium text-black hover:text-gray-900">Admin</Link>
 
           </nav>
 

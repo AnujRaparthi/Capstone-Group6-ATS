@@ -2,84 +2,75 @@ import React from 'react';
 /* import './ViewApplicants.css'; */
 
 const ViewApplicants = () => {
-  const jobData = [
+  const applicantData = [
     {
-        jobTitle: 'Software Engineer',
-        noOfApplicants: 15,
-        location: 'Waterloo, Ontario',
-        department: 'IT',
-        experience: '4-7 years',
-        status: 'Open',
+        name: 'Rahul',
+        email: 'rahul@gmail.com',
+        address: 'Waterloo, Ontario',
+        gender: 'Male',
+        user_type: 'Applicant',
       },
       {
-        jobTitle: 'Marketing Manager',
-        noOfApplicants: 8,
-        location: 'Milton, Ontario',
-        department: 'Marketing',
-        experience: '1-3 years',
-        status: 'In Review',
+        name: 'Goutham Kumar',
+        email: 'goutham@gmail.com',
+        address: 'Waterloo, Ontario',
+        gender: 'Male',
+        user_type: 'Recruiter',
       },
       {
-        jobTitle: 'UI/UX Designer',
-        noOfApplicants: 12,
-        location: 'Toronto, Ontario',
-        department: 'Design',
-        experience: '2-5 years',
-        status: 'Closed' 
+        name: 'Abhishek',
+        email: 'abhishek@gmail.com',
+        address: 'Milton, Ontario',
+        gender: 'Male',
+        user_type: 'Applicant',
       },
       {
-        jobTitle: 'Data Analyst',
-        noOfApplicants: 22,
-        location: 'Vancouver, British Columbia',
-        department: 'Analytics',
-        experience: '3-6 years',
-        status: 'Open',
+        name: 'Likhitha',
+        email: 'likhitha@gmail.com',
+        address: 'Waterloo, Ontario',
+        gender: 'Female',
+        user_type: 'Recruiter',
       },
-      {
-        jobTitle: 'Sales Representative',
-        noOfApplicants: 10,
-        location: 'Montreal, Quebec',
-        department: 'Sales',
-        experience: '1-3 years',
-        status: 'Open'
-      },  
-      {
-        jobTitle: 'Full Stack Web Developer',
-        noOfApplicants: 18,
-        location: 'Calgary, Alberta',
-        department: 'Engineering',
-        experience: '2-4 years',
-        status: 'In Review'
-      }  
   ];
 
   return (
     <div className="content">
   <div className="flex flex-col items-center my-4">
-    <h1 className="text-2xl font-bold mb-4">View Applicants</h1>
+    <h1 className="text-2xl font-bold mb-4">View Users</h1>
     <div className="w-4/5">
       <table className="w-full text-left rounded-lg overflow-hidden bg-white">
         <thead className="primary-blue-bg text-white">
           <tr>
-            <th>Job Title</th>
-            <th>No. of Applicants</th>
-            <th>Location</th>
-            <th>Department</th>
-            <th>Experience</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Gender</th>
+            <th>User Type</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {jobData.map((job, index) => (
+          {applicantData.map((applicant, index) => (
             <tr key={index}>
-              <td>{job.jobTitle}</td>
-              <td>{job.noOfApplicants}</td>
-              <td>{job.location}</td>
-              <td>{job.department}</td>
-              <td>{job.experience}</td>
-              <td>{job.status}</td>
-              <td><button className="btn btn-primary">Edit</button></td>
+              <td>{applicant.name}</td>
+              <td>{applicant.email}</td>
+              <td>{applicant.address}</td>
+              <td>{applicant.gender}</td>
+              <td>{applicant.user_type}</td>
+              <td>
+                    <div className="flex flex-col space-y-2">
+                      <button
+                        className="primary-blue-bg text-white text-sm px-4 py-2 rounded-md focus:outline-none"
+                      >
+                        View User
+                      </button>
+                      <button
+                    className="bg-red-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none"
+                  >
+                    Delete
+                  </button>
+                    </div>
+                    </td>
             </tr>
           ))}
         </tbody>

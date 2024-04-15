@@ -32,12 +32,27 @@ const ManageDepartments = () => {
         <thead className="primary-blue-bg text-white">
           <tr>
             <th>Name</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {departments.map(department => (
             <tr key={department._id}>
               <td>{department.name}</td>
+              <td>
+                    <div className="flex flex-col space-y-2">
+                      <button
+                        className="primary-blue-bg text-white text-sm px-4 py-2 rounded-md focus:outline-none"
+                      >
+                        View Department
+                      </button>
+                      <button
+                    className="bg-red-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none"
+                  >
+                    Delete
+                  </button>
+                    </div>
+                    </td>
             </tr>
           ))}
         </tbody>

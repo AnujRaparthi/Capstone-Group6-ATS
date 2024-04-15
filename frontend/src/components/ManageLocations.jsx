@@ -33,6 +33,7 @@ const ManageLocations = () => {
             <tr>
               <th>Location</th>
               <th>Address</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -40,6 +41,20 @@ const ManageLocations = () => {
               <tr key={location._id}>
                 <td>{location.location_name}</td>
                 <td>{location.address}</td>
+                <td>
+                    <div className="flex flex-col space-y-2">
+                      <button
+                        className="primary-blue-bg text-white text-sm px-4 py-2 rounded-md focus:outline-none"
+                      >
+                        View Location
+                      </button>
+                      <button
+                    className="bg-red-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none"
+                  >
+                    Delete
+                  </button>
+                    </div>
+                    </td>
               </tr>
             ))}
           </tbody>
