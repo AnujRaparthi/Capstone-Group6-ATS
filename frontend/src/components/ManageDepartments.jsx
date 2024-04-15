@@ -39,7 +39,7 @@ const ManageDepartments = () => {
           {departments.map(department => (
             <tr key={department._id}>
               <td>{department.name}</td>
-              <td>
+              <td class = "dbut">
                     <div className="flex flex-col space-y-2">
                       <button
                         className="primary-blue-bg text-white text-sm px-4 py-2 rounded-md focus:outline-none"
