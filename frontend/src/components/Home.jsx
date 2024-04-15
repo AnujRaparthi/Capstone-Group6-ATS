@@ -1,8 +1,8 @@
 import React from 'react';
-import CheckoutForm from './CheckoutForm';
+// import CheckoutForm from './CheckoutForm';
 import logo from '../images/logo_new.png';
 import hiringManager from '../images/hiring_manager.jpg';
-import jobPortal from '../images/job_portal.jpg';
+// import jobPortal from '../images/job_portal.jpg';
 import jobSeeker from '../images/jobseeker.jpg';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -35,7 +35,7 @@ const Home = () => {
         <img className="block mx-auto mb-4" src={logo} alt="logo" width="100" height="57" />
         <h1 className="text-5xl font-bold">Welcome to Our ATS Application</h1>
         <div className="mx-auto lg:w-1/2">
-          <p className="lead mb-4">Welcome to our HR panel, the hub for streamlined talent management! Here, HR professionals gain access to powerful tools and resources designed to simplify recruitment, optimize employee engagement, and foster organizational growth. </p>
+          <p className="lead">Welcome to our HR panel, the hub for streamlined talent management! Here, HR professionals gain access to powerful tools and resources designed to simplify recruitment, optimize employee engagement, and foster organizational growth. </p>
         </div>
       </div>
 
@@ -43,7 +43,6 @@ const Home = () => {
         <div className="flex justify-center">
           <div className="text-center">
             <h3 className="mb-3">Pricing to make your Work Effective</h3>
-            <h6 className="subtitle font-normal">We offer 100% satisfaction and Money back Guarantee</h6>
           </div>
         </div>
         <div className="flex mt-4" style={{ gap: '0' }}>
@@ -69,7 +68,7 @@ const Home = () => {
               </div>
               <div className="w-full md:w-1/2" style={{ margin: '0', padding: '0' }}>
                 <div className="card border-0 mb-4 shadow-sm bg-blue-100 transition duration-300 ease-in-out transform hover:scale-105">
-                  <h5 className="text-lg font-medium mt-3">100% Satisfaction</h5>
+                  <h5 className="text-lg font-medium mt-3"> Satisfaction</h5>
                   <p className="mt-3">Guaranteed satisfaction with our services or your money back.</p>
                 </div>
               </div>
@@ -107,7 +106,7 @@ const Home = () => {
         }
         `}
       </style>
-      <CheckoutForm />
+      {/* <CheckoutForm /> */}
     </div>
   );
 };
