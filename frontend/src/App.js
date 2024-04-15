@@ -67,7 +67,13 @@ const App = () => {
         <div className="App">
           <Elements stripe={stripePromise}>
             <Routes>
-              <Route path="/home" element={<Home />} />
+            <Route path="/home" element={<>
+              <HeaderWrapper
+                searchTerm={searchTerm}
+                onSearchChange={handleSearchChange}
+                onSearchSubmit={handleSearchSubmit}
+                onClearSearch={handleClearSearch}
+              /><Home /><Footer /></>} />
             </Routes>
           </Elements>
           <Routes>
