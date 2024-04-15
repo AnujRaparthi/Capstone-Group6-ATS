@@ -10,7 +10,7 @@ const CommunicationForm = ({ applicantEmail }) => {
     if (!comment.trim()) return;
 
     try {
-      const response = await axios.post('http://capstone-group6-ats-backend.vercel.app/api/send-email', { email: 'anuj.raparthi@gmail.com', comment });
+      const response = await axios.post('https://capstone-group6-ats-backend.vercel.app/api/send-email', { email: 'anuj.raparthi@gmail.com', comment });
       //const response = await axios.post('/api/send-email', { email: applicantEmail, comment });
       alert('Message sent!');
       setComment('');

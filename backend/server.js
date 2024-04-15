@@ -26,6 +26,7 @@ connectDB();
 // Specify the origin to be allowed
 const corsOptions = {
   origin: 'http://localhost:3000',
+  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
   optionsSuccessStatus: 200
 };
 

@@ -43,7 +43,7 @@ const JobDescription = () => {
 
   const handleApplyNow = async () => {
     try {
-      const response = await axios.get(`http://capstone-group6-ats-backend.vercel.app/api/applications/check-application/${jobId}/${userId}`);
+      const response = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/applications/check-application/${jobId}/${userId}`);
       if (response.data.hasApplied) {
         alert('You have already applied for this job.');
       } else {
