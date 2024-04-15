@@ -9,7 +9,7 @@ const AddDepartmentForm = () => {
     e.preventDefault();
     try {
       console.log("Submitting form...");
-      const response = await axios.post("http://localhost:5001/api/Department", {
+      const response = await axios.post("http://capstone-group6-ats-backend.vercel.app/api/Department", {
         name: departmentName,
       });
       console.log("Department added:", response.data);

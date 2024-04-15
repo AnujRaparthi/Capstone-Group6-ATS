@@ -13,7 +13,7 @@ export const UserProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await axios.get('http://localhost:5001/api/validate-token', {
+          const response = await axios.get('http://capstone-group6-ats-backend.vercel.app/api/validate-token', {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(response.data.user);

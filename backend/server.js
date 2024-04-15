@@ -23,6 +23,17 @@ app.use(bodyParser.json());
 app.use(express.json());
 connectDB();
 
+// Specify the origin to be allowed
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
+// Enable pre-flight across-the-board
+app.options('*', cors(corsOptions)); // include before other routes
+
 app.use(cors());
 app.use('/api', applicationsRoute);
 app.use('/api/jobs', getjobRoutes);

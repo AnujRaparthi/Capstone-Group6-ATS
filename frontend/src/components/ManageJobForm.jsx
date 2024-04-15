@@ -17,7 +17,7 @@ const ManageJobForm = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch("http://localhost:5001/api/jobs");
+        const response = await fetch("http://capstone-group6-ats-backend.vercel.app/api/jobs");
         if (response.ok) {
           const data = await response.json();
           console.log("Fetched jobs:", data); // Log the fetched data
@@ -54,7 +54,7 @@ const ManageJobForm = () => {
       experience: experience, 
     };
     try {
-      const response = await fetch("http://localhost:5001/api/jobs", {
+      const response = await fetch("http://capstone-group6-ats-backend.vercel.app/api/jobs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(jobData),

@@ -9,7 +9,7 @@
 //   useEffect(() => {
 //     const fetchJobs = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:5001/api/jobs');
+//         const response = await axios.get('http://capstone-group6-ats-backend.vercel.app/api/jobs');
 //         setJobs(response.data);
 //       } catch (error) {
 //         console.error("Error fetching jobs:", error);
