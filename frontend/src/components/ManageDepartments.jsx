@@ -12,7 +12,7 @@ const ManageDepartments = () => {
           const response = await axios.get("http://localhost:5001/api/Department");
           console.log("Response:", response);
             const data = response.data;
-            console.log("Fetched departments:", data); // Log the fetched data
+            console.log("Fetched departments:", data); 
             setDepartments(data);
         
         } catch (error) {
@@ -24,10 +24,12 @@ const ManageDepartments = () => {
   }, []);
 
   return (
-    <div>
-      <h1 class="MJ">Manage Departments</h1>
-      <table class="department-table">
-        <thead>
+    <div className="content">
+  <div className="flex flex-col items-center my-4">
+    <h1 className="text-2xl font-bold mb-4">Manage Departments</h1>
+    <div className="w-4/5">
+      <table className="w-full text-left rounded-lg overflow-hidden bg-white">
+        <thead className="primary-blue-bg text-white">
           <tr>
             <th>Name</th>
           </tr>
@@ -40,10 +42,14 @@ const ManageDepartments = () => {
           ))}
         </tbody>
       </table>
-      <div class="centerdepartment">
-        <button class="adddepartment"><Link to="/AddDepartmentForm">Create Department</Link></button>
+      <div className="centerdepartment">
+        <button className="addlocation mt-4">
+          <Link to="/AddDepartmentForm">Create Department</Link>
+        </button>
       </div>
     </div>
+  </div>
+</div>
   );
 };
 

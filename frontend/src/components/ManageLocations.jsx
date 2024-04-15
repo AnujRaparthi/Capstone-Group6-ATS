@@ -24,28 +24,34 @@ const ManageLocations = () => {
   }, []);
 
   return (
-    <div>
-      <h1 class="MJ">Manage Locations</h1>
-      <table class="location-table">
-        <thead>
-          <tr>
-            <th>Location</th>
-            <th>Address</th>
-          </tr>
-        </thead>
-        <tbody>
-          {locations.map(location => (
-            <tr key={location._id}>
-              <td>{location.location_name}</td>
-              <td>{location.address}</td>
+    <div className="content">
+    <div className="flex flex-col items-center my-4">
+      <h1 className="text-2xl font-bold mb-4">Manage Locations</h1>
+      <div className="w-4/5">
+        <table className="w-full text-left rounded-lg overflow-hidden bg-white">
+          <thead className="primary-blue-bg text-white">
+            <tr>
+              <th>Location</th>
+              <th>Address</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div calss="centerlocation">
-      <button class="addlocation"><Link to="/AddLocationForm">Add Location</Link></button>
+          </thead>
+          <tbody>
+            {locations.map(location => (
+              <tr key={location._id}>
+                <td>{location.location_name}</td>
+                <td>{location.address}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="centerlocation">
+          <button className="addlocation mt-4">
+            <Link to="/AddLocationForm">Add Location</Link>
+          </button>
+        </div>
       </div>
     </div>
+  </div>
     
   );
 

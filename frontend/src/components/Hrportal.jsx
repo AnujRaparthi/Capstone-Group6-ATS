@@ -23,7 +23,9 @@ const Hrportal = () => {
           <Link to="/ManageLocations" className="nav-button">
             Manage Locations
           </Link>
-          <button className="nav-button">Manage Departments</button>
+          <Link to="/ManageDepartments" className="nav-button">
+            Manage Departments
+          </Link>
         </div>
 
         {showManageJobs && <ManageJobs />}

@@ -12,6 +12,7 @@ const applicationsRoute = require('./routes/applications')
 const userRoutes = require('./routes/userRoutes');
 const getjobRoutes = require('./routes/jobRoutes');
 const Location = require('./models/LocationModel');
+const Department = require('./models/DepartmentModel')
 const JobApplication = require('./models/JobApplication');
 const stripe = require('stripe')('sk_test_51P3jtODTqZXkpm4po0sAv1FZNbTMxjkkcwl9hDRQYLJwkM2mDqcCIaDlyaJVaUhxZnV0m7hlzrwvXTP29tzOJiCg00F9kPAxvA');
 const bodyParser = require('body-parser');
@@ -78,6 +79,29 @@ app.post('/api/Location', async (req, res) => {
     const newLocation = new Location({ location_name, address });
     const savedLocation = await newLocation.save();
     res.status(201).json(savedLocation);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+//Departments
+app.get('/api/Department', async (req, res) => {
+  try {
+    console.log('this is api');
+    const departments = await Department.find();
+    res.json(departments);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+// POST route to add a new department
+app.post('/api/Department', async (req, res) => {
+  try {
+    const { name } = req.body;
+    const newDepartment = new Department({ name });
+    const savedDepartment = await newDepartment.save();
+    res.status(201).json(savedDepartment);
   } catch (error) {
     res.status(500).send(error);
   }

@@ -25,8 +25,11 @@ import CommunicationForm from './components/CommunicationForm.jsx';
 import ManageLocations from "./components/ManageLocations";
 import AddLocationForm from './components/AddLocationForm';
 import ManageJobFrom from './components/ManageJobForm';
+import ManageDepartments from "./components/ManageDepartments";
+import AddDepartmentForm from "./components/AddDepartmentForm";
 import ViewJobApplications from './components/ViewJobApplications';
 import JobApplication from './components/JobApplication';
+import HrBanner from "./components/HrBanner";
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Home from './components/Home'; // Adjust the import path as needed
@@ -68,11 +71,13 @@ const App = () => {
             </Routes>
           </Elements>
           <Routes>
+            <Route path='/HrBanner' element={<HrBanner/>}/>
             <Route
               path="/hrportal"
               element={
                 <>
                   <HrHeader />
+                  <HrBanner/>
                   <Hrportal />
                   <Footer />
                 </>
@@ -112,10 +117,12 @@ const App = () => {
             />
 
 
-            <Route path='/ManageJobForm' element={<><ManageJobFrom /></>} />
+            <Route path='/ManageJobForm' element={<><HrHeader/><ManageJobFrom /></>} />
 
-            <Route path="/ManageLocations" element={<><HrHeader /><ManageLocations /><Footer /></>} />
-            <Route path="/AddLocationForm" element={<><AddLocationForm /></>} />
+            <Route path="/ManageLocations" element={<><HrHeader/><ManageLocations/><Footer/></>}/>
+            <Route path='/ManageDepartments' element={<><HrHeader/><ManageDepartments/><Footer/></>}/>
+            <Route path="/AddLocationForm" element={<><HrHeader/><AddLocationForm/></>}/>
+            <Route path="/AddDepartmentForm" element={<><HrHeader/><AddDepartmentForm/></>}/>
 
 
             <Route path="/status" element={<>

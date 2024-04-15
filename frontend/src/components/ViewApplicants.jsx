@@ -5,7 +5,6 @@ const ViewApplicants = () => {
   const jobData = [
     {
         jobTitle: 'Software Engineer',
-        company: 'Acme Corp',
         noOfApplicants: 15,
         location: 'Waterloo, Ontario',
         department: 'IT',
@@ -14,7 +13,6 @@ const ViewApplicants = () => {
       },
       {
         jobTitle: 'Marketing Manager',
-        company: 'Best Widgets Inc.',
         noOfApplicants: 8,
         location: 'Milton, Ontario',
         department: 'Marketing',
@@ -23,7 +21,6 @@ const ViewApplicants = () => {
       },
       {
         jobTitle: 'UI/UX Designer',
-        company: 'Creative Labs',
         noOfApplicants: 12,
         location: 'Toronto, Ontario',
         department: 'Design',
@@ -32,7 +29,6 @@ const ViewApplicants = () => {
       },
       {
         jobTitle: 'Data Analyst',
-        company: 'Insights Corporation',
         noOfApplicants: 22,
         location: 'Vancouver, British Columbia',
         department: 'Analytics',
@@ -41,7 +37,6 @@ const ViewApplicants = () => {
       },
       {
         jobTitle: 'Sales Representative',
-        company: 'Acme Solutions',
         noOfApplicants: 10,
         location: 'Montreal, Quebec',
         department: 'Sales',
@@ -50,7 +45,6 @@ const ViewApplicants = () => {
       },  
       {
         jobTitle: 'Full Stack Web Developer',
-        company: 'TechStart',
         noOfApplicants: 18,
         location: 'Calgary, Alberta',
         department: 'Engineering',
@@ -60,12 +54,14 @@ const ViewApplicants = () => {
   ];
 
   return (
-    <div className="container"> 
-      <table>
-        <thead>
+    <div className="content">
+  <div className="flex flex-col items-center my-4">
+    <h1 className="text-2xl font-bold mb-4">View Applicants</h1>
+    <div className="w-4/5">
+      <table className="w-full text-left rounded-lg overflow-hidden bg-white">
+        <thead className="primary-blue-bg text-white">
           <tr>
             <th>Job Title</th>
-            <th>Company</th>
             <th>No. of Applicants</th>
             <th>Location</th>
             <th>Department</th>
@@ -75,22 +71,22 @@ const ViewApplicants = () => {
           </tr>
         </thead>
         <tbody>
-        {jobData.map((job, index) => (
-            <tr key={index}> 
+          {jobData.map((job, index) => (
+            <tr key={index}>
               <td>{job.jobTitle}</td>
-              <td>{job.company}</td>
               <td>{job.noOfApplicants}</td>
               <td>{job.location}</td>
               <td>{job.department}</td>
               <td>{job.experience}</td>
               <td>{job.status}</td>
-              <td><button class="edit">Edit</button></td>
-              
+              <td><button className="btn btn-primary">Edit</button></td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
+  </div>
+</div>
   );
 };
 
