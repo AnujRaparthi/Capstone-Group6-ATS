@@ -17,7 +17,7 @@ const JobDescription = () => {
     const fetchJobAndCheckApplication = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`http://capstone-group6-ats-backend.vercel.app/api/jobs/${jobId}`);
+        const response = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/jobs/${jobId}`);
         setJob(response.data);
         if (userId) {
           const checkResponse = await axios.get(`/api/applications/check-application/${jobId}/${userId}`);
