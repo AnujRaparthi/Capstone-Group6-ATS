@@ -11,7 +11,9 @@ const MainContent = ({ filters, searchTerm }) => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/jobs');
+        // const response = await axios.get('http://localhost:5001/api/jobs');
+        //https://capstone-group6-ats-backend.vercel.app/
+        const response = await axios.get('https://capstone-group6-ats-backend.vercel.app/api/jobs');
         console.log('Response=',response);
         setJobListings(response.data);
       } catch (error) {
