@@ -1,34 +1,81 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import Pagination from './Pagination';
 
 const ManageJobs = () => {
   const [jobs, setJobs] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobsPerPage] = useState(5);
+
+  // useEffect(() => {
+  //   const fetchJobs = async () => {
+  //     try {
+  //       const response = await fetch("http://localhost:5001/api/jobs");
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setJobs(data);
+  //       } else {
+  //         console.error("Failed to fetch jobs:", response.statusText);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch jobs:", error);
+  //     }
+  //   };
+
+  //   fetchJobs();
+  // }, []);
 
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await fetch("http://localhost:5001/api/jobs");
-        if (response.ok) {
-          const data = await response.json();
-          setJobs(data);
-        } else {
-          console.error("Failed to fetch jobs:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Failed to fetch jobs:", error);
-      }
-    };
-
     fetchJobs();
   }, []);
 
+  const fetchJobs = async () => {
+    // Retrieve company_id from localStorage
+    const userInfo = localStorage.getItem('user');
+    const user = userInfo ? JSON.parse(userInfo) : null;
+    const companyID = user?.company_id;
+
+    const params = {};
+    if (companyID) {
+      params.company_id = companyID;
+    }
+
+    try {
+      const response = await axios.get("http://localhost:5001/api/jobs", { params });
+      if (response.status === 200) {
+        setJobs(response.data);
+      } else {
+        console.error("Failed to fetch jobs:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Failed to fetch jobs:", error);
+    }
+  };
+
+    // Get current jobs
+    const indexOfLastJob = currentPage * jobsPerPage;
+    const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+    const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  
+    // Change page
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+
   return (
     <div className="content">
-    <div className="flex flex-col items-center my-4">
-      <h1 className="text-2xl font-bold mb-4">Manage Jobs</h1>
-      <div className="w-4/5">
-        <table className="w-full text-left rounded-lg overflow-hidden bg-white">
-          <thead className="primary-blue-bg text-white">
+      <div className="flex flex-col items-center my-4">
+        <h1 className="text-2xl font-bold mb-4">Manage Jobs</h1>
+        <div className="w-4/5">
+          {/* Create Job button */}
+          <div className="flex justify-end">
+            <Link to="/ManageJobForm">
+              <button className="addlocation bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-4 rounded">
+                Post New Job
+              </button>
+            </Link>
+          </div>
+          <table className="w-full text-left rounded-lg overflow-hidden bg-white">
+            <thead className="primary-blue-bg text-white">
             <tr>
               <th>Title</th>
               <th>Type</th>
@@ -43,7 +90,7 @@ const ManageJobs = () => {
             </tr>
           </thead>
           <tbody>
-            {jobs.map((job) => (
+            {currentJobs.map((job) => (
               <tr key={job._id}>
                 <td>{job.job_title}</td>
                 <td>{job.job_type}</td>
@@ -72,11 +119,16 @@ const ManageJobs = () => {
             ))}
           </tbody>
         </table>
-        <button className="addlocation mt-4">
-          <Link to="/ManageJobForm">Create Job</Link>
-        </button>
+        <div className="mt-4">
+            <Pagination
+              itemsPerPage={jobsPerPage}
+              totalItems={jobs.length}
+              paginate={paginate}
+              currentPage={currentPage}
+            />
+          </div>
+          </div>
       </div>
-    </div>
     </div>
   );
 };

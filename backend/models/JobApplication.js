@@ -22,7 +22,12 @@ const jobApplicationSchema = new mongoose.Schema({
     contentType: String,
     fileName: String,
   },
-  interview_comments: String
+  interview_comments: String,
+  company_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true
+  }
 });
 
 module.exports = mongoose.model('JobApplication', jobApplicationSchema);

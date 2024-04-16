@@ -49,16 +49,53 @@ console.log('After jobRoutes');
 
 const PORT = process.env.PORT || 5001; 
 
-app.get('/api/jobs', async (req, res) => {
-  try {
-    const jobs = await Job.find();
+// app.get('/api/jobs', async (req, res) => {
+//   try {
+//     const jobs = await Job.find();
 
-    console.log('Jobs='+jobs);
+//     console.log('Jobs='+jobs);
+//     res.json(jobs);
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// }); 
+
+app.get('/api/jobs', async (req, res) => {
+  const { company_id } = req.query; // Extract company_id from the query parameters, if available
+
+  try {
+    const query = {};
+    if (company_id) {
+      query.company_id = company_id; // If a company_id is provided, filter the jobs by this company_id
+    }
+
+    const jobs = await Job.find(query); // Fetch jobs with or without the company_id filter
+    console.log('Jobs=', jobs);
     res.json(jobs);
   } catch (error) {
+    console.error('Failed to fetch jobs:', error);
     res.status(500).send(error);
   }
-}); 
+});
+
+app.get('/api/users', async (req, res) => {
+  const { company_id } = req.query; // Extract company_id from query parameters, if available
+
+  try {
+    const query = {};
+    if (company_id) {
+      query.company_id = company_id; // If a company_id is provided, filter users by this company_id
+    }
+
+    const users = await User.find(query); // Fetch users with or without the company_id filter
+    console.log('Users=', users);
+    res.json(users);
+  } catch (error) {
+    console.error('Failed to fetch users:', error);
+    res.status(500).send(error);
+  }
+});
+
 
 app.get('/api/validate-token', (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
@@ -77,11 +114,20 @@ app.get('/api/validate-token', (req, res) => {
 
 // locations
 app.get('/api/Location', async (req, res) => {
+
+  const { company_id } = req.query; // Extract company_id from the query parameters, if available
+  
   try {
-    const locations = await Location.find();
+    const query = {};
+    if (company_id) {
+      query.company_id = company_id; // If a company_id is provided, filter the locations by this company_id
+    }
+
+    const locations = await Location.find(query); // Fetch locations with or without the company_id filter
     res.json(locations);
-  } catch (error) {
-    res.status(500).send(error);
+  } catch (err) {
+    console.error('Failed to fetch locations:', err);
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -99,10 +145,25 @@ app.post('/api/Location', async (req, res) => {
 
 //Departments
 app.get('/api/Department', async (req, res) => {
+  // try {
+  //   const departments = await Department.find();
+  //   res.json(departments);
+  // } catch (error) {
+  //   res.status(500).send(error);
+  // }
+
+  const { company_id } = req.query; // Extract company_id from the query parameters, if available
+
   try {
-    const departments = await Department.find();
+    const query = {};
+    if (company_id) {
+      query.company_id = company_id; // If a company_id is provided, filter the departments by this company_id
+    }
+
+    const departments = await Department.find(query); // Fetch departments with or without the company_id filter
     res.json(departments);
   } catch (error) {
+    console.error('Failed to fetch departments:', error);
     res.status(500).send(error);
   }
 });
@@ -153,18 +214,46 @@ app.post('/api/send-email', async (req, res) => {
   }
 });
 
+// app.get('/api/job-applications', async (req, res) => {
+
+//   console.log('Inside applications API');
+//   try {
+//     const jobApplications = await JobApplication.find();
+
+//     console.log('jobApplications='+jobApplications);
+//     res.json(jobApplications);
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// }); 
+
 app.get('/api/job-applications', async (req, res) => {
-
-  console.log('Inside applications API');
+  const { company_id } = req.query; // Get company_id from query parameters
+  console.log('Inside applications API company_id=',company_id);
+  
   try {
-    const jobApplications = await JobApplication.find();
+    const query = {};
+    if (company_id) {
+      query.company_id = company_id;
+    }
 
-    console.log('jobApplications='+jobApplications);
-    res.json(jobApplications);
+    // Populate the 'job' field, assuming 'job_id' is the reference to the Job model
+    const jobApplications = await JobApplication.find(query)
+      .populate({
+        path: 'job_id', // the field in JobApplication that references Job
+        select: 'job_title' // only fetch the job_title from the Job document
+      });
+
+    console.log('JobApplications with Job Titles:', jobApplications);
+    res.json(jobApplications.map(app => ({
+      ...app.toObject(), // convert mongoose document to object
+      jobTitle: app.job_id ? app.job_id.job_title : 'No Job Title' // safeguard against null job_id
+    })));
   } catch (error) {
+    console.error('Failed to fetch job applications:', error);
     res.status(500).send(error);
   }
-}); 
+});
 
 app.get('/api/job-application/:id', async (req, res) => {
 
@@ -242,11 +331,15 @@ app.delete('/api/delete-application/:applicationId', async (req, res) => {
   }
 });
 
-app.post('api/register-company', async (req, res) => {
+app.post('/api/register-company', async (req, res) => {
   try {
-
-    console.log('Inside Register Company=',req);
-    const company = new Company(req.body);
+    const { name, address } = req.body;
+    const companyObj = {
+      name: name,
+      address:address
+    };
+    console.log('Inside Register Company=',name);
+    const company = new Company(companyObj);
     await company.save();
     res.status(201).send(company);
   } catch (error) {

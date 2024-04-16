@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Pagination from './Pagination'; // Ensure this is correctly imported from your components
 
 const stageOptions = [
   'Initial Screening',
@@ -17,6 +18,9 @@ const statusOptions = [
 
 const ViewJobApplications = () => {
   const [applications, setApplications] = useState([]);
+  const [filteredApplications, setFilteredApplications] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [applicationsPerPage] = useState(5);
   const [filters, setFilters] = useState({
     jobTitle: '',
     firstName: '',
@@ -28,7 +32,6 @@ const ViewJobApplications = () => {
     stage: '',
     status: ''
   });
-  const [filteredApplications, setFilteredApplications] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,24 +39,21 @@ const ViewJobApplications = () => {
   }, []);
 
   const fetchJobApplications = async () => {
+    const userInfo = localStorage.getItem('user');
+    const user = userInfo ? JSON.parse(userInfo) : null;
+    const companyID = user?.company_id;
+
+    let apiURL = `http://localhost:5001/api/job-applications`;
+    const params = {};
+    if (companyID) {
+      params.company_id = companyID;
+    }
+
     try {
-      const response = await fetch("http://localhost:5001/api/job-applications");
-      if (response.ok) {
-        const jobApplications = await response.json();
-        const jobsPromises = jobApplications.map(application =>
-          fetch(`http://localhost:5001/api/jobs/${application.job_id}`)
-            .then(response => response.json())
-        );
-        const jobs = await Promise.all(jobsPromises);
-        const applicationsWithJobTitle = jobApplications.map((application, index) => ({
-          ...application,
-          jobTitle: jobs[index].job_title
-        }));
-        setApplications(applicationsWithJobTitle);
-        setFilteredApplications(applicationsWithJobTitle);
-      } else {
-        console.error("Failed to fetch job applications:", response.statusText);
-      }
+      const response = await axios.get(apiURL, { params });
+      const jobApplications = response.data;
+      setApplications(jobApplications);
+      setFilteredApplications(jobApplications);
     } catch (error) {
       console.error("Failed to fetch job applications:", error);
     }
@@ -84,7 +84,7 @@ const ViewJobApplications = () => {
   };
 
   const applyFilters = () => {
-    setFilteredApplications(applications.filter(application =>
+    const newFiltered = applications.filter(application =>
       (!filters.jobTitle || application.jobTitle.toLowerCase().includes(filters.jobTitle.toLowerCase())) &&
       (!filters.firstName || application.firstName.toLowerCase().includes(filters.firstName.toLowerCase())) &&
       (!filters.lastName || application.lastName.toLowerCase().includes(filters.lastName.toLowerCase())) &&
@@ -94,7 +94,8 @@ const ViewJobApplications = () => {
       (!filters.highestEducationalQualification || application.highestEducationalQualification.toLowerCase().includes(filters.highestEducationalQualification.toLowerCase())) &&
       (!filters.stage || application.stage === filters.stage) &&
       (!filters.status || application.status === filters.status)
-    ));
+    );
+    setFilteredApplications(newFiltered);
   };
 
   const clearFilters = () => {
@@ -111,6 +112,12 @@ const ViewJobApplications = () => {
     });
     setFilteredApplications(applications);
   };
+
+  const indexOfLastApplication = currentPage * applicationsPerPage;
+  const indexOfFirstApplication = indexOfLastApplication - applicationsPerPage;
+  const currentApplications = filteredApplications.slice(indexOfFirstApplication, indexOfLastApplication);
+
+  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   return (
     <div className="content">
@@ -189,9 +196,9 @@ const ViewJobApplications = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredApplications.map((application) => (
-                <tr key={application._id}>
-                  <td>{application.jobTitle}</td>
+            {currentApplications.map((application, index) => (
+                <tr key={index}>
+                  <td>{application.job_id.job_title}</td>
                   <td>{application.firstName}</td>
                   <td>{application.lastName}</td>
                   <td>{application.email}</td>
@@ -220,6 +227,14 @@ const ViewJobApplications = () => {
               ))}
             </tbody>
           </table>
+          <div className="mt-4">
+          <Pagination
+            itemsPerPage={applicationsPerPage}
+            totalItems={filteredApplications.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
+          </div>
         </div>
       </div>
     </div>

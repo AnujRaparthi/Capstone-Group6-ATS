@@ -16,7 +16,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
           <li key={number} className="list-none">
             <button 
               onClick={() => paginate(number)}
-              className={`px-3 py-1 border rounded ${currentPage === number ? 'bg-blue-500 text-white' : 'bg-white text-black'}`}
+              className={`px-3 py-1 border rounded ${currentPage === number ? 'primary-blue-bg text-white' : 'bg-white text-black'}`}
             >
               {number}
             </button>
