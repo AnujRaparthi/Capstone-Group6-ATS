@@ -100,7 +100,6 @@ app.post('/api/Location', async (req, res) => {
 //Departments
 app.get('/api/Department', async (req, res) => {
   try {
-    console.log('this is api');
     const departments = await Department.find();
     res.json(departments);
   } catch (error) {

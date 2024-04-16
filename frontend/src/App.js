@@ -126,6 +126,8 @@ const App = () => {
 
             <Route path='/ManageJobForm' element={<><HrHeader/><ManageJobFrom /></>} />
 
+        
+
             <Route path="/ManageLocations" element={<><HrHeader/><ManageLocations/><Footer/></>}/>
             <Route path='/ManageDepartments' element={<><HrHeader/><ManageDepartments/><Footer/></>}/>
             <Route path="/AddLocationForm" element={<><HrHeader/><AddLocationForm/></>}/>
