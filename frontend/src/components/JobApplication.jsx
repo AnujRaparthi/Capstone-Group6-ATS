@@ -27,7 +27,7 @@ const JobApplication = () => {
             try {
 
                 console.log('Inside applicationId=', applicationId);
-                const response = await fetch(`https://capstone-group6-ats-backend.vercel.app/api/job-application/${applicationId}`);
+                const response = await fetch(`http://localhost:5001/api/job-application/${applicationId}`);
                 const data = await response.json();
                 console.log('data=', data);
                 if (response.ok) {
@@ -82,7 +82,7 @@ const JobApplication = () => {
 
         try {
             // Send PUT request to the server to update the job application
-            const response = await axios.put(`https://capstone-group6-ats-backend.vercel.app/api/update-application/${applicationId}`, updateData);
+            const response = await axios.put(`http://localhost:5001/api/update-application/${applicationId}`, updateData);
 
             // Handle the response from the server
             if (response.status === 200) {

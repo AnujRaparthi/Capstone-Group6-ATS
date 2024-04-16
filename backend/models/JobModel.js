@@ -18,6 +18,11 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  company_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true
+  }
  
 });
 

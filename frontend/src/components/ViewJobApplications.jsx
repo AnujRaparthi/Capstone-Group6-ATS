@@ -37,11 +37,11 @@ const ViewJobApplications = () => {
 
   const fetchJobApplications = async () => {
     try {
-      const response = await fetch("https://capstone-group6-ats-backend.vercel.app/api/job-applications");
+      const response = await fetch("http://localhost:5001/api/job-applications");
       if (response.ok) {
         const jobApplications = await response.json();
         const jobsPromises = jobApplications.map(application =>
-          fetch(`https://capstone-group6-ats-backend.vercel.app/api/jobs/${application.job_id}`)
+          fetch(`http://localhost:5001/api/jobs/${application.job_id}`)
             .then(response => response.json())
         );
         const jobs = await Promise.all(jobsPromises);
@@ -66,7 +66,7 @@ const ViewJobApplications = () => {
   const handleDeleteApplication = async (applicationId) => {
     if (window.confirm("Are you sure you want to delete this application?")) {
       try {
-        const response = await axios.delete(`https://capstone-group6-ats-backend.vercel.app/api/delete-application/${applicationId}`);
+        const response = await axios.delete(`http://localhost:5001/api/delete-application/${applicationId}`);
         if (response.status === 200) {
           setFilteredApplications(prev => prev.filter(app => app._id !== applicationId));
           alert("Application deleted successfully!");

@@ -48,8 +48,9 @@ const Profile = () => {
         headers: { 'Authorization': `Bearer ${token}` }
     };
     try {
-        const { data } = await axios.put('https://capstone-group6-ats-backend.vercel.app/api/users/update', formData, config);
+        const { data } = await axios.put('http://localhost:5001/api/users/update', formData, config);
         setUser(data); // Update user context with new user data
+        localStorage.setItem('user', JSON.stringify(data));
         alert('Profile updated successfully!');
     } catch (error) {
         console.error('Failed to update profile:', error.response);
@@ -60,6 +61,7 @@ const Profile = () => {
 
 
   return (
+    <div className="content">
     <div className="profile-form-container bg-white shadow w-full max-w-sm p-6 rounded-md">
       <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Personal Information</h2>
       <form onSubmit={handleSubmit}>
@@ -97,6 +99,7 @@ const Profile = () => {
         </div>
         <button type="submit" className=" btn-primary flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-5 text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Update Profile</button>
       </form>
+    </div>
     </div>
   );
 };

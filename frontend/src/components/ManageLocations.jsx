@@ -9,7 +9,7 @@ const ManageLocations = () => {
   useEffect(() => {
     const fetchLocations = async () => {
         try {
-          const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/Location");
+          const response = await axios.get("http://localhost:5001/api/Location");
           console.log("Response:", response);
             const data = response.data;
             console.log("Fetched locations:", data); // Log the fetched data

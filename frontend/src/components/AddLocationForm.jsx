@@ -10,7 +10,7 @@ const AddLocationForm = () => {
     e.preventDefault();
     try {
       console.log("Submitting form...");
-      const response = await axios.post("https://capstone-group6-ats-backend.vercel.app/api/Location", {
+      const response = await axios.post("http://localhost:5001/api/Location", {
         location_name: locationName,
         address: address,
       });

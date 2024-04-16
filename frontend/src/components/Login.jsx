@@ -13,7 +13,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://capstone-group6-ats-backend.vercel.app/api/login', { email, password });
+      const response = await axios.post('http://localhost:5001/api/login', { email, password });
       console.log({ email, password });  
       const { user, token } = response.data;
       login(user, token);

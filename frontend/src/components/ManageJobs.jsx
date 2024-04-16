@@ -7,7 +7,7 @@ const ManageJobs = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch("https://capstone-group6-ats-backend.vercel.app/api/jobs");
+        const response = await fetch("http://localhost:5001/api/jobs");
         if (response.ok) {
           const data = await response.json();
           setJobs(data);

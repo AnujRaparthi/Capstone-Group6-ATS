@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
     required: true,
     
   },
+  company_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company'
+  }
 
 });
 

@@ -9,17 +9,33 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    // const validateToken = async () => {
+    //   const token = localStorage.getItem('token');
+    //   if (token) {
+    //     try {
+    //       const response = await axios.get('http://localhost:5001/api/validate-token', {
+    //         headers: { Authorization: `Bearer ${token}` },
+    //       });
+    //       setUser(response.data.user);
+    //     } catch (error) {
+    //       console.error('Token validation error:', error);
+    //       localStorage.removeItem('token');
+    //       setUser(null);
+    //     }
+    //   }
+    // };
+
     const validateToken = async () => {
       const token = localStorage.getItem('token');
-      if (token) {
+      const userInfo = localStorage.getItem('user');
+      if (token && userInfo) {
         try {
-          const response = await axios.get('https://capstone-group6-ats-backend.vercel.app/api/validate-token', {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setUser(response.data.user);
+          // You could optionally verify the token is still valid with the server here
+          setUser(JSON.parse(userInfo));
         } catch (error) {
           console.error('Token validation error:', error);
           localStorage.removeItem('token');
+          localStorage.removeItem('user');
           setUser(null);
         }
       }
@@ -29,14 +45,17 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const login = (user, token) => {
-    setUser(user);
+
+    localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('token', token);
+    setUser(user);
+
   };
 
   const logout = () => {
+    localStorage.removeItem('user'); // Remove user data
+    localStorage.removeItem('token'); // Remove token data
     setUser(null);
-    localStorage.removeItem('token');
-    //navigate('/login'); 
   };
 
   return (

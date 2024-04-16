@@ -16,6 +16,7 @@ const Department = require('./models/DepartmentModel')
 const JobApplication = require('./models/JobApplication');
 const stripe = require('stripe')('sk_test_51P3jtODTqZXkpm4po0sAv1FZNbTMxjkkcwl9hDRQYLJwkM2mDqcCIaDlyaJVaUhxZnV0m7hlzrwvXTP29tzOJiCg00F9kPAxvA');
 const bodyParser = require('body-parser');
+const Company = require('./models/CompanyModel');
 
 const app = express();
 
@@ -23,17 +24,17 @@ app.use(bodyParser.json());
 app.use(express.json());
 connectDB();
 
-// Specify the origin to be allowed
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-  optionsSuccessStatus: 200
-};
+// // Specify the origin to be allowed
+// const corsOptions = {
+//   origin: 'http://localhost:3000',
+//   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+//   optionsSuccessStatus: 200
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
-// Enable pre-flight across-the-board
-app.options('*', cors(corsOptions)); // include before other routes
+// // Enable pre-flight across-the-board
+// app.options('*', cors(corsOptions)); // include before other routes
 
 app.use(cors());
 app.use('/api', applicationsRoute);
@@ -239,6 +240,19 @@ app.delete('/api/delete-application/:applicationId', async (req, res) => {
   } catch (error) {
     console.error("Failed to delete application:", error);
     res.status(500).json({ message: "Internal server error while deleting application." });
+  }
+});
+
+app.post('api/register-company', async (req, res) => {
+  try {
+
+    console.log('Inside Register Company=',req);
+    const company = new Company(req.body);
+    await company.save();
+    res.status(201).send(company);
+  } catch (error) {
+    console.error('Company registration error:', error);
+    res.status(400).send({ error: 'Failed to register company.' });
   }
 });
 

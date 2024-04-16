@@ -71,7 +71,7 @@ const JobApplicationForm = () => {
             return;
         }
         try {
-            const response = await axios.post('https://capstone-group6-ats-backend.vercel.app/api/applications', submissionFormData, {
+            const response = await axios.post('http://localhost:5001/api/applications', submissionFormData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             console.log('Submission successful:', response.data);

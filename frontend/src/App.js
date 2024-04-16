@@ -33,6 +33,7 @@ import HrBanner from "./components/HrBanner";
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Home from './components/Home'; // Adjust the import path as needed
+import RecruiterSignup from './components/RecruiterSignup';
 
 const stripePromise = loadStripe("pk_test_51P3jtODTqZXkpm4pEf3Qz9QeOewSYUpfwC4vCgRXhMSc20qH6cEaobmYarHSYX11z9cckK55CRHYvks7tmSZQgHM00OvqAsnlp");
 
@@ -153,6 +154,10 @@ const App = () => {
             <Route path="/signup" element={<>
               <HeaderWrapper
               /><Signup /><Footer /></>} />
+
+            <Route path="/company-signup" element={<>
+              <HeaderWrapper
+              /><RecruiterSignup /><Footer /></>} /> 
 
             <Route path="/job/:jobId" element={<>
               <HeaderWrapper

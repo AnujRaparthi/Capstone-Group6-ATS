@@ -5,7 +5,7 @@ import Header from './Header';
 const HeaderWrapper = ({ searchTerm, onSearchChange, onSearchSubmit, onClearSearch }) => {
   const location = useLocation();
   //console.log("Current path:", location.pathname); 
-  const pathsToExclude = ['/login', '/signup', '/job/', '/apply-now/','/home', '/application-success','/status', '/email','/profile'];
+  const pathsToExclude = ['/login', '/signup', '/job/', '/apply-now/','/home', '/application-success','/status', '/email','/profile', '/company-signup'];
   const showSearchBar = !pathsToExclude.some(path => location.pathname.startsWith(path));
   
   return (
