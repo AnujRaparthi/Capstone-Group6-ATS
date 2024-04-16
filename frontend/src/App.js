@@ -34,6 +34,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Home from './components/Home'; // Adjust the import path as needed
 import RecruiterSignup from './components/RecruiterSignup';
+import RecProfile from "./components/RecProfile";
 
 const stripePromise = loadStripe("pk_test_51P3jtODTqZXkpm4pEf3Qz9QeOewSYUpfwC4vCgRXhMSc20qH6cEaobmYarHSYX11z9cckK55CRHYvks7tmSZQgHM00OvqAsnlp");
 
@@ -125,9 +126,7 @@ const App = () => {
 
 
             <Route path='/ManageJobForm' element={<><HrHeader/><ManageJobFrom /></>} />
-
-        
-
+            <Route path='/recprofile' element={<><HrHeader/><RecProfile /></>} />
             <Route path="/ManageLocations" element={<><HrHeader/><ManageLocations/><Footer/></>}/>
             <Route path='/ManageDepartments' element={<><HrHeader/><ManageDepartments/><Footer/></>}/>
             <Route path="/AddLocationForm" element={<><HrHeader/><AddLocationForm/></>}/>

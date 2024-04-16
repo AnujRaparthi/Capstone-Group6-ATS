@@ -7,7 +7,7 @@ const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, sho
   const { user, logout } = useUser();
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+ 
   const handleLogout = () => {
     logout();
     navigate('/login');
