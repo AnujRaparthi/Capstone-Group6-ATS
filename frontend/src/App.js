@@ -35,6 +35,8 @@ import { loadStripe } from '@stripe/stripe-js';
 import Home from './components/Home'; // Adjust the import path as needed
 import RecruiterSignup from './components/RecruiterSignup';
 import RecProfile from "./components/RecProfile";
+import ManageJobForm from './components/ManageJobForm';
+import UpdateJob from './components/UpdateJob';
 
 const stripePromise = loadStripe("pk_test_51P3jtODTqZXkpm4pEf3Qz9QeOewSYUpfwC4vCgRXhMSc20qH6cEaobmYarHSYX11z9cckK55CRHYvks7tmSZQgHM00OvqAsnlp");
 
@@ -46,6 +48,8 @@ const App = () => {
     department: "",
     experience: "",
   });
+
+  // localStorage.clear();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [submittedSearch, setSubmittedSearch] = useState("");
@@ -119,6 +123,16 @@ const App = () => {
                 <>
                   <HrHeader />
                   <JobApplication />
+                  <Footer />
+                </>
+              }
+            />
+                        <Route
+              path="/update-job/:jobId"
+              element={
+                <>
+                  <HrHeader />
+                  <UpdateJob />
                   <Footer />
                 </>
               }

@@ -12,7 +12,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 router.post('/applications', upload.single('resume'), async (req, res) => {
-  const { jobId, userId, firstName, lastName, email, phone, preferredLocation, totalWorkExperience, highestEducationalQualification } = req.body;
+  const { jobId, userId, firstName, lastName, email, phone, totalWorkExperience, highestEducationalQualification, company_id } = req.body;
 
   try {
     const newApplication = new JobApplication({
@@ -22,7 +22,6 @@ router.post('/applications', upload.single('resume'), async (req, res) => {
       lastName,
       email,
       phone,
-      preferredLocation,
       totalWorkExperience,
       highestEducationalQualification,
       stage: 'Initial Screening',
@@ -32,6 +31,7 @@ router.post('/applications', upload.single('resume'), async (req, res) => {
         contentType: req.file.mimetype,
         fileName: req.file.originalname,
       },
+      company_id
     });
 
     console.log("Saving application:", newApplication);

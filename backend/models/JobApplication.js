@@ -8,7 +8,6 @@ const jobApplicationSchema = new mongoose.Schema({
   lastName: String,
   email: String,
   phone: String,
-  preferredLocation: String,
   totalWorkExperience: String,
   highestEducationalQualification: String,
   stage: String,
@@ -26,7 +25,6 @@ const jobApplicationSchema = new mongoose.Schema({
   company_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Company',
-    required: true
   }
 });
 

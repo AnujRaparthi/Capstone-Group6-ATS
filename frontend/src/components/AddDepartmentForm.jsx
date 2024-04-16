@@ -5,12 +5,19 @@ const AddDepartmentForm = () => {
   const [departmentName, setDepartmentName] = useState("");
   const [message, setMessage] = useState("");
 
+  const userInfo = localStorage.getItem('user');
+  const user = userInfo ? JSON.parse(userInfo) : null;
+  const companyID = user?.company_id;
+
+  console.log('companyID=',companyID);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       console.log("Submitting form...");
       const response = await axios.post("http://localhost:5001/api/Department", {
         name: departmentName,
+        company_id: companyID
       });
       console.log("Department added:", response.data);
       // Reset form field

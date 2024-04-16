@@ -6,6 +6,17 @@ const AddLocationForm = () => {
   const [address, setAddress] = useState("");
   const [message, setMessage] = useState("");
 
+  const userInfo = localStorage.getItem('user');
+  const user = userInfo ? JSON.parse(userInfo) : null;
+  const companyID = user?.company_id;
+
+  console.log('companyID=',companyID);
+
+  const params = {};
+  if (companyID) {
+    params.company_id = companyID;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -13,6 +24,7 @@ const AddLocationForm = () => {
       const response = await axios.post("http://localhost:5001/api/Location", {
         location_name: locationName,
         address: address,
+        company_id: companyID
       });
       console.log("Location added:", response.data);
       // Reset form fields

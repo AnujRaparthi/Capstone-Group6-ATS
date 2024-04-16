@@ -26,7 +26,6 @@ const ViewJobApplications = () => {
     firstName: '',
     lastName: '',
     email: '',
-    preferredLocation: '',
     totalWorkExperience: '',
     highestEducationalQualification: '',
     stage: '',
@@ -39,7 +38,10 @@ const ViewJobApplications = () => {
   }, []);
 
   const fetchJobApplications = async () => {
+
+
     const userInfo = localStorage.getItem('user');
+    console.log('userInfo=',userInfo);
     const user = userInfo ? JSON.parse(userInfo) : null;
     const companyID = user?.company_id;
 
@@ -52,6 +54,8 @@ const ViewJobApplications = () => {
     try {
       const response = await axios.get(apiURL, { params });
       const jobApplications = response.data;
+
+      console.log('jobApplications='+jobApplications);
       setApplications(jobApplications);
       setFilteredApplications(jobApplications);
     } catch (error) {
@@ -89,7 +93,6 @@ const ViewJobApplications = () => {
       (!filters.firstName || application.firstName.toLowerCase().includes(filters.firstName.toLowerCase())) &&
       (!filters.lastName || application.lastName.toLowerCase().includes(filters.lastName.toLowerCase())) &&
       (!filters.email || application.email.toLowerCase().includes(filters.email.toLowerCase())) &&
-      (!filters.preferredLocation || application.preferredLocation.toLowerCase().includes(filters.preferredLocation.toLowerCase())) &&
       (!filters.totalWorkExperience || application.totalWorkExperience.toLowerCase().includes(filters.totalWorkExperience.toLowerCase())) &&
       (!filters.highestEducationalQualification || application.highestEducationalQualification.toLowerCase().includes(filters.highestEducationalQualification.toLowerCase())) &&
       (!filters.stage || application.stage === filters.stage) &&
@@ -104,7 +107,6 @@ const ViewJobApplications = () => {
       firstName: '',
       lastName: '',
       email: '',
-      preferredLocation: '',
       totalWorkExperience: '',
       highestEducationalQualification: '',
       stage: '',
@@ -187,7 +189,6 @@ const ViewJobApplications = () => {
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
-                <th>Preferred Location</th>
                 <th>Total Work Experience</th>
                 <th>Highest Educational Qualification</th>
                 <th>Stage</th>
@@ -202,7 +203,6 @@ const ViewJobApplications = () => {
                   <td>{application.firstName}</td>
                   <td>{application.lastName}</td>
                   <td>{application.email}</td>
-                  <td>{application.preferredLocation}</td>
                   <td>{application.totalWorkExperience}</td>
                   <td>{application.highestEducationalQualification}</td>
                   <td>{application.stage}</td>

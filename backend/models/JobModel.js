@@ -20,9 +20,14 @@ const jobSchema = new mongoose.Schema({
   },
   company_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Company',
+    ref: 'Company'
+  },
+  location_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Location',
     required: true
   }
+
  
 });
 

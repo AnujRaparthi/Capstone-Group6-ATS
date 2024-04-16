@@ -7,16 +7,16 @@ const mockApplications = [
     id: 1,
     jobTitle: 'Data Analyst',
     location: 'Waterloo, Ontario',
-    appliedDate: 'March 18, 2024',
-    applicationNumber: 'APP10001',
-    currentStage: 2, // Assuming 1-based index for stages
+    appliedDate: 'April 16, 2024',
+    applicationNumber: 'APP10003',
+    currentStage: 1, // Assuming 1-based index for stages
     status: 'Pending'
   },
   {
     id: 2,
     jobTitle: 'Software Developer',
     location: 'Milton, Ontario',
-    appliedDate: 'March 18, 2024',
+    appliedDate: 'April 16, 2024',
     applicationNumber: 'APP10002',
     currentStage: 3,
     status: 'On Hold'
@@ -25,8 +25,8 @@ const mockApplications = [
     id: 3,
     jobTitle: 'Senior Software Developer',
     location: 'Milton, Ontario',
-    appliedDate: 'March 18, 2024',
-    applicationNumber: 'APP10003',
+    appliedDate: 'April 16, 2024',
+    applicationNumber: 'APP10001',
     currentStage: 3,
     status: 'Rejected'
   }

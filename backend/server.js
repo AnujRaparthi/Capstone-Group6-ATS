@@ -134,12 +134,25 @@ app.get('/api/Location', async (req, res) => {
 // POST route to add a new location
 app.post('/api/Location', async (req, res) => {
   try {
-    const { location_name, address } = req.body;
-    const newLocation = new Location({ location_name, address });
+    const { location_name, address , company_id} = req.body;
+    const newLocation = new Location({ location_name, address ,company_id});
     const savedLocation = await newLocation.save();
     res.status(201).json(savedLocation);
   } catch (error) {
     res.status(500).send(error);
+  }
+});
+
+app.post('/api/create-job', async (req, res) => {
+  try {
+    const jobData = req.body;
+    console.log('jobData='+jobData);
+    const newJob = new Job(jobData);
+    const savedJob = await newJob.save();
+    res.status(201).json(savedJob);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to save job', reason: err.message });
   }
 });
 
@@ -171,8 +184,8 @@ app.get('/api/Department', async (req, res) => {
 // POST route to add a new department
 app.post('/api/Department', async (req, res) => {
   try {
-    const { name } = req.body;
-    const newDepartment = new Department({ name });
+    const { name, company_id } = req.body;
+    const newDepartment = new Department({ name, company_id });
     const savedDepartment = await newDepartment.save();
     res.status(201).json(savedDepartment);
   } catch (error) {
@@ -271,6 +284,22 @@ app.get('/api/job-application/:id', async (req, res) => {
   }
 });
 
+app.get('/api/jobdetail/:id', async (req, res) => {
+
+  console.log('Inside Job application api='+req.params.id);
+  try {
+    const application = await Job.findById(req.params.id);
+
+    if (!application) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+
+    res.json(application);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 app.post('api/create-payment-intent', async (req, res) => {
   try {
     const { paymentMethodId } = req.body;
@@ -298,7 +327,6 @@ app.put('/api/update-application/:applicationId', async (req, res) => {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      preferredLocation: req.body.preferredLocation,
       totalWorkExperience: req.body.totalWorkExperience,
       highestEducationalQualification: req.body.highestEducationalQualification,
       stage: req.body.stage,
@@ -328,6 +356,56 @@ app.delete('/api/delete-application/:applicationId', async (req, res) => {
   } catch (error) {
     console.error("Failed to delete application:", error);
     res.status(500).json({ message: "Internal server error while deleting application." });
+  }
+});
+
+// DELETE endpoint for deleting a job application
+app.delete('/api/delete-job/:jobId', async (req, res) => {
+  try {
+    const jobId = req.params.jobId;
+    const deletedJob = await Job.findByIdAndDelete(jobId);
+
+    if (!deletedJob) {
+      return res.status(404).json({ message: "Job not found." });
+    }
+
+    res.status(200).json({ message: "Job deleted successfully." });
+  } catch (error) {
+    console.error("Failed to delete Job:", error);
+    res.status(500).json({ message: "Internal server error while deleting Job." });
+  }
+});
+
+
+app.put('/api/update-job/:jobId', async (req, res) => {
+  const { jobId } = req.params;
+  const updateData = {
+    job_title: req.body.job_title,
+    job_type: req.body.job_type,
+    no_of_positions: req.body.no_of_positions,
+    state: req.body.state,
+    target_hiring_date: req.body.target_hiring_date,
+    compensation_type: req.body.compensation_type,
+    compensation_range_from: req.body.compensation_range_from,
+    compensation_range_to: req.body.compensation_range_to,
+    job_description: req.body.job_description,
+    experience: req.body.experience,
+    location_id: req.body.location_id,
+    company_id: req.body.company_id
+  };
+
+  try {
+
+    console.log('updateData=',updateData);
+    const updatedJob = await Job.findByIdAndUpdate(jobId, updateData, { new: true });
+    if (updatedJob) {
+      res.status(200).json(updatedJob);
+    } else {
+      res.status(404).send({ message: "Job not found" });
+    }
+  } catch (error) {
+    console.error("Error updating job:", error);
+    res.status(500).send({ message: "Internal server error while updating the job." });
   }
 });
 

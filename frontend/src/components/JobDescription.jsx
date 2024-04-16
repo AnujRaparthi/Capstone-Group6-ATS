@@ -77,7 +77,7 @@ const JobDescription = () => {
             </div>
             <div className="job-icons px-4 py-3">
               <JobIcon icon="fas fa-briefcase" text={job.experience ?? 'Not specified'} />
-              <JobIcon icon="fas fa-map-marker-alt" text="Milton,ON" />
+              <JobIcon icon="fas fa-map-marker-alt" text="Waterloo, Ontario" />
               <JobIcon icon="fas fa-building" text="IT" />
               <JobIcon icon="far fa-clock" text="Posted recently" />
             </div>
@@ -128,7 +128,7 @@ const JobDescription = () => {
                   </tr>
                   <tr className="bg-gray-100 border-b">
                     <td className="py-2 text-gray-600 font-medium">Location</td>
-                    <td className="py-2 text-gray-900">Milton</td>
+                    <td className="py-2 text-gray-900">Waterloo, Ontario</td>
                   </tr>
                   <tr className="border-b">
                     <td className="py-2 text-gray-600 font-medium">Department</td>

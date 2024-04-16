@@ -62,7 +62,7 @@ const MainContent = ({ filters, searchTerm }) => {
             id={listing._id}
             title={listing.job_title}
             experience={listing.experience}
-            location="Milton, Ontario"
+            location="Waterloo, Ontario"
             department="IT"
             postedTime="10 mins ago"
             description={listing.job_description}

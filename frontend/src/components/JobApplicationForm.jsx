@@ -9,12 +9,20 @@ const JobApplicationForm = () => {
     const { user } = useUser();
     const navigate = useNavigate();
 
+    console.log('jobId=',jobId);
+
+    const [jobDetails, setJobDetails] = useState({
+        jobTitle: '',
+        experience: '',
+        location: '',
+        company_id: ''
+    });
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         phone: '',
         email: '',
-        preferredLocation: '',
         totalWorkExperience: '',
         highestEducationalQualification: '',
         resume: null,
@@ -40,7 +48,28 @@ const JobApplicationForm = () => {
             navigate('/login');
             return;
         }
-    }, [user, navigate]);
+
+        const fetchJobDetails = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5001/api/jobdetail/${jobId}`);
+                if (response.status === 200) {
+                    const { job_title, experience, location, company_id } = response.data;
+                    setJobDetails({
+                        jobTitle: job_title,
+                        experience,
+                        location,
+                        company_id
+                    });
+                } else {
+                    console.log('Failed to fetch job details');
+                }
+            } catch (error) {
+                console.error('Error fetching job details:', error);
+            }
+        };
+
+        fetchJobDetails();
+    }, [user, navigate,jobId]);
 
 
     // Adjust the handleSubmit function inside JobApplicationForm
@@ -59,9 +88,9 @@ const JobApplicationForm = () => {
         console.log("Appending jobId: ", jobId);
         submissionFormData.append('userId', user._id);
         console.log("Appending userId: ", user._id);
-        submissionFormData.append('preferredLocation', formData.preferredLocation);
         submissionFormData.append('totalWorkExperience', formData.totalWorkExperience);
         submissionFormData.append('highestEducationalQualification', formData.highestEducationalQualification);
+        submissionFormData.append('company_id', jobDetails.company_id);
 
         if (fileInputRef.current && fileInputRef.current.files[0]) {
             submissionFormData.append('resume', fileInputRef.current.files[0]);
@@ -98,9 +127,9 @@ const JobApplicationForm = () => {
                 <div className='bg-white shadow mt-10 mb-10 w-full max-w-xl p-6 border border-gray-300 rounded-md'>
 
                     <div className="text-center mb-4">
-                        <p className="font-medium text-lg">Data Analyst</p>
+                        <p className="font-medium text-lg">{jobDetails.jobTitle}</p>
                         <div className="job-icons flex justify-center space-x-4 py-2">
-                            <JobIcon icon="fas fa-briefcase" text="1 - 3 years" />
+                            <JobIcon icon="fas fa-briefcase" text={jobDetails.experience} />
                             <JobIcon icon="fas fa-map-marker-alt" text="Waterloo, Ontario" />
                             <JobIcon icon="fas fa-building" text="IT" />
                             <JobIcon icon="far fa-clock" text="Posted 10 mins ago" />
@@ -150,19 +179,6 @@ const JobApplicationForm = () => {
                                 <input id="phone" name="phone" type="text" required
                                     className="appearance-none block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     value={formData.phone} onChange={handleChange} />
-                            </div>
-
-                            <div className="input-field">
-                                <label htmlFor="preferredLocation" className="block text-sm font-medium text-gray-900">
-                                    Preferred Location
-                                </label>
-                                <select id="preferredLocation" name="preferredLocation" required onChange={handleChange} value={formData.preferredLocation} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                    <option value="">Select Preferred Location</option>
-                                    <option value="Remote">Remote</option>
-                                    <option value="New York">New York</option>
-                                    <option value="San Francisco">San Francisco</option>
-                                    <option value="Austin">Austin</option>
-                                </select>
                             </div>
 
                             <div className="input-field">

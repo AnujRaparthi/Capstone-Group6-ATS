@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import JobIcon from './JobIcon';
 import { useUser } from './UserContext';
 import axios from 'axios';
+import CommunicationForm from './CommunicationForm';
 
 
 const JobApplication = () => {
@@ -14,7 +15,7 @@ const JobApplication = () => {
         firstName: '',
         lastName: '',
         email: '',
-        preferredLocation: '',
+        phone:'',
         totalWorkExperience: '',
         highestEducationalQualification: '',
         resumeFile: null,
@@ -35,12 +36,12 @@ const JobApplication = () => {
                         firstName: data.firstName,
                         lastName: data.lastName,
                         email: data.email,
-                        preferredLocation: data.preferredLocation,
                         totalWorkExperience: data.totalWorkExperience,
                         highestEducationalQualification: data.highestEducationalQualification,
                         resumeFile: data.resume_file,
                         stage: data.stage,
-                        status: data.status
+                        status: data.status,
+                        phone: data.phone
                     });
                 }
             } catch (error) {
@@ -73,11 +74,11 @@ const JobApplication = () => {
             firstName: formData.firstName,
             lastName: formData.lastName,
             email: formData.email,
-            preferredLocation: formData.preferredLocation,
             totalWorkExperience: formData.totalWorkExperience,
             highestEducationalQualification: formData.highestEducationalQualification,
             stage: formData.stage,
             status: formData.status,
+            phone: formData.phone
         };
 
         try {
@@ -172,19 +173,6 @@ const JobApplication = () => {
                         </div>
 
                         <div className="input-field">
-                            <label htmlFor="preferredLocation" className="block text-sm font-medium text-gray-900">
-                                Preferred Location
-                            </label>
-                            <select id="preferredLocation" name="preferredLocation" required onChange={handleChange} value={formData.preferredLocation} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                <option value="">Select Preferred Location</option>
-                                <option value="Remote">Remote</option>
-                                <option value="New York">New York</option>
-                                <option value="San Francisco">San Francisco</option>
-                                <option value="Austin">Austin</option>
-                            </select>
-                        </div>
-
-                        <div className="input-field">
                             <label htmlFor="totalWorkExperience" className="block text-sm font-medium text-gray-900">
                                 Total Work Experience
                             </label>
@@ -248,6 +236,7 @@ const JobApplication = () => {
                         </button>
                     </form>
                 </div>
+                <CommunicationForm applicantEmail={formData.email} />
             </div>
         </div>
     );
