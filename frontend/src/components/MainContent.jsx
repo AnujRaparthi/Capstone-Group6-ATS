@@ -13,7 +13,7 @@ const MainContent = ({ filters, searchTerm }) => {
       try {
         // const response = await axios.get('http://capstone-group6-ats-backend.vercel.app/api/jobs');
         //http://localhost:5001/
-        const response = await axios.get('http://localhost:5001/api/jobs');
+        const response = await axios.get('http://capstone-group6-ats-backend.vercel.app/api/jobs');
         console.log('Response=',response);
         setJobListings(response.data);
       } catch (error) {
