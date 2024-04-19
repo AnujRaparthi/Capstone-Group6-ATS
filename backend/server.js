@@ -512,7 +512,7 @@ app.get('/api/process-payment', async (req, res) => {
       const user = new User({ name, email, password, address, gender, userType: 'recruiter', company_id: company._id });
       await user.save();
 
-      res.redirect('http://localhost:3000/login'); // Or send a response that triggers a redirect on the frontend
+      res.redirect('https://capstone-group6-ats-frontend.vercel.app/login'); // Or send a response that triggers a redirect on the frontend
     } else {
       res.redirect('/payment-failed');
     }
