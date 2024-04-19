@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate, Link } from 'react-router-dom';
 
 const AddLocationForm = () => {
+  const navigate = useNavigate();
   const [locationName, setLocationName] = useState("");
   const [address, setAddress] = useState("");
   const [message, setMessage] = useState("");
@@ -32,6 +34,7 @@ const AddLocationForm = () => {
       setAddress("");
       // Show success message
       setMessage("Location added successfully!");
+      navigate('/ManageLocations'); 
       // Clear message after 3 seconds
       setTimeout(() => setMessage(""), 3000);
     } catch (error) {

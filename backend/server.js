@@ -69,7 +69,7 @@ app.get('/api/jobs', async (req, res) => {
       query.company_id = company_id; // If a company_id is provided, filter the jobs by this company_id
     }
 
-    const jobs = await Job.find(query); // Fetch jobs with or without the company_id filter
+    const jobs = await Job.find(query).populate('location_id').populate('department_id').populate('company_id'); // Fetch jobs with or without the company_id filter
     console.log('Jobs=', jobs);
     res.json(jobs);
   } catch (error) {

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate, Link } from 'react-router-dom';
 
 const AddDepartmentForm = () => {
+  const navigate = useNavigate();
   const [departmentName, setDepartmentName] = useState("");
   const [message, setMessage] = useState("");
 
@@ -23,7 +25,9 @@ const AddDepartmentForm = () => {
       // Reset form field
       setDepartmentName("");
       // Show success message
+      navigate('/ManageDepartments'); 
       setMessage("Department added successfully!");
+      
       // Clear message after 3 seconds
       setTimeout(() => setMessage(""), 3000);
     } catch (error) {

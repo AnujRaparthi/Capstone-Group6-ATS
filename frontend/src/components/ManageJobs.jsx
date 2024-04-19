@@ -78,13 +78,12 @@ const ManageJobs = () => {
               <tr>
                 <th>Title</th>
                 <th>Type</th>
-                <th>Positions</th>
-                <th>State</th>
-                <th>Target Hiring Date</th>
-                <th>Compensation Type</th>
-                <th>Range From</th>
-                <th>Range To</th>
+                <th>Location</th>
+                <th>Department</th>
                 <th>Experience</th>
+                <th>No. of Positions</th>
+                <th>Publish State</th>
+                <th>Target Hiring Date</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -93,13 +92,12 @@ const ManageJobs = () => {
                 <tr key={job._id}>
                   <td>{job.job_title}</td>
                   <td>{job.job_type}</td>
+                  <td>{job.location_id.location_name}</td>
+                  <td>{job.department_id.name}</td>
+                  <td>{job.experience}</td>
                   <td>{job.no_of_positions}</td>
                   <td>{job.state}</td>
                   <td>{new Date(job.target_hiring_date).toLocaleDateString()}</td>
-                  <td>{job.compensation_type}</td>
-                  <td>{job.compensation_range_from}</td>
-                  <td>{job.compensation_range_to}</td>
-                  <td>{job.experience}</td>
                   <td>
                     <div className="flex flex-col space-y-2">
                       <button

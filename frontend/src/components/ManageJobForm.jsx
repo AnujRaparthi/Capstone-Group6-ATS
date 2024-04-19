@@ -14,34 +14,61 @@ const ManageJobForm = () => {
   const [compensationRangeFrom, setCompensationRangeFrom] = useState("");
   const [compensationRangeTo, setCompensationRangeTo] = useState("");
   const [experience, setExperience] = useState('');
+  const [department, setDepartment] = useState('');
   const [locations, setLocations] = useState([]);
+  const [departments, setDepartments] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchLocations = async () => {
-      const userInfo = localStorage.getItem('user');
-      const user = userInfo ? JSON.parse(userInfo) : null;
-      const companyID = user?.company_id;
-
-      const params = {};
-      if (companyID) {
-        params.company_id = companyID;
-      }
-
-      try {
-        const response = await axios.get("http://localhost:5001/api/Location", { params });
-        if (response.status === 200) {
-          setLocations(response.data);
-        } else {
-          console.error("Failed to fetch locations:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Failed to fetch locations:", error);
-      }
-    };
     fetchLocations();
+    fetchDepartments();
   }, []);
+
+  const fetchDepartments = async () => {
+    const userInfo = localStorage.getItem('user');
+    const user = userInfo ? JSON.parse(userInfo) : null;
+    const companyID = user?.company_id;
+
+    const params = {};
+    if (companyID) {
+      params.company_id = companyID;
+    }
+
+    try {
+      const response = await axios.get("http://localhost:5001/api/Department", { params });
+
+      if (response.status === 200) {
+        setDepartments(response.data);
+      } else {
+        console.error("Failed to fetch departments:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Failed to fetch departments:", error);
+    }
+  };
+
+  const fetchLocations = async () => {
+    const userInfo = localStorage.getItem('user');
+    const user = userInfo ? JSON.parse(userInfo) : null;
+    const companyID = user?.company_id;
+
+    const params = {};
+    if (companyID) {
+      params.company_id = companyID;
+    }
+
+    try {
+      const response = await axios.get("http://localhost:5001/api/Location", { params });
+      if (response.status === 200) {
+        setLocations(response.data);
+      } else {
+        console.error("Failed to fetch locations:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Failed to fetch locations:", error);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -62,7 +89,8 @@ const ManageJobForm = () => {
       job_description: jobDescription,
       experience: experience,
       location_id: jobLocation,
-      company_id: companyID
+      company_id: companyID,
+      department_id: department
     };
 
     try {
@@ -80,9 +108,16 @@ const ManageJobForm = () => {
     }
   };
 
+  const experienceRanges = [
+    "0-1 Years",
+    "1-3 Years",
+    "3-5 Years",
+    "5+ Years"
+  ];
+
   return (
     <div className="form-container">
-      <h1 className="MJ">Create Job</h1>
+      <h1 className="MJ">Post New Job</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="jobTitle">Job Title:</label>
@@ -112,10 +147,27 @@ const ManageJobForm = () => {
             required
             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
-            <option value="">Select Location</option>
+            <option value="">Select location</option>
             {locations.map((location) => (
               <option key={location._id} value={location._id}>
                 {location.location_name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="department">Department:</label>
+          <select
+            id="department"
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
+            required
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          >
+            <option value="">Select department</option>
+            {departments.map((dept) => (
+              <option key={dept._id} value={dept._id}>
+                {dept.name}
               </option>
             ))}
           </select>
@@ -137,6 +189,22 @@ const ManageJobForm = () => {
           </select>
         </div>
         <div className="form-group">
+          <label htmlFor="experience">Experience Needed:</label>
+          <select
+            id="experience"
+            name="experience"
+            value={experience}
+            onChange={(e) => setExperience(e.target.value)}
+            required
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          >
+            <option value="">Select experience range</option>
+            {experienceRanges.map((range, index) => (
+              <option key={index} value={range}>{range}</option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
           <label htmlFor="noOfPositions">Number of Positions:</label>
           <input
             type="number"
@@ -147,7 +215,7 @@ const ManageJobForm = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="state">State:</label>
+          <label htmlFor="state">Publish State:</label>
           <select
             id="state"
             value={state}
@@ -184,6 +252,7 @@ const ManageJobForm = () => {
             <option value="Hourly">Hourly</option>
             <option value="Daily">Daily</option>
             <option value="Weekly">Weekly</option>
+            <option value="Biweekly">Bi-Weekly</option>
             <option value="Monthly">Monthly</option>
           </select>
         </div>
@@ -206,16 +275,6 @@ const ManageJobForm = () => {
             id="compensationRangeTo"
             value={compensationRangeTo}
             onChange={(e) => setCompensationRangeTo(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="experience">Experience Needed (in years):</label>
-          <input
-            type="text"
-            id="experience"
-            value={experience}
-            onChange={(e) => setExperience(e.target.value)}
             required
           />
         </div>

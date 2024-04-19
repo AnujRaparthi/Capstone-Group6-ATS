@@ -7,7 +7,7 @@ const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, sho
   const { user, logout } = useUser();
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
- 
+
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -42,6 +42,7 @@ const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, sho
         </Link>
         <div className="flex items-center space-x-10">
           <Link to="/" className="text-base font-medium text-black hover:text-gray-900">All Jobs</Link>
+
           {user && (
             <>
               <Link to="/status" className="text-base font-medium text-black hover:text-gray-900">My Job Applications</Link>
@@ -59,7 +60,11 @@ const Header = ({ onSearchSubmit, onSearchChange, searchTerm, onClearSearch, sho
             </>
           )}
           {!user && (
-            <Link to="/login" className="text-base font-medium text-black hover:text-gray-900">Login</Link>
+            <>
+              <Link to="/home" className="text-base font-medium text-black hover:text-gray-900">Register your company</Link>
+              <Link to="/login" className="text-base font-medium text-black hover:text-gray-900">Login</Link>
+            </>
+
           )}
         </div>
       </div>

@@ -17,12 +17,15 @@ const UpdateJob = () => {
       compensationRangeFrom: '',
       compensationRangeTo: '',
       experience: '',
-      company_id: ''
+      company_id: '',
+      department: ''
     });
     const [locations, setLocations] = useState([]);
+    const [departments, setDepartments] = useState([]);
   
     useEffect(() => {
       fetchLocations();
+      fetchDepartments();
       if (jobId) {
         fetchJobDetails(jobId);
       }
@@ -40,6 +43,29 @@ const UpdateJob = () => {
         }
       } catch (error) {
         console.error("Failed to fetch locations:", error);
+      }
+    };
+
+    const fetchDepartments = async () => {
+      const userInfo = localStorage.getItem('user');
+      const user = userInfo ? JSON.parse(userInfo) : null;
+      const companyID = user?.company_id;
+  
+      const params = {};
+      if (companyID) {
+        params.company_id = companyID;
+      }
+  
+      try {
+        const response = await axios.get("http://localhost:5001/api/Department", { params });
+  
+        if (response.status === 200) {
+          setDepartments(response.data);
+        } else {
+          console.error("Failed to fetch departments:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Failed to fetch departments:", error);
       }
     };
   
@@ -60,7 +86,8 @@ const UpdateJob = () => {
             compensationRangeFrom: job.compensation_range_from.toString(),
             compensationRangeTo: job.compensation_range_to.toString(),
             experience: job.experience,
-            company_id: job.company_id
+            company_id: job.company_id,
+            department: job.department_id
           });
         }
       } catch (error) {
@@ -87,7 +114,8 @@ const UpdateJob = () => {
         compensation_range_from: parseFloat(jobData.compensationRangeFrom),
         compensation_range_to: parseFloat(jobData.compensationRangeTo),
         experience: jobData.experience,
-        company_id: jobData.company_id
+        company_id: jobData.company_id,
+        department_id: jobData.department_id
       };
       try {
         const response = await axios.put(`http://localhost:5001/api/update-job/${jobId}`, formattedData);
@@ -100,91 +128,13 @@ const UpdateJob = () => {
         alert('Failed to update job.');
       }
     };
-  
 
-// const UpdateJob = () => {
-//   const { jobId } = useParams();
-//   const navigate = useNavigate();
-//   const [jobData, setJobData] = useState({
-//     jobTitle: '',
-//     jobDescription: '',
-//     jobLocation: '',
-//     jobType: '',
-//     noOfPositions: '',
-//     state: '',
-//     targetHiringDate: '',
-//     compensationType: '',
-//     compensationRangeFrom: '',
-//     compensationRangeTo: '',
-//     experience: '',
-//     company_id: ''
-//   });
-//   const [locations, setLocations] = useState([]);
-
-//   useEffect(() => {
-//     fetchLocations();
-//     if (jobId) {
-//       fetchJobDetails(jobId);
-//     }
-//   }, [jobId]);
-
-//   const fetchLocations = async () => {
-//     const userInfo = localStorage.getItem('user');
-//     const user = userInfo ? JSON.parse(userInfo) : null;
-//     const companyID = user?.company_id;
-
-//     try {
-//       const response = await axios.get("http://localhost:5001/api/Location", { params: { company_id: companyID } });
-//       if (response.status === 200) {
-//         setLocations(response.data);
-//       }
-//     } catch (error) {
-//       console.error("Failed to fetch locations:", error);
-//     }
-//   };
-
-//   const fetchJobDetails = async (jobId) => {
-//     try {
-//       const response = await axios.get(`http://localhost:5001/api/jobs/${jobId}`);
-//       if (response.status === 200) {
-//         setJobData({
-//           jobTitle: response.data.job_title,
-//           jobDescription: response.data.job_description,
-//           jobLocation: response.data.location_id,
-//           jobType: response.data.job_type,
-//           noOfPositions: response.data.no_of_positions.toString(),
-//           state: response.data.state,
-//           targetHiringDate: response.data.target_hiring_date.substring(0, 10), // to fit the date input format
-//           compensationType: response.data.compensation_type,
-//           compensationRangeFrom: response.data.compensation_range_from.toString(),
-//           compensationRangeTo: response.data.compensation_range_to.toString(),
-//           experience: response.data.experience,
-//           company_id: response.data.company_id
-//         });
-//       }
-//     } catch (error) {
-//       console.error('Failed to fetch job details:', error);
-//     }
-//   };
-
-//   const handleChange = (event) => {
-//     const { name, value } = event.target;
-//     setJobData(prevData => ({ ...prevData, [name]: value }));
-//   };
-
-//   const handleSubmit = async (event) => {
-//     event.preventDefault();
-//     try {
-//       const response = await axios.put(`http://localhost:5001/api/update-job/${jobId}`, jobData);
-//       if (response.status === 200) {
-//         alert('Job updated successfully!');
-//         navigate('/ManageJobs');
-//       }
-//     } catch (error) {
-//       console.error('Error updating job:', error);
-//       alert('Failed to update job.');
-//     }
-//   };
+    const experienceRanges = [
+      "0-1 Years",
+      "1-3 Years",
+      "3-5 Years",
+      "5+ Years"
+    ];
 
   return (
     <div className="form-container">
@@ -230,6 +180,23 @@ const UpdateJob = () => {
           </select>
         </div>
         <div className="form-group">
+          <label htmlFor="department">Department:</label>
+          <select
+            id="department"
+            value={jobData.department}
+            onChange={handleChange}
+            required
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          >
+            <option value="">Select department</option>
+            {departments.map((dept) => (
+              <option key={dept._id} value={dept._id}>
+                {dept.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
           <label htmlFor="jobType">Job Type:</label>
           <select
             id="jobType"
@@ -247,6 +214,22 @@ const UpdateJob = () => {
           </select>
         </div>
         <div className="form-group">
+          <label htmlFor="experience">Experience Needed:</label>
+          <select
+            id="experience"
+            name="experience"
+            value={jobData.experience}
+            onChange={handleChange}
+            required
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          >
+            <option value="">Select experience range</option>
+            {experienceRanges.map((range, index) => (
+              <option key={index} value={range}>{range}</option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
           <label htmlFor="noOfPositions">Number of Positions:</label>
           <input
             type="number"
@@ -258,7 +241,7 @@ const UpdateJob = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="state">State:</label>
+          <label htmlFor="state">Publish State:</label>
           <select
             id="state"
             name="state"
@@ -319,17 +302,6 @@ const UpdateJob = () => {
             id="compensationRangeTo"
             name="compensationRangeTo"
             value={jobData.compensationRangeTo}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="experience">Experience Needed:</label>
-          <input
-            type="text"
-            id="experience"
-            name="experience"
-            value={jobData.experience}
             onChange={handleChange}
             required
           />

@@ -1,21 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Filter from './Filter';
+import axios from 'axios';
 
 const FilterSection = ({ filters, onFilterChange }) => {
-  const handleFilterChange = (filterName, value) => {
-    // Update the filters state in the parent App component
+  const [locations, setLocations] = useState([]);
+  const [departments, setDepartments] = useState([]);
 
-    console.log(filterName,value);
-    console.log('Filter obj',{
-      ...filters,
-      [filterName]: value
-    });
-    
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await axios.get("http://localhost:5001/api/Location");
+        setLocations(response.data.map(l => ({ value: l._id, label: l.location_name })));
+      } catch (error) {
+        console.error("Error fetching locations:", error);
+      }
+    };
+
+    const fetchDepartments = async () => {
+      try {
+        const response = await axios.get("http://localhost:5001/api/Department");
+        setDepartments(response.data.map(d => ({ value: d._id, label: d.name })));
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+      }
+    };
+
+    fetchLocations();
+    fetchDepartments();
+  }, []);
+
+  const handleFilterChange = (filterName, value) => {
     onFilterChange({
       ...filters,
       [filterName]: value
     });
-    
   };
 
   const handleClearFilters = () => {
@@ -31,32 +49,100 @@ const FilterSection = ({ filters, onFilterChange }) => {
       <div className="bg-white shadow overflow-hidden sm:rounded-md p-4">
         <div className="flex justify-between">
           <h3 className="text-lg leading-6 font-bold text-gray-900">Filters</h3>
-          <button onClick={handleClearFilters} className="bg-blue-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none"
-  style={{ backgroundColor: '#067DCD' }}>
+          <button onClick={handleClearFilters} className="bg-blue-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none">
             Clear filters
           </button>
         </div>
-        <Filter 
-          label="Location" 
-          options={['Waterloo, Ontario','Milton, Ontario']} 
+        <Filter
+          label="Location"
+          options={locations}
           value={filters.location}
           onFilterChange={(value) => handleFilterChange('location', value)}
         />
-        <Filter 
-          label="Department" 
-          options={['IT', 'Marketing','Sales']} 
+        <Filter
+          label="Department"
+          options={departments}
           value={filters.department}
-          onFilterChange={(value) => handleFilterChange('department', value)} 
+          onFilterChange={(value) => handleFilterChange('department', value)}
         />
-        <Filter 
-          label="Experience" 
-          options={['1-3 years', '4-7 years']} 
+        <Filter
+          label="Experience"
+          options={[
+          { value: '0-1 Years', label: '0-1 Years' },
+          { value: '1-3 Years', label: '1-3 Years' },
+          { value: '3-5 Years', label: '3-5 Years' },
+          { value: '5+ Years', label: '5+ Years' }
+          ]}
           value={filters.experience}
           onFilterChange={(value) => handleFilterChange('experience', value)}
-        />
-      </div>
-    </aside>
-  );
-};
+          />
+          </div>
+          </aside>
+          );
+          };
+          
+          export default FilterSection;
 
-export default FilterSection;
+
+// import React from 'react';
+// import Filter from './Filter';
+
+// const FilterSection = ({ filters, onFilterChange }) => {
+//   const handleFilterChange = (filterName, value) => {
+//     // Update the filters state in the parent App component
+
+//     console.log(filterName,value);
+//     console.log('Filter obj',{
+//       ...filters,
+//       [filterName]: value
+//     });
+    
+//     onFilterChange({
+//       ...filters,
+//       [filterName]: value
+//     });
+    
+//   };
+
+//   const handleClearFilters = () => {
+//     onFilterChange({
+//       location: '',
+//       department: '',
+//       experience: ''
+//     });
+//   };
+
+//   return (
+//     <aside className="col-span-1">
+//       <div className="bg-white shadow overflow-hidden sm:rounded-md p-4">
+//         <div className="flex justify-between">
+//           <h3 className="text-lg leading-6 font-bold text-gray-900">Filters</h3>
+//           <button onClick={handleClearFilters} className="bg-blue-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none"
+//   style={{ backgroundColor: '#067DCD' }}>
+//             Clear filters
+//           </button>
+//         </div>
+//         <Filter 
+//           label="Location" 
+//           options={['Waterloo, Ontario','Milton, Ontario']} 
+//           value={filters.location}
+//           onFilterChange={(value) => handleFilterChange('location', value)}
+//         />
+//         <Filter 
+//           label="Department" 
+//           options={['IT', 'Marketing','Sales']} 
+//           value={filters.department}
+//           onFilterChange={(value) => handleFilterChange('department', value)} 
+//         />
+//         <Filter 
+//           label="Experience" 
+//           options={['1-3 years', '4-7 years']} 
+//           value={filters.experience}
+//           onFilterChange={(value) => handleFilterChange('experience', value)}
+//         />
+//       </div>
+//     </aside>
+//   );
+// };
+
+// export default FilterSection;
