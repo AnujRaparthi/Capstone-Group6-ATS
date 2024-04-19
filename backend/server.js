@@ -268,6 +268,18 @@ app.get('/api/job-applications', async (req, res) => {
   }
 });
 
+app.get('/api/my-job-applications', async (req, res) => {
+  const { applicant_id } = req.query;
+
+  try {
+    const applications = await jobApplications.find({ applicant_id: applicant_id }).populate('job_id').populate('company_id');
+    res.json(applications);
+  } catch (error) {
+    console.error('Failed to fetch applications:', error);
+    res.status(500).send('Server error');
+  }
+});
+
 app.get('/api/job-application/:id', async (req, res) => {
 
   console.log('Inside Job application api='+req.params.id);

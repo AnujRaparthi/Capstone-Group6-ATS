@@ -15,8 +15,14 @@ const MainContent = ({ filters, searchTerm }) => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get('https://capstone-group6-ats-backend.vercel.app/api/jobs');
-        console.log('Response=', response);
-        setJobListings(response.data);
+        // Map through the response to create a new array with the creation date
+        const mappedJobs = response.data.map(job => ({
+          ...job,
+          created_at: new Date(parseInt(job._id.substring(0, 8), 16) * 1000), // Extract and convert the timestamp
+        }));
+
+        console.log('mappedJobs=',mappedJobs);
+        setJobListings(mappedJobs);
       } catch (error) {
         console.error('Error fetching jobs:', error);
       }
@@ -28,8 +34,8 @@ const MainContent = ({ filters, searchTerm }) => {
   const getFilteredJobListings = () => {
     return jobListings
       .filter(listing => {
-        const locationMatch = !filters.location || listing.location_id._id === filters.location;
-        const departmentMatch = !filters.department || listing.department_id._id === filters.department;
+        const locationMatch = !filters.location || listing.location_id.location_name === filters.location;
+        const departmentMatch = !filters.department || listing.department_id.name === filters.department;
         const experienceMatch = !filters.experience || listing.experience === filters.experience;
 
         return locationMatch && departmentMatch && experienceMatch;
@@ -52,28 +58,34 @@ const MainContent = ({ filters, searchTerm }) => {
 
   return (
     <main className="col-span-2">
-      {currentItems.length > 0 ? (
-        currentItems.map(listing => (
-          <JobListing
-            key={listing._id}
-            id={listing._id}
-            title={listing.job_title}
-            experience={listing.experience}
-            location={listing.location_id.location_name}
-            department={listing.department_id.name}
-            postedTime="10 mins ago" // This should be calculated or formatted accordingly
-            description={listing.job_description}
+      {filteredJobListings.length > 0 ? (
+        <>
+          {/* <div className="my-4">
+            <span className="font-semibold">{filteredJobListings.length} job(s) found</span>
+          </div> */}
+          {currentItems.map(listing => (
+            <JobListing
+              key={listing._id}
+              id={listing._id}
+              title={listing.job_title}
+              company={listing.company_id.name}
+              experience={listing.experience}
+              location={listing.location_id.location_name}
+              department={listing.department_id.name}
+              postedTime={`Posted on ${listing.created_at.toDateString()}`}
+              description={listing.job_description}
+            />
+          ))}
+          <Pagination
+            itemsPerPage={itemsPerPage}
+            totalItems={filteredJobListings.length}
+            paginate={paginate}
+            currentPage={currentPage}
           />
-        ))
+        </>
       ) : (
-        <p>No job listings found.</p>
+        <p className="my-4 font-semibold">No jobs found</p>
       )}
-      <Pagination
-        itemsPerPage={itemsPerPage}
-        totalItems={filteredJobListings.length}
-        paginate={paginate}
-        currentPage={currentPage}
-      />
     </main>
   );
 };
