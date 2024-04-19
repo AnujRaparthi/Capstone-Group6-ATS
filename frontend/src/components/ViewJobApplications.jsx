@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Pagination from './Pagination'; // Ensure this is correctly imported from your components
+import { useUser } from './UserContext';
 
 const stageOptions = [
   'Initial Screening',
@@ -17,6 +18,7 @@ const statusOptions = [
 ];
 
 const ViewJobApplications = () => {
+  const { user } = useUser();
   const [applications, setApplications] = useState([]);
   const [filteredApplications, setFilteredApplications] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -215,12 +217,14 @@ const ViewJobApplications = () => {
                       >
                         View Application
                       </button>
-                      <button
-                        onClick={() => handleDeleteApplication(application._id)}
-                        className="bg-red-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none"
-                      >
-                        Delete
-                      </button>
+                      {user && user.role === 'admin' && (
+                        <button
+                          onClick={() => handleDeleteApplication(application._id)}
+                          className="bg-red-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none"
+                        >
+                          Delete
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

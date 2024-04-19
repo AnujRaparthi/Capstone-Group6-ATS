@@ -72,7 +72,7 @@ const Home = () => {
         <div className="flex justify-center mt-4">
           <div className="border rounded text-center p-4 bg-white">
             <h5>Master Plan</h5>
-            <sup>$</sup><span className="text-5xl">69</span>
+            <sup>$</sup><span className="text-5xl">89</span>
             <h6 className="font-light">MONTHLY</h6>
             <p className="mt-4">The Master license allows you to customize, store and even host your website using your platform</p>
             <ul className="list-unstyled mt-3 mb-4 text-center">

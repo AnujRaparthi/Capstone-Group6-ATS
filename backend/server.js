@@ -465,6 +465,109 @@ app.patch('/api/users/toggle-active/:id', async (req, res) => {
   }
 });
 
+app.post('/create-checkout-session', async (req, res) => {
+  const { priceId, userData } = req.body;
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [{
+        price: priceId,
+        quantity: 1,
+      }],
+      mode: 'subscription', // assuming you're using one-time prices now
+      success_url: `http://localhost:5001/api/process-payment?session_id={CHECKOUT_SESSION_ID}`, // Endpoint to handle post-payment processing
+      cancel_url: `${req.headers.origin}/payment-failed`,
+      metadata: {
+        name: userData.name,
+        email: userData.email,
+        password: userData.password, // Consider security implications
+        address: userData.address,
+        gender: userData.gender,
+        companyName: userData.companyName,
+        companyAddress: userData.companyAddress
+      }
+    });
+
+    res.json({ sessionId: session.id });
+  } catch (error) {
+    console.error('Stripe session creation failed:', error);
+    res.status(400).send({ error: { message: error.message } });
+  }
+});
+
+app.get('/api/process-payment', async (req, res) => {
+  const sessionId = req.query.session_id;
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    if (session.payment_status === 'paid') {
+      // Extract user and company data from session metadata
+      const { name, email, password, address, gender, companyName, companyAddress } = session.metadata;
+
+      // Process company registration
+      const company = new Company({ name: companyName, address: companyAddress });
+      await company.save();
+
+      // Process user registration
+      const user = new User({ name, email, password, address, gender, userType: 'recruiter', company_id: company._id });
+      await user.save();
+
+      res.redirect('http://localhost:3000/login'); // Or send a response that triggers a redirect on the frontend
+    } else {
+      res.redirect('/payment-failed');
+    }
+  } catch (error) {
+    console.error('Error processing payment:', error);
+    res.status(400).send({ error: 'Payment processing failed.' });
+  }
+});
+
+
+
+
+// This is an Express route in your backend
+// app.post('/create-checkout-session', async (req, res) => {
+//   const { priceId } = req.body; // You'd configure this according to your price setup in Stripe Dashboard
+//   try {
+//       const session = await stripe.checkout.sessions.create({
+//           payment_method_types: ['card'],
+//           line_items: [{
+//               price: 'price_1P7KyxDTqZXkpm4p3p2M6VSl', // This is a predefined product/price ID in your Stripe Dashboard
+//               quantity: 1,
+//           }],
+//           mode: 'payment',
+//           success_url: `/login`,
+//           cancel_url: `/payment-failed`,
+//       });
+//       res.json({ sessionId: session.id });
+//   } catch (error) {
+//       res.status(400).send({ error: { message: error.message } });
+//   }
+// });
+
+// app.post('/create-checkout-session', async (req, res) => {
+//   const { priceId } = req.body;
+
+//   try {
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ['card'],
+//       line_items: [{
+//         price: priceId, // Using the passed priceId dynamically
+//         quantity: 1,
+//       }],
+//       mode: 'subscription',
+//       success_url: `${req.headers.origin}/login?session_id={CHECKOUT_SESSION_ID}`, // Use actual URLs where your frontend is hosted
+//       cancel_url: `${req.headers.origin}/payment-failed`,
+//     });
+
+//     res.json({ sessionId: session.id });
+//   } catch (error) {
+//     console.error('Stripe session creation failed:', error);
+//     res.status(400).send({ error: { message: error.message } });
+//   }
+// });
+
+
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 

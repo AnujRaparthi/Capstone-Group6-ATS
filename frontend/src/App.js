@@ -37,6 +37,7 @@ import RecruiterSignup from './components/RecruiterSignup';
 import RecProfile from "./components/RecProfile";
 import ManageJobForm from './components/ManageJobForm';
 import UpdateJob from './components/UpdateJob';
+import PaymentFailed from './components/PaymentFailed';
 
 const stripePromise = loadStripe("pk_test_51P3jtODTqZXkpm4pEf3Qz9QeOewSYUpfwC4vCgRXhMSc20qH6cEaobmYarHSYX11z9cckK55CRHYvks7tmSZQgHM00OvqAsnlp");
 
@@ -81,6 +82,14 @@ const App = () => {
                 onSearchSubmit={handleSearchSubmit}
                 onClearSearch={handleClearSearch}
               /><Home /><Footer /></>} />
+
+<Route path="/payment-failed" element={<>
+              <HeaderWrapper
+                searchTerm={searchTerm}
+                onSearchChange={handleSearchChange}
+                onSearchSubmit={handleSearchSubmit}
+                onClearSearch={handleClearSearch}
+              /><PaymentFailed /><Footer /></>} />
             </Routes>
           </Elements>
           <Routes>
