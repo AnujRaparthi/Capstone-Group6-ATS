@@ -49,7 +49,7 @@ const RecruiterSignup = () => {
     if (validateForm()) {
       const stripe = await stripePromise;
       try {
-        const { data } = await axios.post('http://localhost:5001/create-checkout-session', {
+        const { data } = await axios.post('https://capstone-group6-ats-backend.vercel.app/create-checkout-session', {
           priceId: 'price_1P7KyxDTqZXkpm4p3p2M6VSl',
           userData: formData // sending user data to backend
         });
@@ -194,7 +194,7 @@ export default RecruiterSignup;
 //     if (validateForm()) {
 //       const stripe = await stripePromise;
 //       try {
-//         const { data } = await axios.post('http://localhost:5001/create-checkout-session', {
+//         const { data } = await axios.post('https://capstone-group6-ats-backend.vercel.app/create-checkout-session', {
 //           priceId: 'price_1P7KyxDTqZXkpm4p3p2M6VSl'
 //         });
 //         const result = await stripe.redirectToCheckout({ sessionId: data.sessionId });
@@ -203,7 +203,7 @@ export default RecruiterSignup;
 //           navigate('/payment-failed');
 //         } else {
 //           // Handle successful payment here
-//           const companyResponse = await axios.post('http://localhost:5001/api/register-company', {
+//           const companyResponse = await axios.post('https://capstone-group6-ats-backend.vercel.app/api/register-company', {
 //             name: formData.companyName,
 //             address: formData.companyAddress
 //           });
@@ -219,7 +219,7 @@ export default RecruiterSignup;
 //               company_id: companyResponse.data._id
 //             };
 
-//             const userResponse = await axios.post('http://localhost:5001/api/signup', recruiterData);
+//             const userResponse = await axios.post('https://capstone-group6-ats-backend.vercel.app/api/signup', recruiterData);
 //             if (userResponse.status === 201) navigate('/login');
 //             else throw new Error('Could not create recruiter');
 //           } else {
@@ -395,7 +395,7 @@ export default RecruiterSignup;
 //             try {
 //                 const stripe = await stripePromise;
 //                 // Assume you have a priceId from your products setup in Stripe
-//                 const { data: { sessionId } } = await axios.post('http://localhost:5001/create-checkout-session', { priceId: 'price_1P7KyxDTqZXkpm4p3p2M6VSl' });
+//                 const { data: { sessionId } } = await axios.post('https://capstone-group6-ats-backend.vercel.app/create-checkout-session', { priceId: 'price_1P7KyxDTqZXkpm4p3p2M6VSl' });
 //                 const { error } = await stripe.redirectToCheckout({
 //                     sessionId
 //                 });
@@ -508,7 +508,7 @@ export default RecruiterSignup;
 //             // First, create the company
 
 //             console.log('Inside Register compnay=',formData);
-//             const companyResponse = await axios.post('http://localhost:5001/api/register-company', {
+//             const companyResponse = await axios.post('https://capstone-group6-ats-backend.vercel.app/api/register-company', {
 //               name: formData.companyName,
 //               address: formData.companyAddress
 //             });
@@ -526,7 +526,7 @@ export default RecruiterSignup;
 //                 company_id: companyData._id // assuming the response body has the id as '_id'
 //               };
       
-//               const userResponse = await axios.post('http://localhost:5001/api/signup', recruiterData);
+//               const userResponse = await axios.post('https://capstone-group6-ats-backend.vercel.app/api/signup', recruiterData);
       
 //               if (userResponse.status === 201) {
 //                 navigate('/login');

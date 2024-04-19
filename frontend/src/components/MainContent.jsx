@@ -112,7 +112,7 @@ export default MainContent;
 //     const fetchJobs = async () => {
 //       try {
 //         // const response = await axios.get('http://capstone-group6-ats-backend.vercel.app/api/jobs');
-//         //http://localhost:5001/
+//         //https://capstone-group6-ats-backend.vercel.app/
 //         const response = await axios.get('https://capstone-group6-ats-backend.vercel.app/api/jobs');
 //         console.log('Response=',response);
 //         setJobListings(response.data);

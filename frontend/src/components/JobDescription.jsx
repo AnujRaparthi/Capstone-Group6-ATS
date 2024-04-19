@@ -17,7 +17,7 @@ const JobDescription = () => {
     const fetchJobAndCheckApplication = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5001/api/jobs/${jobId}`);
+        const response = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/jobs/${jobId}`);
         if (response.data) {
           const jobData = {
             ...response.data,
@@ -26,7 +26,7 @@ const JobDescription = () => {
           setJob(jobData);
         }
         if (userId) {
-          const checkResponse = await axios.get(`http://localhost:5001/api/applications/check-application/${jobId}/${userId}`);
+          const checkResponse = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/applications/check-application/${jobId}/${userId}`);
           setHasApplied(checkResponse.data.hasApplied);
         }
       } catch (error) {
@@ -147,7 +147,7 @@ export default JobDescription;
 //     const fetchJobAndCheckApplication = async () => {
 //       setIsLoading(true);
 //       try {
-//         const response = await axios.get(`http://localhost:5001/api/jobs/${jobId}`);
+//         const response = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/jobs/${jobId}`);
 //         if (response.data) {
 //           const jobData = {
 //             ...response.data,
@@ -156,7 +156,7 @@ export default JobDescription;
 //           setJob(jobData);
 //         }
 //         if (userId) {
-//           const checkResponse = await axios.get(`http://localhost:5001/api/applications/check-application/${jobId}/${userId}`);
+//           const checkResponse = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/applications/check-application/${jobId}/${userId}`);
 //           setHasApplied(checkResponse.data.hasApplied);
 //         }
 //       } catch (error) {
@@ -179,11 +179,11 @@ export default JobDescription;
 
 //   const handleApplyNow = async () => {
 //     try {
-//       const response = await axios.get(`http://localhost:5001/api/applications/check-application/${jobId}/${userId}`);
+//       const response = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/applications/check-application/${jobId}/${userId}`);
 //       if (response.data.hasApplied) {
 //         alert('You have already applied for this job.');
 //       } else {
-//         navigate(`http://localhost:5001/apply-now/${jobId}`);
+//         navigate(`https://capstone-group6-ats-backend.vercel.app/apply-now/${jobId}`);
 //       }
 //     } catch (error) {
 //       console.error('Error checking application status:', error);
@@ -259,10 +259,10 @@ export default JobDescription;
 //     const fetchJobAndCheckApplication = async () => {
 //       setIsLoading(true);
 //       try {
-//         const response = await axios.get(`http://localhost:5001/api/jobs/${jobId}`);
+//         const response = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/jobs/${jobId}`);
 //         setJob(response.data);
 //         if (userId) {
-//           const checkResponse = await axios.get(`http://localhost:5001/api/applications/check-application/${jobId}/${userId}`);
+//           const checkResponse = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/applications/check-application/${jobId}/${userId}`);
 //           setHasApplied(checkResponse.data.hasApplied);
 //         }
 //       } catch (error) {
@@ -285,7 +285,7 @@ export default JobDescription;
 
 //   const handleApplyNow = async () => {
 //     try {
-//       const response = await axios.get(`http://localhost:5001/api/applications/check-application/${jobId}/${userId}`);
+//       const response = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/applications/check-application/${jobId}/${userId}`);
 //       if (response.data.hasApplied) {
 //         alert('You have already applied for this job.');
 //       } else {

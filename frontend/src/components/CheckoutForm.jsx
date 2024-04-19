@@ -80,7 +80,7 @@ const CheckoutForm = () => {
     } else {
       console.log('[PaymentMethod]', paymentMethod);
       // Send paymentMethod.id to the server
-      await fetch("http://localhost:5001/api/create-payment-intent", {
+      await fetch("https://capstone-group6-ats-backend.vercel.app/api/create-payment-intent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

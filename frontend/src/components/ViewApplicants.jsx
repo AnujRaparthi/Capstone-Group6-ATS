@@ -24,7 +24,7 @@ const ViewApplicants = () => {
     }
 
     try {
-      const response = await axios.get("http://localhost:5001/api/users", { params });
+      const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/users", { params });
       if (response.status === 200) {
         setApplicants(response.data);
       } else {
@@ -37,7 +37,7 @@ const ViewApplicants = () => {
 
   const toggleActiveStatus = async (userId, isActive) => {
     try {
-      await axios.patch(`http://localhost:5001/api/users/toggle-active/${userId}`, { active: !isActive });
+      await axios.patch(`https://capstone-group6-ats-backend.vercel.app/api/users/toggle-active/${userId}`, { active: !isActive });
       fetchApplicants();  // Refresh the list after toggling
     } catch (error) {
       console.error('Error updating user active status:', error);
@@ -230,7 +230,7 @@ export default ViewApplicants;
 //     }
 
 //     try {
-//       const response = await axios.get("http://localhost:5001/api/users", { params });
+//       const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/users", { params });
 //       if (response.status === 200) {
 //         setApplicants(response.data);
 //       } else {

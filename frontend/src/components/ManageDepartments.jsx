@@ -23,7 +23,7 @@ const ManageDepartments = () => {
     }
 
     try {
-      const response = await axios.get("http://localhost:5001/api/Department", { params });
+      const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/Department", { params });
 
       if (response.status === 200) {
         setDepartments(response.data);
@@ -111,7 +111,7 @@ export default ManageDepartments;
 //   useEffect(() => {
 //     const fetchDepartments = async () => {
 //         try {
-//           const response = await axios.get("http://localhost:5001/api/Department");
+//           const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/Department");
 //           console.log("Response:", response);
 //             const data = response.data;
 //             console.log("Fetched departments:", data); 

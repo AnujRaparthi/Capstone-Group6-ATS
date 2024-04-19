@@ -36,7 +36,7 @@ const ManageJobForm = () => {
     }
 
     try {
-      const response = await axios.get("http://localhost:5001/api/Department", { params });
+      const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/Department", { params });
 
       if (response.status === 200) {
         setDepartments(response.data);
@@ -59,7 +59,7 @@ const ManageJobForm = () => {
     }
 
     try {
-      const response = await axios.get("http://localhost:5001/api/Location", { params });
+      const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/Location", { params });
       if (response.status === 200) {
         setLocations(response.data);
       } else {
@@ -95,7 +95,7 @@ const ManageJobForm = () => {
 
     try {
       console.log('jobData=',jobData);
-      const response = await axios.post("http://localhost:5001/api/create-job", jobData);
+      const response = await axios.post("https://capstone-group6-ats-backend.vercel.app/api/create-job", jobData);
       console.log('response=',response);
       if (response.status === 201) {
         console.log("Job posted successfully!");
@@ -308,7 +308,7 @@ export default ManageJobForm;
 //   useEffect(() => {
 //     const fetchJobs = async () => {
 //       try {
-//         const response = await fetch("http://localhost:5001/api/jobs");
+//         const response = await fetch("https://capstone-group6-ats-backend.vercel.app/api/jobs");
 //         if (response.ok) {
 //           const data = await response.json();
 //           console.log("Fetched jobs:", data); // Log the fetched data
@@ -345,7 +345,7 @@ export default ManageJobForm;
 //       experience: experience, 
 //     };
 //     try {
-//       const response = await fetch("http://localhost:5001/api/jobs", {
+//       const response = await fetch("https://capstone-group6-ats-backend.vercel.app/api/jobs", {
 //         method: "POST",
 //         headers: { "Content-Type": "application/json" },
 //         body: JSON.stringify(jobData),

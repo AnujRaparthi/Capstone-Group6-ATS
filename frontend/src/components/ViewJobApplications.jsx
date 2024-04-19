@@ -47,7 +47,7 @@ const ViewJobApplications = () => {
     const user = userInfo ? JSON.parse(userInfo) : null;
     const companyID = user?.company_id;
 
-    let apiURL = `http://localhost:5001/api/job-applications`;
+    let apiURL = `https://capstone-group6-ats-backend.vercel.app/api/job-applications`;
     const params = {};
     if (companyID) {
       params.company_id = companyID;
@@ -72,7 +72,7 @@ const ViewJobApplications = () => {
   const handleDeleteApplication = async (applicationId) => {
     if (window.confirm("Are you sure you want to delete this application?")) {
       try {
-        const response = await axios.delete(`http://localhost:5001/api/delete-application/${applicationId}`);
+        const response = await axios.delete(`https://capstone-group6-ats-backend.vercel.app/api/delete-application/${applicationId}`);
         if (response.status === 200) {
           setFilteredApplications(prev => prev.filter(app => app._id !== applicationId));
           alert("Application deleted successfully!");

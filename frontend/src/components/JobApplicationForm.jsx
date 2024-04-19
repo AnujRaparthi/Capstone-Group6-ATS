@@ -53,7 +53,7 @@ const JobApplicationForm = () => {
 
         const fetchJobDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:5001/api/jobdetail/${jobId}`);
+                const response = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/jobdetail/${jobId}`);
                 if (response.status === 200) {
 
                     console.log('response.data=',response.data);
@@ -107,7 +107,7 @@ const JobApplicationForm = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:5001/api/applications', submissionFormData, {
+            const response = await axios.post('https://capstone-group6-ats-backend.vercel.app/api/applications', submissionFormData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             console.log('Submission successful:', response.data);

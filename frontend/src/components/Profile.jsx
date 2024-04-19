@@ -48,7 +48,7 @@ const Profile = () => {
         headers: { 'Authorization': `Bearer ${token}` }
     };
     try {
-        const { data } = await axios.put('http://localhost:5001/api/users/update', formData, config);
+        const { data } = await axios.put('https://capstone-group6-ats-backend.vercel.app/api/users/update', formData, config);
         setUser(data); // Update user context with new user data
         localStorage.setItem('user', JSON.stringify(data));
         alert('Profile updated successfully!');

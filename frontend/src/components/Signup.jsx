@@ -71,7 +71,7 @@ const Signup = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        await axios.post('http://localhost:5001/api/signup', formData);
+        await axios.post('https://capstone-group6-ats-backend.vercel.app/api/signup', formData);
         navigate('/login');
       } catch (error) {
         setErrors({ ...errors, form: 'Signup failed. Please try again.' });

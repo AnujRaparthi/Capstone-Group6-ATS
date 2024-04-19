@@ -476,7 +476,7 @@ app.post('/create-checkout-session', async (req, res) => {
         quantity: 1,
       }],
       mode: 'subscription', // assuming you're using one-time prices now
-      success_url: `http://localhost:5001/api/process-payment?session_id={CHECKOUT_SESSION_ID}`, // Endpoint to handle post-payment processing
+      success_url: `https://capstone-group6-ats-backend.vercel.app/api/process-payment?session_id={CHECKOUT_SESSION_ID}`, // Endpoint to handle post-payment processing
       cancel_url: `${req.headers.origin}/payment-failed`,
       metadata: {
         name: userData.name,

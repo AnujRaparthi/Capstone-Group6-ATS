@@ -24,7 +24,7 @@ const ManageJobs = () => {
     }
 
     try {
-      const response = await axios.get("http://localhost:5001/api/jobs", { params });
+      const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/jobs", { params });
       if (response.status === 200) {
         setJobs(response.data);
       } else {
@@ -42,7 +42,7 @@ const ManageJobs = () => {
   const handleDeleteJob = async (jobId) => {
     if (window.confirm("Are you sure you want to delete this job?")) {
       try {
-        const response = await axios.delete(`http://localhost:5001/api/delete-job/${jobId}`);
+        const response = await axios.delete(`https://capstone-group6-ats-backend.vercel.app/api/delete-job/${jobId}`);
         if (response.status === 200) {
           const updatedJobs = jobs.filter(job => job._id !== jobId);
           setJobs(updatedJobs);
@@ -148,7 +148,7 @@ export default ManageJobs;
 //   // useEffect(() => {
 //   //   const fetchJobs = async () => {
 //   //     try {
-//   //       const response = await fetch("http://localhost:5001/api/jobs");
+//   //       const response = await fetch("https://capstone-group6-ats-backend.vercel.app/api/jobs");
 //   //       if (response.ok) {
 //   //         const data = await response.json();
 //   //         setJobs(data);
@@ -179,7 +179,7 @@ export default ManageJobs;
 //     }
 
 //     try {
-//       const response = await axios.get("http://localhost:5001/api/jobs", { params });
+//       const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/jobs", { params });
 //       if (response.status === 200) {
 //         setJobs(response.data);
 //       } else {

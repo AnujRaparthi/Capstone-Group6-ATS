@@ -10,10 +10,10 @@ const FilterSection = ({ filters, onFilterChange }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const locationsResponse = await axios.get("http://localhost:5001/api/Location");
+        const locationsResponse = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/Location");
         setLocations([...new Set(locationsResponse.data.map(location => location.location_name))]);
 
-        const departmentsResponse = await axios.get("http://localhost:5001/api/Department");
+        const departmentsResponse = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/Department");
         setDepartments([...new Set(departmentsResponse.data.map(dept => dept.name))]);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -88,7 +88,7 @@ export default FilterSection;
 //   useEffect(() => {
 //     const fetchLocations = async () => {
 //       try {
-//         const response = await axios.get("http://localhost:5001/api/Location");
+//         const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/Location");
 //         setLocations([...new Set(response.data.map(l => ({ value: l.location_name, label: l.location_name })))]);
 //       } catch (error) {
 //         console.error("Error fetching locations:", error);
@@ -97,7 +97,7 @@ export default FilterSection;
 
 //     const fetchDepartments = async () => {
 //       try {
-//         const response = await axios.get("http://localhost:5001/api/Department");
+//         const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/Department");
 //         setDepartments([...new Set(response.data.map(d => ({ value: d.name, label: d.name })))]);
 //       } catch (error) {
 //         console.error("Error fetching departments:", error);

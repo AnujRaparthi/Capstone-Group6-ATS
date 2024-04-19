@@ -37,7 +37,7 @@ const UpdateJob = () => {
       const companyID = user?.company_id;
   
       try {
-        const response = await axios.get("http://localhost:5001/api/Location", { params: { company_id: companyID } });
+        const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/Location", { params: { company_id: companyID } });
         if (response.status === 200) {
           setLocations(response.data);
         }
@@ -57,7 +57,7 @@ const UpdateJob = () => {
       }
   
       try {
-        const response = await axios.get("http://localhost:5001/api/Department", { params });
+        const response = await axios.get("https://capstone-group6-ats-backend.vercel.app/api/Department", { params });
   
         if (response.status === 200) {
           setDepartments(response.data);
@@ -71,7 +71,7 @@ const UpdateJob = () => {
   
     const fetchJobDetails = async (jobId) => {
       try {
-        const response = await axios.get(`http://localhost:5001/api/jobs/${jobId}`);
+        const response = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/jobs/${jobId}`);
         if (response.status === 200) {
           const job = response.data;
           setJobData({
@@ -118,7 +118,7 @@ const UpdateJob = () => {
         department_id: jobData.department_id
       };
       try {
-        const response = await axios.put(`http://localhost:5001/api/update-job/${jobId}`, formattedData);
+        const response = await axios.put(`https://capstone-group6-ats-backend.vercel.app/api/update-job/${jobId}`, formattedData);
         if (response.status === 200) {
           alert('Job updated successfully!');
           navigate('/ManageJobs');

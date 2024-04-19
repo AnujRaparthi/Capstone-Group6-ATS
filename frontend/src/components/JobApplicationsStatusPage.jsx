@@ -13,7 +13,7 @@ const JobApplicationsStatusPage = () => {
 
       if (user && user._id) {
         try {
-          const response = await axios.get(`http://localhost:5001/api/my-job-applications?applicant_id=${user._id}`);
+          const response = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/my-job-applications?applicant_id=${user._id}`);
           const mappedData = response.data.map(app => ({
             ...app,
             appliedDate: new Date(parseInt(app._id.substring(0, 8), 16) * 1000),
@@ -76,7 +76,7 @@ export default JobApplicationsStatusPage;
 
 //       if (user && user._id) {
 //         try {
-//           const response = await axios.get(`http://localhost:5001/api/my-job-applications?applicant_id=${user._id}`);
+//           const response = await axios.get(`https://capstone-group6-ats-backend.vercel.app/api/my-job-applications?applicant_id=${user._id}`);
 
 //           console.log('response=',response);
 //           const mappedData = response.data.map(app => ({
