@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const CommunicationForm = ({ applicantEmail }) => {
+const CommunicationForm = ({ applicantEmail, jobDetails }) => {
   const [comment, setComment] = useState('');
 
   const handleSubmit = async (event) => {
@@ -9,8 +9,22 @@ const CommunicationForm = ({ applicantEmail }) => {
 
     if (!comment.trim()) return;
 
+    const emailContent = `
+    <html>
+    <body>
+      <p><strong>Job Title:</strong> ${jobDetails.jobTitle}</p>
+      <p><strong>Company:</strong> ${jobDetails.company}</p>
+      <p><strong>Location:</strong> ${jobDetails.location}</p>
+      <p><strong>Notification:</strong> ${comment}</p>
+    </body>
+    </html>
+  `;
+
     try {
-      const response = await axios.post('http://localhost:5001/api/send-email', { email: 'anujraparthi.inry@gmail.com', comment });
+      const response = await axios.post('http://localhost:5001/api/send-email', {
+                email: 'anujraparthi.inry@gmail.com',
+                content: emailContent
+            });
       alert('Message sent!');
       setComment('');
     } catch (error) {

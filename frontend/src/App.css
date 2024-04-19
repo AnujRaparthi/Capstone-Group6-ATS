@@ -142,13 +142,13 @@ body {
 }
 
 /* This CSS is for Hr portal */
-.container {
+/* .container {
   background-color: #f4f4f4;
   display: flex;
   gap: 20px;
   margin-left: 20px;
   margin-top: 20px; 
-}
+} */
 .nav-buttons {
   display: flex;
   justify-content: flex-start;
@@ -167,7 +167,7 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 15em;
 }
-.card {
+/* .card {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: white;
@@ -187,7 +187,7 @@ body {
   font-weight: bold;
   margin: 0;
   color:rgb(32, 161, 241)
-}
+} */
 
 .HrBanner {
   position: relative;
@@ -400,4 +400,46 @@ th{
   width: 30%;
 }
 
+/* CSS to apply padding to all input, select, and textarea elements */
+input,
+select,
+textarea {
+  padding: 8px 12px; /* Adjust padding values as needed */
+  border: 1px solid #ccc; /* Optional: border style */
+  border-radius: 4px; /* Optional: border radius for rounded corners */
+  box-sizing: border-box; /* Ensures padding doesn't affect overall dimensions */
+}
 
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: blue;
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: darkblue;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.card-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+}

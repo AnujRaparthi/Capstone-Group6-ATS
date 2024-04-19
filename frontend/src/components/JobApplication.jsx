@@ -41,7 +41,10 @@ const JobApplication = () => {
                         resumeFile: data.resume_file,
                         stage: data.stage,
                         status: data.status,
-                        phone: data.phone
+                        phone: data.phone,
+                        jobTitle: data.job_id.job_title,
+                        company: data.job_id.company_id.name,
+                        location: data.job_id.location_id.location_name
                     });
                 }
             } catch (error) {
@@ -118,7 +121,7 @@ const JobApplication = () => {
 
             <div className='bg-white shadow mt-10 mb-10 w-full max-w-xl p-6 border border-gray-300 rounded-md'>
 
-                <div className="text-center mb-4">
+                {/* <div className="text-center mb-4">
                     <p className="font-medium text-lg">Data Analyst</p>
                     <div className="job-icons flex justify-center space-x-4 py-2">
                         <JobIcon icon="fas fa-briefcase" text="1 - 3 years" />
@@ -126,7 +129,7 @@ const JobApplication = () => {
                         <JobIcon icon="fas fa-building" text="IT" />
                         <JobIcon icon="far fa-clock" text="Posted 10 mins ago" />
                     </div>
-                </div>
+                </div> */}
 
                 <div className="sm:mx-auto sm:w-full">
                     <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -236,7 +239,11 @@ const JobApplication = () => {
                         </button>
                     </form>
                 </div>
-                <CommunicationForm applicantEmail={formData.email} />
+                <CommunicationForm applicantEmail={formData.email} jobDetails={{
+    jobTitle: formData.jobTitle,
+    company: formData.company,
+    location: formData.location,
+}} />
             </div>
         </div>
     );

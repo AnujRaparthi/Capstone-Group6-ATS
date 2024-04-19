@@ -29,22 +29,47 @@ export const UserProvider = ({ children }) => {
     validateToken();
   }, []);
 
-  const login = async (userData, token) => {
+  // const login = async (userData, token) => {
     
-    if (typeof userData === 'string' && userData === 'admin@gmail.com' && token === 'admin-token') {
-      const adminUser = { email: userData, role: 'admin' };
+  //   if (typeof userData === 'string' && userData === 'admin@gmail.com' && token === 'admin-token') {
+  //     const adminUser = { email: userData, role: 'admin' };
+  //     localStorage.setItem('user', JSON.stringify(adminUser));
+  //     localStorage.setItem('token', token);
+  //     setUser(adminUser);
+  //     navigate('/hrportal');
+  //   } else {
+      
+  //     localStorage.setItem('user', JSON.stringify(userData));
+  //     localStorage.setItem('token', token);
+  //     setUser(userData);
+  //     navigateBasedOnUserType(userData);
+  //   }
+  // };
+
+  const login = async (userData, token) => {
+
+    console.log('typeof userData=',typeof userData);
+    console.log('userData=',userData);
+    console.log('token=',token);
+
+    if (token === 'admin-token') {
+      const adminUser = { 
+        email: userData.email, 
+        role: 'admin',
+        name: 'Admin' // Set a name for the admin
+      };
       localStorage.setItem('user', JSON.stringify(adminUser));
       localStorage.setItem('token', token);
       setUser(adminUser);
       navigate('/hrportal');
     } else {
-      
       localStorage.setItem('user', JSON.stringify(userData));
       localStorage.setItem('token', token);
       setUser(userData);
       navigateBasedOnUserType(userData);
     }
   };
+  
 
   const navigateBasedOnUserType = (user) => {
     if (user.userType === 'applicant') {

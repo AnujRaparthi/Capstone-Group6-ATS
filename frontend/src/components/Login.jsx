@@ -13,7 +13,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (email === 'admin@gmail.com' && password === 'Admin#123') {
+    if (email === 'admin@gmail.com' && password === 'admin') {
       login({ email }, 'admin-token');
       navigate('/hrportal'); 
     } else {
@@ -21,14 +21,20 @@ const Login = () => {
       try {
         const response = await axios.post('http://localhost:5001/api/login', { email, password });
         const { user, token } = response.data;
-        login(user, token);
-        if (user.userType === 'applicant') {
-          navigate('/');
-        } else if (user.userType === 'recruiter') {
-          navigate('/hrportal');
-        } else {
+        
+        if(user.active==true){
+          login(user, token);
+          if (user.userType === 'applicant') {
+            navigate('/');
+          } else if (user.userType === 'recruiter') {
+            navigate('/hrportal');
+          } else {
+            setError('Unauthorized access or unrecognized user type');
+          }
+        }else{
           setError('Unauthorized access or unrecognized user type');
         }
+        
       } catch (error) {
         console.error('Login error:', error);
         handleErrorResponse(error);

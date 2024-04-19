@@ -15,7 +15,9 @@ const JobApplicationForm = () => {
         jobTitle: '',
         experience: '',
         location: '',
-        company_id: ''
+        company_id: '',
+        company: '',
+        postedTime: '',
     });
 
     const [formData, setFormData] = useState({
@@ -53,12 +55,17 @@ const JobApplicationForm = () => {
             try {
                 const response = await axios.get(`http://localhost:5001/api/jobdetail/${jobId}`);
                 if (response.status === 200) {
-                    const { job_title, experience, location, company_id } = response.data;
+
+                    console.log('response.data=',response.data);
+                    const { job_title, experience, location_id, company_id, department_id } = response.data;
                     setJobDetails({
                         jobTitle: job_title,
                         experience,
-                        location,
-                        company_id
+                        location : location_id.location_name,
+                        company_id: company_id._id,
+                        company: company_id.name,
+                        department: department_id.name,
+                        postedTime: `Posted on ${new Date(parseInt(response.data._id.substring(0, 8), 16) * 1000).toDateString()}`
                     });
                 } else {
                     console.log('Failed to fetch job details');
@@ -127,19 +134,27 @@ const JobApplicationForm = () => {
                 <div className='bg-white shadow mt-10 mb-10 w-full max-w-xl p-6 border border-gray-300 rounded-md'>
 
                     <div className="text-center mb-4">
-                        <p className="font-medium text-lg">{jobDetails.jobTitle}</p>
+                    <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+                    {jobDetails.jobTitle}
+                        </h2>
                         <div className="job-icons flex justify-center space-x-4 py-2">
-                            <JobIcon icon="fas fa-briefcase" text={jobDetails.experience} />
+                            {/* <JobIcon icon="fas fa-briefcase" text={jobDetails.experience} />
                             <JobIcon icon="fas fa-map-marker-alt" text="Waterloo, Ontario" />
                             <JobIcon icon="fas fa-building" text="IT" />
-                            <JobIcon icon="far fa-clock" text="Posted 10 mins ago" />
+                            <JobIcon icon="far fa-clock" text="Posted 10 mins ago" /> */}
+
+                            <JobIcon icon="fas fa-building" text={jobDetails.company} />
+                            <JobIcon icon="fas fa-map-marker-alt" text={jobDetails.location} />
+                            <JobIcon icon="fas fa-briefcase" text={jobDetails.experience} />
+                            <JobIcon icon="fas fa-sitemap" text={jobDetails.department} />
+                            <JobIcon icon="far fa-clock" text={jobDetails.postedTime} />
                         </div>
                     </div>
 
                     <div className="sm:mx-auto sm:w-full">
-                        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+                        <h4 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
                             Job Application
-                        </h2>
+                        </h4>
 
                     </div>
 

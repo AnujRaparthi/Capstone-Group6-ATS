@@ -209,15 +209,16 @@ const transporter = nodemailer.createTransport({
 //App Password - nrhm jhyb gwyb nbfq
 
 app.post('/api/send-email', async (req, res) => {
-  const { email, comment } = req.body;
+  const { email, content } = req.body;
+
+  console.log('content=',content);
 
   try {
     await transporter.sendMail({
       from: '"CareerHunt ATS" <careerhunt.ats@gmail.com>',
       to: email, // Recipient email from the request
-      subject: "New Comment on Your Application",
-      text: comment,
-      html: `<p>${comment}</p>`,
+      subject: "New notification on your job application",
+      html: content,
     });
 
     res.send({ message: 'Email sent' });
@@ -272,7 +273,12 @@ app.get('/api/my-job-applications', async (req, res) => {
   const { applicant_id } = req.query;
 
   try {
-    const applications = await jobApplications.find({ applicant_id: applicant_id }).populate('job_id').populate('company_id');
+    const applications = await JobApplication.find({ applicant_id: applicant_id }, '-resume_file') // Using '-' to exclude the resume_file
+      .populate('job_id') // Assuming you want to populate details about the job
+      .populate({
+        path: 'job_id',
+        populate: { path: 'location_id department_id company_id' } // Deep populate if necessary
+      });
     res.json(applications);
   } catch (error) {
     console.error('Failed to fetch applications:', error);
@@ -284,7 +290,14 @@ app.get('/api/job-application/:id', async (req, res) => {
 
   console.log('Inside Job application api='+req.params.id);
   try {
-    const application = await JobApplication.findById(req.params.id);
+    const application = await JobApplication.findById(req.params.id)
+      .populate({
+        path: 'job_id',
+        populate: {
+          path: 'company_id location_id',
+          select: 'name location_name' // Adjust fields based on your Company and Location schema
+        }
+      });
 
     if (!application) {
       return res.status(404).json({ message: 'Job application not found' });
@@ -300,7 +313,7 @@ app.get('/api/jobdetail/:id', async (req, res) => {
 
   console.log('Inside Job application api='+req.params.id);
   try {
-    const application = await Job.findById(req.params.id);
+    const application = await Job.findById(req.params.id).populate('location_id').populate('department_id').populate('company_id');
 
     if (!application) {
       return res.status(404).json({ message: 'Job not found' });
@@ -435,6 +448,20 @@ app.post('/api/register-company', async (req, res) => {
   } catch (error) {
     console.error('Company registration error:', error);
     res.status(400).send({ error: 'Failed to register company.' });
+  }
+});
+
+app.patch('/api/users/toggle-active/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    user.active = !user.active;  // Toggle the active status
+    await user.save();
+    res.send(user);
+  } catch (error) {
+    res.status(500).send('Server error');
   }
 });
 

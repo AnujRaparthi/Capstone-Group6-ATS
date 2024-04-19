@@ -29,9 +29,10 @@ const HrHeader = () => {
         </Link>
         <div className="flex items-center">
           <nav className="hidden md:flex space-x-10">
+          {user && user.role === 'admin' && (
+              <Link to="/ViewApplicants" className="text-base font-medium text-black hover:text-gray-900">Manage Users</Link>
+            )}
             <a href="/ViewJobApplications" class="text-base font-medium text-black hover:text-gray-900">View Job Applications</a>
-
-            <Link to="/ViewApplicants" class="text-base font-medium text-black hover:text-gray-900">View Users</Link>
             <Link to="/ManageJobs" class="text-base font-medium text-black hover:text-gray-900">Manage Jobs</Link>
             <Link to="/ManageLocations" class="text-base font-medium text-black hover:text-gray-900">Manage Locations</Link>
             <Link to="/ManageDepartments" class="text-base font-medium text-black hover:text-gray-900">Manage Departments</Link>

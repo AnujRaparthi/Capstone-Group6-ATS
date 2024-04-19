@@ -10,7 +10,7 @@ const Signup = () => {
     confirmPassword: '',
     address: '',
     gender: '',
-    userType: '',
+    userType: 'applicant',
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -56,11 +56,6 @@ const Signup = () => {
 
     if (!formData.gender) {
       fieldErrors['gender'] = 'Please select a gender';
-      formIsValid = false;
-    }
-
-    if (!formData.userType) {
-      fieldErrors['userType'] = 'Please select a user type';
       formIsValid = false;
     }
 
@@ -160,20 +155,6 @@ const Signup = () => {
                 <option value="other">Other</option>
               </select>
               {errors.gender && <p className="mt-2 text-sm text-red-600">{errors.gender}</p>}
-            </div>
-
-            <div className="input-field">
-              <label htmlFor="userType" className="block text-sm font-medium text-gray-700">
-                Registering as
-              </label>
-              <select id="userType" name="userType" required
-                className="appearance-none block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={formData.userType} onChange={handleChange}>
-                <option value="">Select...</option>
-                <option value="applicant">Applicant</option>
-                <option value="recruiter">Recruiter</option>
-              </select>
-              {errors.userType && <p className="mt-2 text-sm text-red-600">{errors.userType}</p>}
             </div>
 
             {errors.form && (

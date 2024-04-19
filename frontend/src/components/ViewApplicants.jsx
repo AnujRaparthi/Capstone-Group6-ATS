@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Pagination from './Pagination';  // Make sure to import the Pagination component
+import { useUser } from './UserContext';
 
 const ViewApplicants = () => {
+  const { user } = useUser();
   const [applicants, setApplicants] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [applicantsPerPage] = useState(5);  // Set the number of applicants per page
@@ -33,6 +35,15 @@ const ViewApplicants = () => {
     }
   };
 
+  const toggleActiveStatus = async (userId, isActive) => {
+    try {
+      await axios.patch(`http://localhost:5001/api/users/toggle-active/${userId}`, { active: !isActive });
+      fetchApplicants();  // Refresh the list after toggling
+    } catch (error) {
+      console.error('Error updating user active status:', error);
+    }
+  };
+
   // Calculate the current applicants to display
   const indexOfLastApplicant = currentPage * applicantsPerPage;
   const indexOfFirstApplicant = indexOfLastApplicant - applicantsPerPage;
@@ -47,7 +58,7 @@ const ViewApplicants = () => {
   return (
     <div className="content">
       <div className="flex flex-col items-center my-4">
-        <h1 className="text-2xl font-bold mb-4">View Users</h1>
+        <h1 className="text-2xl font-bold mb-4">Manage Users</h1>
         <div className="w-4/5">
           <table className="w-full text-left rounded-lg overflow-hidden bg-white">
             <thead className="primary-blue-bg text-white">
@@ -66,20 +77,27 @@ const ViewApplicants = () => {
                   <td>{applicant.name}</td>
                   <td>{applicant.email}</td>
                   <td>{applicant.address}</td>
-                  <td>{applicant.gender}</td>
+                  <td>{formatUserType(applicant.gender)}</td>
                   <td>{formatUserType(applicant.userType)}</td>
                   <td>
                     <div className="flex flex-col space-y-2">
-                      <button
-                        className="primary-blue-bg text-white text-sm px-4 py-2 rounded-md focus:outline-none"
-                      >
-                        View User
-                      </button>
-                      <button
-                        className="bg-red-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none"
-                      >
-                        Delete
-                      </button>
+
+                      {/* Conditional rendering based on user role */}
+                      {user && user.role === 'admin' && (
+
+                        <>
+                          <button
+                            className={`${applicant.active ? "primary-blue-bg" : "bg-green-600"} text-white text-sm px-4 py-2 rounded-md focus:outline-none`}
+                            onClick={() => toggleActiveStatus(applicant._id, applicant.active)}
+                          >
+                            {applicant.active ? 'Deactivate' : 'Activate'}
+                          </button>
+                          <button className="bg-red-600 text-white text-sm px-4 py-2 rounded-md focus:outline-none">
+                            Delete
+                          </button>
+                        </>
+
+                      )}
                     </div>
                   </td>
                 </tr>
@@ -87,12 +105,12 @@ const ViewApplicants = () => {
             </tbody>
           </table>
           <div className="mt-4">
-          <Pagination
-            itemsPerPage={applicantsPerPage}
-            totalItems={applicants.length}
-            paginate={paginate}
-            currentPage={currentPage}
-          />
+            <Pagination
+              itemsPerPage={applicantsPerPage}
+              totalItems={applicants.length}
+              paginate={paginate}
+              currentPage={currentPage}
+            />
           </div>
         </div>
       </div>
